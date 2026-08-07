@@ -27,8 +27,8 @@ const FEE_RATE = 0.005;
 
 function TransfersPage() {
   const { accounts, transfer } = useBank();
-  const [from, setFrom] = useState(accounts[0].id);
-  const [recipientId, setRecipientId] = useState(recipients[0].id);
+  const [from, setFrom] = useState(accounts[0]!.id);
+  const [recipientId, setRecipientId] = useState(recipients[0]!.id);
   const [amount, setAmount] = useState("250");
   const [note, setNote] = useState("");
   const [step, setStep] = useState<"form" | "review" | "done">("form");
