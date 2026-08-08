@@ -1,9 +1,19 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { toast } from "sonner";
-import { ShieldCheck, Fingerprint, Bell, LifeBuoy, Globe, Save } from "lucide-react";
+import {
+  ShieldCheck,
+  Fingerprint,
+  Bell,
+  LifeBuoy,
+  Globe,
+  Save,
+  Camera,
+  Trash2,
+  ArrowRight,
+} from "lucide-react";
 import { AppShell } from "@/components/layout/AppShell";
-import { profile } from "@/data/bank";
+import { useBank } from "@/lib/bank-store";
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/profile")({
@@ -26,6 +36,7 @@ export const Route = createFileRoute("/profile")({
 });
 
 function ProfilePage() {
+  const { profile, setProfile } = useBank();
   const [prefs, setPrefs] = useState({ biometrics: true, alerts: true, travel: false });
   const [form, setForm] = useState({
     fullName: profile.fullName,
@@ -35,17 +46,51 @@ function ProfilePage() {
   });
   const [saved, setSaved] = useState(false);
 
+  function onAvatarChange(file?: File) {
+    if (!file) return;
+    if (!file.type.startsWith("image/")) {
+      toast.error("Please choose an image file");
+      return;
+    }
+    if (file.size > 2_000_000) {
+      toast.error("Please choose an image under 2MB");
+      return;
+    }
+    const reader = new FileReader();
+    reader.onload = () => {
+      setProfile({ ...profile, avatar: String(reader.result) });
+      toast.success("Profile picture updated");
+    };
+    reader.readAsDataURL(file);
+  }
+
   return (
     <AppShell title="Profile">
       <div className="mx-auto max-w-2xl space-y-5">
         <div className="rounded-2xl border border-border bg-card p-5">
           <div className="flex items-center gap-4">
-            <div className="flex h-16 w-16 items-center justify-center overflow-hidden rounded-full bg-secondary">
-              <img
-                src="/bestcash-logo.jpeg"
-                alt="BestCash profile mark"
-                className="h-full w-full object-cover"
-              />
+            <div className="relative flex h-20 w-20 items-center justify-center overflow-hidden rounded-full bg-secondary text-lg font-bold text-primary ring-4 ring-primary/10">
+              {profile.avatar ? (
+                <img
+                  src={profile.avatar}
+                  alt={`${form.fullName} profile`}
+                  className="h-full w-full object-cover"
+                />
+              ) : (
+                form.fullName
+                  .split(" ")
+                  .map((name) => name[0])
+                  .join("")
+              )}
+              <label className="absolute inset-x-0 bottom-0 flex cursor-pointer items-center justify-center gap-1 bg-black/60 py-1 text-[10px] font-medium text-white">
+                <Camera className="h-3 w-3" /> Edit
+                <input
+                  type="file"
+                  accept="image/*"
+                  className="sr-only"
+                  onChange={(e) => onAvatarChange(e.target.files?.[0])}
+                />
+              </label>
             </div>
             <div>
               <h2 className="text-lg font-semibold">{form.fullName}</h2>
@@ -57,13 +102,26 @@ function ProfilePage() {
               </span>
             </div>
           </div>
+          {profile.avatar && (
+            <button
+              onClick={() => {
+                const { avatar: _avatar, ...withoutAvatar } = profile;
+                setProfile(withoutAvatar);
+              }}
+              className="mt-3 inline-flex items-center gap-1.5 text-xs text-muted-foreground hover:text-destructive"
+            >
+              <Trash2 className="h-3.5 w-3.5" /> Remove profile picture
+            </button>
+          )}
           <div className="mt-5 grid gap-3 sm:grid-cols-2">
-            {[
-              ["fullName", "Full name", "text"],
-              ["username", "Username", "text"],
-              ["email", "Email address", "email"],
-              ["country", "Country", "text"],
-            ].map(([key, label, type]) => (
+            {(
+              [
+                ["fullName", "Full name", "text"],
+                ["username", "Username", "text"],
+                ["email", "Email address", "email"],
+                ["country", "Country", "text"],
+              ] as const
+            ).map(([key, label, type]) => (
               <label key={key} className="text-xs font-medium text-muted-foreground">
                 {label}
                 <input
@@ -80,6 +138,7 @@ function ProfilePage() {
           </div>
           <button
             onClick={() => {
+              setProfile({ ...profile, ...form });
               setSaved(true);
               toast.success("Profile saved", { description: "Demo details updated locally." });
             }}
@@ -126,14 +185,15 @@ function ProfilePage() {
 
         <div className="rounded-2xl border border-border bg-card p-5">
           <h3 className="text-base font-semibold">Support</h3>
-          <button
-            onClick={() =>
-              toast("Demo support", { description: "Chat is not available in this prototype." })
-            }
-            className="mt-3 flex w-full items-center gap-3 rounded-xl border border-border px-4 py-3 text-sm hover:border-primary/60"
+          <a
+            href="/support"
+            className="mt-3 flex w-full items-center justify-between rounded-xl border border-border px-4 py-3 text-sm hover:border-primary/60"
           >
-            <LifeBuoy className="h-4 w-4 text-primary" /> Contact support
-          </button>
+            <span className="flex items-center gap-3">
+              <LifeBuoy className="h-4 w-4 text-primary" /> Contact support
+            </span>
+            <ArrowRight className="h-4 w-4 text-muted-foreground" />
+          </a>
         </div>
 
         <p className="flex items-start gap-2 rounded-2xl border border-border bg-secondary/40 p-4 text-xs text-muted-foreground">

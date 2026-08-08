@@ -1,11 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { toast } from "sonner";
-import { Check, ShieldCheck } from "lucide-react";
+import { AlertTriangle, ShieldCheck } from "lucide-react";
 import { AppShell } from "@/components/layout/AppShell";
 import { useBank } from "@/lib/bank-store";
 import { formatUSD } from "@/lib/currency";
-import { recipients } from "@/data/bank";
+import { demoCredentials, recipients } from "@/data/bank";
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/transfers")({
@@ -27,12 +27,14 @@ export const Route = createFileRoute("/transfers")({
 const FEE_RATE = 0.005;
 
 function TransfersPage() {
-  const { accounts, transfer } = useBank();
+  const { accounts } = useBank();
   const [from, setFrom] = useState(accounts[0]!.id);
   const [recipientId, setRecipientId] = useState(recipients[0]!.id);
   const [amount, setAmount] = useState("250");
   const [note, setNote] = useState("");
-  const [step, setStep] = useState<"form" | "review" | "done">("form");
+  const [step, setStep] = useState<"form" | "review" | "blocked">("form");
+  const [transactionPin, setTransactionPin] = useState("");
+  const [saveRecipient, setSaveRecipient] = useState(false);
 
   const recipient = recipients.find((r) => r.id === recipientId)!;
   const account = accounts.find((a) => a.id === from)!;
@@ -41,35 +43,43 @@ function TransfersPage() {
   const total = value + fee;
   const insufficient = total > account.balance;
   const invalid = value <= 0 || insufficient;
+  const invalidPin =
+    transactionPin.length === 4 && transactionPin !== demoCredentials.transactionPin;
 
   function confirm() {
-    transfer({ recipient: recipient.name, amount: total, note, from });
-    setStep("done");
-    toast.success("Transfer sent", {
-      description: `${formatUSD(value)} to ${recipient.name} (demo)`,
+    if (transactionPin !== demoCredentials.transactionPin) {
+      toast.error("Enter the demo transaction PIN to continue");
+      return;
+    }
+    if (saveRecipient) {
+      window.localStorage.setItem("bestcash-demo-saved-recipient", recipient.id);
+    }
+    setStep("blocked");
+    toast.error("Transfer couldn't be completed", {
+      description: "BestCash is a demo environment and does not process transactions.",
     });
   }
 
   return (
     <AppShell title="Transfers">
       <div className="mx-auto grid max-w-3xl gap-5">
-        {step === "done" ? (
+        {step === "blocked" ? (
           <div className="rounded-3xl border border-border bg-card p-8 text-center elev">
-            <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-[var(--success)]/15">
-              <Check className="h-7 w-7 text-[var(--success)]" />
+            <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-destructive/10">
+              <AlertTriangle className="h-7 w-7 text-destructive" />
             </div>
-            <h2 className="mt-4 text-xl font-semibold">Transfer completed</h2>
+            <h2 className="mt-4 text-xl font-semibold">Transfer couldn’t be completed</h2>
             <p className="mt-1 text-sm text-muted-foreground">
-              {formatUSD(value)} sent to {recipient.name} · {recipient.bank}
+              Your request for {formatUSD(value)} to {recipient.name} was not sent.
             </p>
             <p className="mt-4 text-xs text-muted-foreground">
-              Simulated transaction — no real money moved.
+              This is a fictional banking prototype. No balance was changed and no real money moved.
             </p>
             <button
               onClick={() => setStep("form")}
               className="mt-6 rounded-xl gold-surface px-5 py-2.5 text-sm font-semibold"
             >
-              New transfer
+              Try another demo transfer
             </button>
           </div>
         ) : (
@@ -120,6 +130,28 @@ function TransfersPage() {
                   </select>
                 </div>
                 <div>
+                  <label className="text-xs text-muted-foreground">Transaction PIN (demo)</label>
+                  <input
+                    type="password"
+                    inputMode="numeric"
+                    value={transactionPin}
+                    onChange={(e) =>
+                      setTransactionPin(e.target.value.replace(/[^0-9]/g, "").slice(0, 4))
+                    }
+                    placeholder="4-digit PIN"
+                    className="mt-1 w-full rounded-xl border border-input bg-background px-3 py-2.5 text-sm outline-none focus:border-primary"
+                  />
+                </div>
+                <label className="flex items-center gap-2 text-xs text-muted-foreground">
+                  <input
+                    type="checkbox"
+                    checked={saveRecipient}
+                    onChange={(e) => setSaveRecipient(e.target.checked)}
+                    className="accent-[var(--primary)]"
+                  />
+                  Save this recipient for later demo transfers
+                </label>
+                <div>
                   <label className="text-xs text-muted-foreground">Amount (USD)</label>
                   <input
                     inputMode="decimal"
@@ -169,7 +201,7 @@ function TransfersPage() {
 
               {step === "form" ? (
                 <button
-                  disabled={invalid}
+                  disabled={invalid || transactionPin !== demoCredentials.transactionPin}
                   onClick={() => setStep("review")}
                   className="mt-5 w-full rounded-xl gold-surface py-3 text-sm font-semibold disabled:opacity-40"
                 >
@@ -181,6 +213,11 @@ function TransfersPage() {
                     <ShieldCheck className="h-4 w-4 text-primary" />
                     Sending {formatUSD(value)} to {recipient.name} from {account.name}.
                   </p>
+                  {invalidPin && (
+                    <p className="text-xs text-destructive">
+                      That transaction PIN does not match this demo account.
+                    </p>
+                  )}
                   <div className="flex gap-2">
                     <button
                       onClick={() => setStep("form")}

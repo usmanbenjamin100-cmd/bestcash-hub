@@ -13,8 +13,10 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as CardsRouteImport } from './routes/cards'
 import { Route as CryptoRouteImport } from './routes/crypto'
 import { Route as HistoryRouteImport } from './routes/history'
+import { Route as LoginRouteImport } from './routes/login'
 import { Route as NotificationsRouteImport } from './routes/notifications'
 import { Route as ProfileRouteImport } from './routes/profile'
+import { Route as SupportRouteImport } from './routes/support'
 import { Route as TransfersRouteImport } from './routes/transfers'
 
 const IndexRoute = IndexRouteImport.update({
@@ -37,6 +39,11 @@ const HistoryRoute = HistoryRouteImport.update({
   path: '/history',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const NotificationsRoute = NotificationsRouteImport.update({
   id: '/notifications',
   path: '/notifications',
@@ -45,6 +52,11 @@ const NotificationsRoute = NotificationsRouteImport.update({
 const ProfileRoute = ProfileRouteImport.update({
   id: '/profile',
   path: '/profile',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SupportRoute = SupportRouteImport.update({
+  id: '/support',
+  path: '/support',
   getParentRoute: () => rootRouteImport,
 } as any)
 const TransfersRoute = TransfersRouteImport.update({
@@ -58,8 +70,10 @@ export interface FileRoutesByFullPath {
   '/cards': typeof CardsRoute
   '/crypto': typeof CryptoRoute
   '/history': typeof HistoryRoute
+  '/login': typeof LoginRoute
   '/notifications': typeof NotificationsRoute
   '/profile': typeof ProfileRoute
+  '/support': typeof SupportRoute
   '/transfers': typeof TransfersRoute
 }
 export interface FileRoutesByTo {
@@ -67,8 +81,10 @@ export interface FileRoutesByTo {
   '/cards': typeof CardsRoute
   '/crypto': typeof CryptoRoute
   '/history': typeof HistoryRoute
+  '/login': typeof LoginRoute
   '/notifications': typeof NotificationsRoute
   '/profile': typeof ProfileRoute
+  '/support': typeof SupportRoute
   '/transfers': typeof TransfersRoute
 }
 export interface FileRoutesById {
@@ -77,8 +93,10 @@ export interface FileRoutesById {
   '/cards': typeof CardsRoute
   '/crypto': typeof CryptoRoute
   '/history': typeof HistoryRoute
+  '/login': typeof LoginRoute
   '/notifications': typeof NotificationsRoute
   '/profile': typeof ProfileRoute
+  '/support': typeof SupportRoute
   '/transfers': typeof TransfersRoute
 }
 export interface FileRouteTypes {
@@ -88,8 +106,10 @@ export interface FileRouteTypes {
     | '/cards'
     | '/crypto'
     | '/history'
+    | '/login'
     | '/notifications'
     | '/profile'
+    | '/support'
     | '/transfers'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -97,8 +117,10 @@ export interface FileRouteTypes {
     | '/cards'
     | '/crypto'
     | '/history'
+    | '/login'
     | '/notifications'
     | '/profile'
+    | '/support'
     | '/transfers'
   id:
     | '__root__'
@@ -106,8 +128,10 @@ export interface FileRouteTypes {
     | '/cards'
     | '/crypto'
     | '/history'
+    | '/login'
     | '/notifications'
     | '/profile'
+    | '/support'
     | '/transfers'
   fileRoutesById: FileRoutesById
 }
@@ -116,8 +140,10 @@ export interface RootRouteChildren {
   CardsRoute: typeof CardsRoute
   CryptoRoute: typeof CryptoRoute
   HistoryRoute: typeof HistoryRoute
+  LoginRoute: typeof LoginRoute
   NotificationsRoute: typeof NotificationsRoute
   ProfileRoute: typeof ProfileRoute
+  SupportRoute: typeof SupportRoute
   TransfersRoute: typeof TransfersRoute
 }
 
@@ -151,6 +177,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof HistoryRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/notifications': {
       id: '/notifications'
       path: '/notifications'
@@ -163,6 +196,13 @@ declare module '@tanstack/react-router' {
       path: '/profile'
       fullPath: '/profile'
       preLoaderRoute: typeof ProfileRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/support': {
+      id: '/support'
+      path: '/support'
+      fullPath: '/support'
+      preLoaderRoute: typeof SupportRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/transfers': {
@@ -180,10 +220,22 @@ const rootRouteChildren: RootRouteChildren = {
   CardsRoute: CardsRoute,
   CryptoRoute: CryptoRoute,
   HistoryRoute: HistoryRoute,
+  LoginRoute: LoginRoute,
   NotificationsRoute: NotificationsRoute,
   ProfileRoute: ProfileRoute,
+  SupportRoute: SupportRoute,
   TransfersRoute: TransfersRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}

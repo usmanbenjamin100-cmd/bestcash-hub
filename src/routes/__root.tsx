@@ -4,6 +4,8 @@ import {
   Link,
   createRootRouteWithContext,
   useRouter,
+  useRouterState,
+  useNavigate,
   HeadContent,
   Scripts,
 } from "@tanstack/react-router";
@@ -12,8 +14,8 @@ import { useEffect, type ReactNode } from "react";
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { BankProvider } from "../lib/bank-store";
+import { AuthProvider, useAuth } from "../lib/auth-store";
 import { Toaster } from "../components/ui/sonner";
-
 
 function NotFoundComponent() {
   return (
@@ -131,12 +133,41 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <BankProvider>
-        {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
-        <Outlet />
-        <Toaster position="top-center" richColors />
-      </BankProvider>
+      <AuthProvider>
+        <BankProvider>
+          <AuthGate>
+            {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
+            <Outlet />
+          </AuthGate>
+          <Toaster position="top-center" richColors />
+        </BankProvider>
+      </AuthProvider>
     </QueryClientProvider>
   );
 }
 
+function AuthGate({ children }: { children: ReactNode }) {
+  const pathname = useRouterState({ select: (state) => state.location.pathname });
+  const navigate = useNavigate();
+  const { authenticated, loading } = useAuth();
+
+  useEffect(() => {
+    if (loading) return;
+    if (!authenticated && pathname !== "/login") {
+      navigate({ to: "/login", replace: true });
+    }
+    if (authenticated && pathname === "/login") {
+      navigate({ to: "/", replace: true });
+    }
+  }, [authenticated, loading, navigate, pathname]);
+
+  if (pathname === "/login") return <>{children}</>;
+  if (loading || !authenticated) {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-background">
+        <div className="h-10 w-10 animate-spin rounded-full border-2 border-primary border-t-transparent" />
+      </div>
+    );
+  }
+  return <>{children}</>;
+}

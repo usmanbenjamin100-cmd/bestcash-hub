@@ -14,7 +14,7 @@ import { useState } from "react";
 import { AppShell } from "@/components/layout/AppShell";
 import { useBank } from "@/lib/bank-store";
 import { formatUSD, formatDate } from "@/lib/currency";
-import { profile, savingsGoals, spendingByCategory } from "@/data/bank";
+import { savingsGoals, spendingByCategory } from "@/data/bank";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -43,7 +43,7 @@ const quickActions = [
 ] as const;
 
 function Dashboard() {
-  const { totalBalance, accounts, transactions } = useBank();
+  const { totalBalance, accounts, transactions, profile } = useBank();
   const [hidden, setHidden] = useState(false);
   const maxSpend = Math.max(...spendingByCategory.map((s) => s.value));
 
@@ -54,17 +54,17 @@ function Dashboard() {
     <AppShell title="Dashboard">
       <div className="grid gap-5 lg:grid-cols-3">
         <section className="lg:col-span-2 space-y-5">
-          <div className="relative overflow-hidden rounded-3xl border border-border bg-card p-6 elev">
+          <div className="relative overflow-hidden rounded-3xl border border-[oklch(0.34_0.06_65)] bg-[oklch(0.28_0.045_65)] p-6 text-white elev balance-card">
             <div
               className="pointer-events-none absolute -right-16 -top-20 h-56 w-56 rounded-full opacity-30 blur-2xl"
               style={{ background: "var(--gradient-gold)" }}
             />
             <div className="relative">
               <div className="flex items-center justify-between">
-                <p className="text-sm text-muted-foreground">Total balance · {profile.currency}</p>
+                <p className="text-sm text-white/65">Total balance · {profile.currency}</p>
                 <button
                   onClick={() => setHidden((v) => !v)}
-                  className="rounded-full border border-border p-1.5 text-muted-foreground hover:text-foreground"
+                  className="rounded-full border border-white/15 p-1.5 text-white/70 hover:text-white"
                   aria-label={hidden ? "Show balance" : "Hide balance"}
                 >
                   {hidden ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
@@ -73,7 +73,7 @@ function Dashboard() {
               <p className="mt-2 font-display text-4xl font-semibold tracking-tight sm:text-5xl">
                 {hidden ? "••••••" : formatUSD(totalBalance)}
               </p>
-              <p className="mt-2 inline-flex items-center gap-1.5 text-sm text-[var(--success)]">
+              <p className="mt-2 inline-flex items-center gap-1.5 text-sm text-emerald-300">
                 <TrendingUp className="h-4 w-4" /> +3.2% this month
               </p>
 
@@ -82,7 +82,7 @@ function Dashboard() {
                   <Link
                     key={a.label}
                     to={a.to}
-                    className="flex flex-col items-center gap-2 rounded-2xl border border-border bg-secondary/60 px-2 py-3 text-xs font-medium transition-colors hover:border-primary/60"
+                    className="flex flex-col items-center gap-2 rounded-2xl border border-white/15 bg-white/10 px-2 py-3 text-xs font-medium text-white transition-colors hover:border-white/40 hover:bg-white/15"
                   >
                     <a.icon className="h-4.5 w-4.5 text-primary" />
                     {a.label}
@@ -141,6 +141,23 @@ function Dashboard() {
                 </li>
               ))}
             </ul>
+          </div>
+          <div className="rounded-2xl border border-border bg-card p-5">
+            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-primary">
+              Personal overview
+            </p>
+            <h2 className="mt-2 text-2xl font-semibold">
+              {new Date().getHours() < 12
+                ? "Good morning"
+                : new Date().getHours() < 18
+                  ? "Good afternoon"
+                  : "Good evening"}
+              , {profile.fullName.split(" ")[0]}
+            </h2>
+            <p className="mt-1 text-sm text-muted-foreground">
+              Your demo portfolio is ready. Here’s what’s happening across your BestCash accounts
+              today.
+            </p>
           </div>
         </section>
 

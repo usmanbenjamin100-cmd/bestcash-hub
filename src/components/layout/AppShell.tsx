@@ -7,10 +7,14 @@ import {
   Bitcoin,
   User,
   Bell,
+  LifeBuoy,
+  LogOut,
 } from "lucide-react";
 import type { ReactNode } from "react";
 import { BrandLogo } from "@/components/BrandLogo";
 import { cn } from "@/lib/utils";
+import { useBank } from "@/lib/bank-store";
+import { useAuth } from "@/lib/auth-store";
 
 const nav = [
   { to: "/", label: "Dashboard", icon: LayoutDashboard },
@@ -19,10 +23,15 @@ const nav = [
   { to: "/history", label: "History", icon: Receipt },
   { to: "/crypto", label: "Crypto", icon: Bitcoin },
   { to: "/profile", label: "Profile", icon: User },
+  { to: "/support", label: "Support", icon: LifeBuoy },
 ] as const;
+
+const mobileNav = [nav[0], nav[1], nav[4], nav[5], nav[6]] as const;
 
 export function AppShell({ title, children }: { title: string; children: ReactNode }) {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
+  const { profile } = useBank();
+  const { logout } = useAuth();
 
   return (
     <div className="min-h-screen w-full bg-background">
@@ -54,6 +63,12 @@ export function AppShell({ title, children }: { title: string; children: ReactNo
           <div className="mt-auto rounded-2xl border border-sidebar-border bg-sidebar-accent p-3 text-xs leading-relaxed text-sidebar-foreground/70">
             Demo prototype — all balances, cards and transactions are fictional.
           </div>
+          <button
+            onClick={logout}
+            className="mt-3 flex items-center gap-2 px-2 text-xs font-medium text-sidebar-foreground/60 hover:text-sidebar-foreground"
+          >
+            <LogOut className="h-3.5 w-3.5" /> Sign out demo
+          </button>
         </aside>
 
         <div className="flex min-w-0 flex-1 flex-col pb-24 lg:pb-0">
@@ -69,14 +84,29 @@ export function AppShell({ title, children }: { title: string; children: ReactNo
                 <h1 className="font-display text-lg font-semibold">{title}</h1>
               </div>
             </div>
-            <Link
-              to="/notifications"
-              className="relative rounded-full border border-border p-2 text-muted-foreground transition-colors hover:text-foreground"
-              aria-label="Notifications"
-            >
-              <Bell className="h-4.5 w-4.5" />
-              <span className="absolute right-1.5 top-1.5 h-2 w-2 rounded-full bg-accent" />
-            </Link>
+            <div className="flex items-center gap-3">
+              <Link to="/profile" className="hidden items-center gap-2 sm:flex">
+                <span className="flex h-8 w-8 items-center justify-center overflow-hidden rounded-full bg-secondary text-xs font-semibold text-primary">
+                  {profile.avatar ? (
+                    <img src={profile.avatar} alt="" className="h-full w-full object-cover" />
+                  ) : (
+                    profile.fullName
+                      .split(" ")
+                      .map((name) => name[0])
+                      .join("")
+                  )}
+                </span>
+                <span className="text-xs font-semibold">{profile.fullName.split(" ")[0]}</span>
+              </Link>
+              <Link
+                to="/notifications"
+                className="relative rounded-full border border-border p-2 text-muted-foreground transition-colors hover:text-foreground"
+                aria-label="Notifications"
+              >
+                <Bell className="h-4.5 w-4.5" />
+                <span className="absolute right-1.5 top-1.5 h-2 w-2 rounded-full bg-accent" />
+              </Link>
+            </div>
           </header>
 
           <main className="flex-1 px-4 py-6 lg:px-10 lg:py-9">{children}</main>
@@ -84,7 +114,7 @@ export function AppShell({ title, children }: { title: string; children: ReactNo
       </div>
 
       <nav className="fixed inset-x-0 bottom-0 z-40 grid grid-cols-5 border-t border-border bg-card/95 px-1 pb-[env(safe-area-inset-bottom)] backdrop-blur lg:hidden">
-        {nav.slice(0, 5).map((item) => {
+        {mobileNav.map((item) => {
           const active = item.to === "/" ? pathname === "/" : pathname.startsWith(item.to);
           return (
             <Link
