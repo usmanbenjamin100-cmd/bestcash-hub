@@ -12,10 +12,14 @@ export const Route = createFileRoute("/crypto")({
       { title: "Crypto Wallet — BestCash Demo Banking" },
       {
         name: "description",
-        content: "A simulated crypto wallet with fictional BTC, ETH, SOL and USDC holdings inside the BestCash prototype.",
+        content:
+          "A simulated crypto wallet with fictional BTC, ETH, SOL and USDC holdings inside the BestCash prototype.",
       },
       { property: "og:title", content: "Crypto Wallet — BestCash Demo Banking" },
-      { property: "og:description", content: "Track a fictional crypto portfolio and simulate buys." },
+      {
+        property: "og:description",
+        content: "Track a fictional crypto portfolio and simulate buys.",
+      },
     ],
   }),
   component: CryptoPage,

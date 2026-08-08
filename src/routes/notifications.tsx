@@ -11,10 +11,14 @@ export const Route = createFileRoute("/notifications")({
       { title: "Notifications — BestCash Demo Banking" },
       {
         name: "description",
-        content: "Demo alerts for payments, deposits and security tips in the BestCash banking prototype.",
+        content:
+          "Demo alerts for payments, deposits and security tips in the BestCash banking prototype.",
       },
       { property: "og:title", content: "Notifications — BestCash Demo Banking" },
-      { property: "og:description", content: "Payment, deposit and security alerts in the demo app." },
+      {
+        property: "og:description",
+        content: "Payment, deposit and security alerts in the demo app.",
+      },
     ],
   }),
   component: NotificationsPage,
@@ -34,7 +38,15 @@ function NotificationsPage() {
         </button>
         <ul className="divide-y divide-border rounded-2xl border border-border bg-card">
           {items.map((n) => (
-            <li key={n.id} className="flex gap-3 p-4">
+            <li
+              key={n.id}
+              onClick={() =>
+                setItems((p) =>
+                  p.map((item) => (item.id === n.id ? { ...item, unread: false } : item)),
+                )
+              }
+              className="flex cursor-pointer gap-3 p-4 transition-colors hover:bg-secondary/40"
+            >
               <span
                 className={cn(
                   "mt-0.5 flex h-9 w-9 items-center justify-center rounded-full",

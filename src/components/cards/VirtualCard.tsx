@@ -1,5 +1,4 @@
 import { Nfc, Snowflake } from "lucide-react";
-import logo from "@/assets/bestcash-logo.jpg.asset.json";
 import { cn } from "@/lib/utils";
 
 export interface CardData {
@@ -24,8 +23,13 @@ export function VirtualCard({ card, revealed }: { card: CardData; revealed?: boo
         "relative aspect-[1.586/1] w-full overflow-hidden rounded-2xl elev transition-all",
         card.frozen && "opacity-70 saturate-50",
       )}
-      style={{ background: "linear-gradient(160deg, #ffffff 0%, #f6f4f1 60%, #ece8e3 100%)" }}
+      style={{ background: "linear-gradient(160deg, #fffdf6 0%, #f4efe5 60%, #e9dfcf 100%)" }}
     >
+      <img
+        src="/bestcash-virtual-card.jpeg"
+        alt="BestCash virtual card preview"
+        className="absolute inset-0 h-full w-full object-cover opacity-[0.22] mix-blend-multiply"
+      />
       {/* brand swoosh */}
       <div
         className="pointer-events-none absolute inset-0"
@@ -46,8 +50,8 @@ export function VirtualCard({ card, revealed }: { card: CardData; revealed?: boo
         <div className="flex items-start justify-between">
           <div className="h-7 w-9 rounded-[5px] bg-gradient-to-br from-[#e8c877] to-[#b7913f] ring-1 ring-black/10 sm:h-8 sm:w-11" />
           <img
-            src={logo.url}
-            alt=""
+            src="/bestcash-logo.jpeg"
+            alt="BestCash"
             className="h-11 w-11 rounded-full ring-1 ring-black/10 sm:h-14 sm:w-14"
           />
           <Nfc className="h-5 w-5 text-black/50" />
@@ -68,7 +72,9 @@ export function VirtualCard({ card, revealed }: { card: CardData; revealed?: boo
               <p className="text-[9px] uppercase tracking-widest text-black/45">Expires</p>
               <p className="text-xs font-semibold text-black/80 sm:text-sm">{card.expiry}</p>
             </div>
-            <p className="font-display text-xs font-bold text-black/70 sm:text-sm">{card.network}</p>
+            <p className="font-display text-xs font-bold text-black/70 sm:text-sm">
+              {card.network}
+            </p>
           </div>
         </div>
       </div>

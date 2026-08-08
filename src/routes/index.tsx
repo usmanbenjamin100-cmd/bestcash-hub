@@ -61,9 +61,7 @@ function Dashboard() {
             />
             <div className="relative">
               <div className="flex items-center justify-between">
-                <p className="text-sm text-muted-foreground">
-                  Total balance · {profile.currency}
-                </p>
+                <p className="text-sm text-muted-foreground">Total balance · {profile.currency}</p>
                 <button
                   onClick={() => setHidden((v) => !v)}
                   className="rounded-full border border-border p-1.5 text-muted-foreground hover:text-foreground"

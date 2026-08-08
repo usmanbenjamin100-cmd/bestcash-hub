@@ -18,7 +18,10 @@ export const Route = createFileRoute("/cards")({
           "Manage demo BestCash cards: freeze, set spend limits, toggle online and ATM usage in this banking prototype.",
       },
       { property: "og:title", content: "Cards & ATM — BestCash Demo Banking" },
-      { property: "og:description", content: "Freeze cards, set limits and manage ATM controls in the demo." },
+      {
+        property: "og:description",
+        content: "Freeze cards, set limits and manage ATM controls in the demo.",
+      },
     ],
   }),
   component: CardsPage,
@@ -46,7 +49,9 @@ function CardsPage() {
                 }}
                 className={cn(
                   "rounded-full border px-3 py-1.5 text-xs font-medium",
-                  c.id === activeId ? "border-primary text-primary" : "border-border text-muted-foreground",
+                  c.id === activeId
+                    ? "border-primary text-primary"
+                    : "border-border text-muted-foreground",
                 )}
               >
                 {c.label}

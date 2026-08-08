@@ -12,7 +12,8 @@ export const Route = createFileRoute("/history")({
       { title: "Transaction History — BestCash Demo Banking" },
       {
         name: "description",
-        content: "Search and filter the fictional transaction history of the BestCash banking prototype.",
+        content:
+          "Search and filter the fictional transaction history of the BestCash banking prototype.",
       },
       { property: "og:title", content: "Transaction History — BestCash Demo Banking" },
       { property: "og:description", content: "Filter demo transactions by direction and keyword." },
@@ -58,7 +59,9 @@ function HistoryPage() {
                 onClick={() => setFilter(f)}
                 className={cn(
                   "rounded-xl border px-4 py-2 text-sm capitalize",
-                  filter === f ? "border-primary text-primary" : "border-border text-muted-foreground",
+                  filter === f
+                    ? "border-primary text-primary"
+                    : "border-border text-muted-foreground",
                 )}
               >
                 {f === "in" ? "Money in" : f === "out" ? "Money out" : "All"}

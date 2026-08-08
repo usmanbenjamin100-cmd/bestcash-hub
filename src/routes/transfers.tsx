@@ -14,7 +14,8 @@ export const Route = createFileRoute("/transfers")({
       { title: "Transfers — BestCash Demo Banking" },
       {
         name: "description",
-        content: "Send a simulated transfer between demo accounts and recipients in the BestCash prototype.",
+        content:
+          "Send a simulated transfer between demo accounts and recipients in the BestCash prototype.",
       },
       { property: "og:title", content: "Transfers — BestCash Demo Banking" },
       { property: "og:description", content: "Simulated transfers with fee and FX preview." },

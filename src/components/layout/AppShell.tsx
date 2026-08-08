@@ -26,10 +26,10 @@ export function AppShell({ title, children }: { title: string; children: ReactNo
 
   return (
     <div className="min-h-screen w-full bg-background">
-      <div className="mx-auto flex w-full max-w-7xl">
-        <aside className="sticky top-0 hidden h-screen w-64 shrink-0 flex-col border-r border-border bg-sidebar px-4 py-6 lg:flex">
+      <div className="mx-auto flex w-full max-w-[1440px]">
+        <aside className="sticky top-0 hidden h-screen w-64 shrink-0 flex-col border-r border-sidebar-border bg-sidebar px-4 py-6 lg:flex">
           <div className="px-2">
-            <BrandLogo />
+            <BrandLogo size={40} />
           </div>
           <nav className="mt-8 flex flex-col gap-1">
             {nav.map((item) => {
@@ -51,18 +51,23 @@ export function AppShell({ title, children }: { title: string; children: ReactNo
               );
             })}
           </nav>
-          <div className="mt-auto rounded-xl border border-border bg-card p-3 text-xs text-muted-foreground">
+          <div className="mt-auto rounded-2xl border border-sidebar-border bg-sidebar-accent p-3 text-xs leading-relaxed text-sidebar-foreground/70">
             Demo prototype — all balances, cards and transactions are fictional.
           </div>
         </aside>
 
         <div className="flex min-w-0 flex-1 flex-col pb-24 lg:pb-0">
-          <header className="sticky top-0 z-30 flex items-center justify-between border-b border-border bg-background/85 px-4 py-3.5 backdrop-blur lg:px-8">
+          <header className="sticky top-0 z-30 flex items-center justify-between border-b border-border bg-background/90 px-4 py-4 backdrop-blur lg:px-10">
             <div className="flex items-center gap-3">
               <div className="lg:hidden">
                 <BrandLogo size={30} withText={false} />
               </div>
-              <h1 className="font-display text-lg font-semibold">{title}</h1>
+              <div>
+                <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-muted-foreground">
+                  BestCash / demo
+                </p>
+                <h1 className="font-display text-lg font-semibold">{title}</h1>
+              </div>
             </div>
             <Link
               to="/notifications"
@@ -74,7 +79,7 @@ export function AppShell({ title, children }: { title: string; children: ReactNo
             </Link>
           </header>
 
-          <main className="flex-1 px-4 py-5 lg:px-8 lg:py-8">{children}</main>
+          <main className="flex-1 px-4 py-6 lg:px-10 lg:py-9">{children}</main>
         </div>
       </div>
 
