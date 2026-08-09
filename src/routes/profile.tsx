@@ -1,20 +1,25 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
-import { toast } from "sonner";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import {
-  ShieldCheck,
-  Fingerprint,
-  Bell,
-  LifeBuoy,
-  Globe,
-  Save,
-  Camera,
-  Trash2,
   ArrowRight,
+  BadgeCheck,
+  Bell,
+  CalendarDays,
+  Check,
+  ChevronRight,
+  Fingerprint,
+  Globe2,
+  LifeBuoy,
+  LockKeyhole,
+  Mail,
+  MapPin,
+  ShieldCheck,
+  Smartphone,
+  UserRound,
+  WalletCards,
 } from "lucide-react";
 import { AppShell } from "@/components/layout/AppShell";
 import { useBank } from "@/lib/bank-store";
-import { cn } from "@/lib/utils";
+import { formatUSD } from "@/lib/currency";
 
 export const Route = createFileRoute("/profile")({
   head: () => ({
@@ -22,184 +27,298 @@ export const Route = createFileRoute("/profile")({
       { title: "Profile & Security — BestCash Banking" },
       {
         name: "description",
-        content: "Manage your BestCash profile, security settings and support preferences.",
+        content: "Review your BestCash identity, account details and security status.",
       },
       { property: "og:title", content: "Profile & Security — BestCash Banking" },
       {
         property: "og:description",
-        content: "Manage your profile settings and security preferences.",
+        content: "A read-only view of your BestCash account identity and security status.",
       },
     ],
   }),
   component: ProfilePage,
 });
 
-function ProfilePage() {
-  const { profile, setProfile } = useBank();
-  const [prefs, setPrefs] = useState({ biometrics: true, alerts: true, travel: false });
-  const [form, setForm] = useState({
-    fullName: profile.fullName,
-    username: profile.username,
-    email: profile.email,
-    country: profile.country,
-  });
-  const [saved, setSaved] = useState(false);
+const securityItems = [
+  {
+    label: "Biometric unlock",
+    detail: "Available on this device",
+    icon: Fingerprint,
+    status: "Enabled",
+  },
+  {
+    label: "Transaction alerts",
+    detail: "Instant notifications for account activity",
+    icon: Bell,
+    status: "Enabled",
+  },
+  {
+    label: "Travel protection",
+    detail: "No travel notice is currently active",
+    icon: Globe2,
+    status: "Off",
+  },
+] as const;
 
-  function onAvatarChange(file?: File) {
-    if (!file) return;
-    if (!file.type.startsWith("image/")) {
-      toast.error("Please choose an image file");
-      return;
-    }
-    if (file.size > 2_000_000) {
-      toast.error("Please choose an image under 2MB");
-      return;
-    }
-    const reader = new FileReader();
-    reader.onload = () => {
-      setProfile({ ...profile, avatar: String(reader.result) });
-      toast.success("Profile picture updated");
-    };
-    reader.readAsDataURL(file);
-  }
+function initials(name: string) {
+  return name
+    .split(" ")
+    .map((part) => part[0])
+    .join("")
+    .slice(0, 2)
+    .toUpperCase();
+}
+
+function DetailRow({
+  icon: Icon,
+  label,
+  value,
+  detail,
+}: {
+  icon: typeof Mail;
+  label: string;
+  value: string;
+  detail?: string;
+}) {
+  return (
+    <div className="flex items-start gap-3 border-b border-border/70 py-4 last:border-0 last:pb-0">
+      <span className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-secondary text-primary">
+        <Icon className="h-4 w-4" />
+      </span>
+      <div className="min-w-0">
+        <dt className="text-[11px] font-medium uppercase tracking-[0.14em] text-muted-foreground">
+          {label}
+        </dt>
+        <dd className="mt-1 truncate text-sm font-semibold text-foreground">{value}</dd>
+        {detail && <p className="mt-0.5 text-xs text-muted-foreground">{detail}</p>}
+      </div>
+    </div>
+  );
+}
+
+function ProfilePage() {
+  const { profile, accounts, totalBalance } = useBank();
+  const memberSince = new Date(`${profile.memberSince}-01-01T00:00:00Z`).toLocaleDateString(
+    "en-US",
+    { month: "short", year: "numeric" },
+  );
 
   return (
     <AppShell title="Profile">
-      <div className="mx-auto max-w-2xl space-y-5">
-        <div className="rounded-2xl border border-border bg-card p-5">
-          <div className="flex items-center gap-4">
-            <div className="relative flex h-20 w-20 items-center justify-center overflow-hidden rounded-full bg-secondary text-lg font-bold text-primary ring-4 ring-primary/10">
-              {profile.avatar ? (
-                <img
-                  src={profile.avatar}
-                  alt={`${form.fullName} profile`}
-                  className="h-full w-full object-cover"
-                />
-              ) : (
-                form.fullName
-                  .split(" ")
-                  .map((name) => name[0])
-                  .join("")
-              )}
-              <label className="absolute inset-x-0 bottom-0 flex cursor-pointer items-center justify-center gap-1 bg-black/60 py-1 text-[10px] font-medium text-white">
-                <Camera className="h-3 w-3" /> Edit
-                <input
-                  type="file"
-                  accept="image/*"
-                  className="sr-only"
-                  onChange={(e) => onAvatarChange(e.target.files?.[0])}
-                />
-              </label>
+      <div className="mx-auto max-w-5xl space-y-6">
+        <header className="flex flex-col justify-between gap-2 sm:flex-row sm:items-end">
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-primary">
+              Account center
+            </p>
+            <h2 className="mt-2 font-display text-3xl font-semibold tracking-tight">
+              Your profile
+            </h2>
+            <p className="mt-2 max-w-xl text-sm leading-6 text-muted-foreground">
+              A clear view of the identity and security settings attached to your BestCash account.
+            </p>
+          </div>
+          <div className="flex items-center gap-2 text-xs text-muted-foreground">
+            <span className="live-dot" />
+            Account services active
+          </div>
+        </header>
+
+        <section className="relative overflow-hidden rounded-3xl border border-[oklch(0.34_0.06_65)] bg-[oklch(0.28_0.045_65)] p-6 text-white elev sm:p-8">
+          <div
+            className="pointer-events-none absolute -right-20 -top-28 h-72 w-72 rounded-full opacity-25 blur-3xl"
+            style={{ background: "var(--gradient-gold)" }}
+          />
+          <div className="pointer-events-none absolute -bottom-28 left-1/3 h-56 w-56 rounded-full bg-white/10 blur-3xl" />
+          <div className="relative flex flex-col gap-7 sm:flex-row sm:items-center sm:justify-between">
+            <div className="flex items-center gap-4">
+              <div className="flex h-20 w-20 shrink-0 items-center justify-center rounded-[1.5rem] border border-white/20 bg-white/10 font-display text-2xl font-semibold text-primary shadow-inner">
+                {profile.avatar ? (
+                  <img
+                    src={profile.avatar}
+                    alt={`${profile.fullName} profile`}
+                    className="h-full w-full rounded-[1.5rem] object-cover"
+                  />
+                ) : (
+                  initials(profile.fullName)
+                )}
+              </div>
+              <div>
+                <div className="flex flex-wrap items-center gap-2">
+                  <h3 className="font-display text-2xl font-semibold">{profile.fullName}</h3>
+                  <BadgeCheck className="h-5 w-5 text-primary" aria-label="Verified profile" />
+                </div>
+                <p className="mt-1 text-sm text-white/65">
+                  @{profile.username} · {profile.country}
+                </p>
+                <div className="mt-3 flex flex-wrap items-center gap-2 text-[11px] font-medium">
+                  <span className="rounded-full bg-primary px-2.5 py-1 text-primary-foreground">
+                    {profile.tier} member
+                  </span>
+                  <span className="rounded-full border border-white/15 bg-white/10 px-2.5 py-1 text-white/75">
+                    Member since {memberSince}
+                  </span>
+                </div>
+              </div>
             </div>
-            <div>
-              <h2 className="text-lg font-semibold">{form.fullName}</h2>
-              <p className="text-sm text-muted-foreground">
-                @{form.username} · {form.country}
-              </p>
-              <span className="mt-1 inline-block rounded-full border border-primary/50 px-2 py-0.5 text-[11px] text-primary">
-                {profile.tier} · member since {profile.memberSince}
+            <div className="grid grid-cols-2 gap-6 border-t border-white/10 pt-5 sm:min-w-[250px] sm:border-l sm:border-t-0 sm:pl-7 sm:pt-0">
+              <div>
+                <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-white/50">
+                  Total relationship
+                </p>
+                <p className="mt-1.5 font-display text-xl font-semibold">
+                  {formatUSD(totalBalance, { compact: true })}
+                </p>
+                <p className="mt-1 text-xs text-emerald-300">Across {accounts.length} accounts</p>
+              </div>
+              <div>
+                <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-white/50">
+                  Account status
+                </p>
+                <p className="mt-1.5 flex items-center gap-1.5 font-display text-xl font-semibold">
+                  <span className="h-2 w-2 rounded-full bg-emerald-300" /> Active
+                </p>
+                <p className="mt-1 text-xs text-white/55">In good standing</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <div className="grid gap-5 lg:grid-cols-[1.1fr_0.9fr]">
+          <section className="rounded-3xl border border-border bg-card p-5 sm:p-6">
+            <div className="flex items-start justify-between gap-4">
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-[0.16em] text-primary">
+                  Identity
+                </p>
+                <h3 className="mt-1.5 text-lg font-semibold">Personal details</h3>
+              </div>
+              <span className="flex items-center gap-1.5 rounded-full border border-border bg-secondary/70 px-2.5 py-1 text-[11px] font-medium text-muted-foreground">
+                <LockKeyhole className="h-3 w-3 text-primary" /> Managed by BestCash
               </span>
             </div>
-          </div>
-          {profile.avatar && (
-            <button
-              onClick={() => {
-                const { avatar: _avatar, ...withoutAvatar } = profile;
-                setProfile(withoutAvatar);
-              }}
-              className="mt-3 inline-flex items-center gap-1.5 text-xs text-muted-foreground hover:text-destructive"
-            >
-              <Trash2 className="h-3.5 w-3.5" /> Remove profile picture
-            </button>
-          )}
-          <div className="mt-5 grid gap-3 sm:grid-cols-2">
-            {(
-              [
-                ["fullName", "Full name", "text"],
-                ["username", "Username", "text"],
-                ["email", "Email address", "email"],
-                ["country", "Country", "text"],
-              ] as const
-            ).map(([key, label, type]) => (
-              <label key={key} className="text-xs font-medium text-muted-foreground">
-                {label}
-                <input
-                  type={type}
-                  value={form[key as keyof typeof form]}
-                  onChange={(e) => {
-                    setSaved(false);
-                    setForm({ ...form, [key]: e.target.value });
-                  }}
-                  className="mt-1.5 w-full rounded-xl border border-input bg-background px-3 py-2.5 text-sm text-foreground outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/15"
-                />
-              </label>
-            ))}
-          </div>
-          <button
-            onClick={() => {
-              setProfile({ ...profile, ...form });
-              setSaved(true);
-              toast.success("Profile saved", { description: "Your account details were updated." });
-            }}
-            className="mt-4 inline-flex items-center gap-2 rounded-xl gold-surface px-4 py-2.5 text-sm font-semibold"
-          >
-            <Save className="h-4 w-4" /> {saved ? "Saved" : "Save profile"}
-          </button>
-        </div>
+            <dl className="mt-3">
+              <DetailRow icon={UserRound} label="Full name" value={profile.fullName} />
+              <DetailRow icon={Mail} label="Email address" value={profile.email} />
+              <DetailRow icon={MapPin} label="Country of residence" value={profile.country} />
+              <DetailRow
+                icon={WalletCards}
+                label="Base currency"
+                value={profile.currency}
+                detail="Used for your primary account view"
+              />
+            </dl>
+            <div className="mt-5 flex items-start gap-3 rounded-2xl bg-secondary/60 p-4">
+              <ShieldCheck className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
+              <p className="text-xs leading-5 text-muted-foreground">
+                Your personal details are protected and cannot be changed from this page. Contact
+                support if your information needs to be reviewed.
+              </p>
+            </div>
+          </section>
 
-        <div className="rounded-2xl border border-border bg-card p-5">
-          <h3 className="text-base font-semibold">Security</h3>
-          <div className="mt-3 divide-y divide-border">
-            {[
-              { key: "biometrics" as const, label: "Biometric unlock", icon: Fingerprint },
-              { key: "alerts" as const, label: "Transaction alerts", icon: Bell },
-              { key: "travel" as const, label: "Travel mode", icon: Globe },
-            ].map((p) => (
-              <div key={p.key} className="flex items-center justify-between py-3">
-                <span className="flex items-center gap-3 text-sm">
-                  <p.icon className="h-4 w-4 text-primary" />
-                  {p.label}
-                </span>
-                <button
-                  role="switch"
-                  aria-checked={prefs[p.key]}
-                  aria-label={p.label}
-                  onClick={() => setPrefs((v) => ({ ...v, [p.key]: !v[p.key] }))}
-                  className={cn(
-                    "relative h-6 w-11 rounded-full transition-colors",
-                    prefs[p.key] ? "bg-primary" : "bg-secondary",
-                  )}
-                >
-                  <span
-                    className={cn(
-                      "absolute top-0.5 h-5 w-5 rounded-full bg-background transition-all",
-                      prefs[p.key] ? "left-[22px]" : "left-0.5",
-                    )}
-                  />
-                </button>
+          <section className="rounded-3xl border border-border bg-card p-5 sm:p-6">
+            <div className="flex items-start justify-between gap-4">
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-[0.16em] text-primary">
+                  Protection
+                </p>
+                <h3 className="mt-1.5 text-lg font-semibold">Security status</h3>
               </div>
-            ))}
+              <div className="flex items-center gap-1.5 rounded-full bg-emerald-500/10 px-2.5 py-1 text-[11px] font-semibold text-emerald-600 dark:text-emerald-300">
+                <Check className="h-3 w-3" /> Strong
+              </div>
+            </div>
+            <div className="mt-4 space-y-1">
+              {securityItems.map((item) => (
+                <div
+                  key={item.label}
+                  className="flex items-center gap-3 rounded-2xl px-2 py-3.5 transition-colors hover:bg-secondary/50"
+                >
+                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-secondary text-primary">
+                    <item.icon className="h-4 w-4" />
+                  </span>
+                  <div className="min-w-0 flex-1">
+                    <p className="text-sm font-semibold">{item.label}</p>
+                    <p className="mt-0.5 text-xs text-muted-foreground">{item.detail}</p>
+                  </div>
+                  <span
+                    className={
+                      item.status === "Enabled"
+                        ? "rounded-full bg-emerald-500/10 px-2 py-1 text-[10px] font-semibold text-emerald-600 dark:text-emerald-300"
+                        : "rounded-full bg-secondary px-2 py-1 text-[10px] font-semibold text-muted-foreground"
+                    }
+                  >
+                    {item.status}
+                  </span>
+                </div>
+              ))}
+            </div>
+            <div className="mt-4 flex items-start gap-3 border-t border-border pt-4">
+              <Smartphone className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
+              <p className="text-xs leading-5 text-muted-foreground">
+                Sign-in and transaction approval details are never displayed here.
+              </p>
+            </div>
+          </section>
+        </div>
+
+        <div className="grid gap-5 sm:grid-cols-2">
+          <section className="rounded-3xl border border-border bg-card p-5">
+            <div className="flex items-center gap-3">
+              <span className="flex h-10 w-10 items-center justify-center rounded-2xl bg-secondary text-primary">
+                <CalendarDays className="h-4 w-4" />
+              </span>
+              <div>
+                <h3 className="text-sm font-semibold">Account timeline</h3>
+                <p className="mt-0.5 text-xs text-muted-foreground">
+                  Your BestCash relationship began in {profile.memberSince}.
+                </p>
+              </div>
+            </div>
+            <div className="mt-4 h-1.5 overflow-hidden rounded-full bg-secondary">
+              <div className="h-full w-4/5 rounded-full bg-[var(--gradient-gold)]" />
+            </div>
+            <p className="mt-2 text-[11px] text-muted-foreground">
+              Signature relationship · established account
+            </p>
+          </section>
+
+          <section className="rounded-3xl border border-border bg-card p-5">
+            <div className="flex items-center gap-3">
+              <span className="flex h-10 w-10 items-center justify-center rounded-2xl bg-secondary text-primary">
+                <LifeBuoy className="h-4 w-4" />
+              </span>
+              <div>
+                <h3 className="text-sm font-semibold">Need to update something?</h3>
+                <p className="mt-0.5 text-xs text-muted-foreground">
+                  Our support team can help review account information.
+                </p>
+              </div>
+            </div>
+            <Link
+              to="/support"
+              className="mt-4 flex min-h-11 items-center justify-between rounded-2xl border border-border px-3.5 text-sm font-semibold transition-colors hover:border-primary/60 hover:bg-secondary/50"
+            >
+              Contact BestCash support
+              <ChevronRight className="h-4 w-4 text-primary" />
+            </Link>
+          </section>
+        </div>
+
+        <div className="flex items-start justify-between gap-4 rounded-3xl border border-primary/20 bg-primary/5 p-5">
+          <div className="flex gap-3">
+            <ShieldCheck className="mt-0.5 h-5 w-5 shrink-0 text-primary" />
+            <div>
+              <h3 className="text-sm font-semibold">Your account is protected</h3>
+              <p className="mt-1 text-xs leading-5 text-muted-foreground">
+                BestCash will never ask for your sign-in PIN or transaction PIN by email, message,
+                or phone.
+              </p>
+            </div>
           </div>
+          <ArrowRight className="mt-0.5 hidden h-4 w-4 shrink-0 text-primary sm:block" />
         </div>
-
-        <div className="rounded-2xl border border-border bg-card p-5">
-          <h3 className="text-base font-semibold">Support</h3>
-          <a
-            href="/support"
-            className="mt-3 flex w-full items-center justify-between rounded-xl border border-border px-4 py-3 text-sm hover:border-primary/60"
-          >
-            <span className="flex items-center gap-3">
-              <LifeBuoy className="h-4 w-4 text-primary" /> Contact support
-            </span>
-            <ArrowRight className="h-4 w-4 text-muted-foreground" />
-          </a>
-        </div>
-
-        <p className="flex items-start gap-2 rounded-2xl border border-border bg-secondary/40 p-4 text-xs text-muted-foreground">
-          <ShieldCheck className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
-          Your account security matters. Keep your sign-in and transaction PINs private and never
-          share them with anyone.
-        </p>
       </div>
     </AppShell>
   );

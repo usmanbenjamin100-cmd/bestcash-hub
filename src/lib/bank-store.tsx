@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useMemo, useState, type ReactNode } from "react";
+import { createContext, useContext, useMemo, useState, type ReactNode } from "react";
 import {
   accounts as seedAccounts,
   initialTransactions,
@@ -17,7 +17,6 @@ interface BankState {
   cards: Card[];
   profile: Profile;
   totalBalance: number;
-  setProfile: (profile: Profile) => void;
   transfer: (input: { recipient: string; amount: number; note?: string; from: string }) => void;
   toggleFreeze: (cardId: string) => void;
   setLimit: (cardId: string, limit: number) => void;
@@ -29,18 +28,7 @@ export function BankProvider({ children }: { children: ReactNode }) {
   const [accounts, setAccounts] = useState<Account[]>(seedAccounts);
   const [transactions, setTransactions] = useState<Transaction[]>(initialTransactions);
   const [cards, setCards] = useState<Card[]>(seedCards);
-  const [profile, setProfileState] = useState<Profile>(seedProfile);
-
-  useEffect(() => {
-    const stored = window.localStorage.getItem("bestcash-profile");
-    if (stored) {
-      try {
-        setProfileState({ ...seedProfile, ...(JSON.parse(stored) as Partial<Profile>) });
-      } catch {
-        window.localStorage.removeItem("bestcash-profile");
-      }
-    }
-  }, []);
+  const profile = seedProfile;
 
   const value = useMemo<BankState>(() => {
     const totalBalance = accounts.reduce((sum, a) => sum + a.balance, 0);
@@ -51,10 +39,6 @@ export function BankProvider({ children }: { children: ReactNode }) {
       cards,
       profile,
       totalBalance,
-      setProfile: (nextProfile) => {
-        setProfileState(nextProfile);
-        window.localStorage.setItem("bestcash-profile", JSON.stringify(nextProfile));
-      },
       transfer: ({ recipient, amount, note, from }) => {
         setAccounts((prev) =>
           prev.map((a) => (a.id === from ? { ...a, balance: a.balance - amount } : a)),
