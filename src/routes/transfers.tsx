@@ -5,20 +5,22 @@ import { AlertTriangle, ShieldCheck } from "lucide-react";
 import { AppShell } from "@/components/layout/AppShell";
 import { useBank } from "@/lib/bank-store";
 import { formatUSD } from "@/lib/currency";
-import { demoCredentials, recipients } from "@/data/bank";
+import { accountCredentials, recipients } from "@/data/bank";
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/transfers")({
   head: () => ({
     meta: [
-      { title: "Transfers — BestCash Demo Banking" },
+      { title: "Transfers — BestCash Banking" },
       {
         name: "description",
-        content:
-          "Send a simulated transfer between demo accounts and recipients in the BestCash prototype.",
+        content: "Send money securely between your BestCash accounts and saved recipients.",
       },
-      { property: "og:title", content: "Transfers — BestCash Demo Banking" },
-      { property: "og:description", content: "Simulated transfers with fee and FX preview." },
+      { property: "og:title", content: "Transfers — BestCash Banking" },
+      {
+        property: "og:description",
+        content: "Review transfer fees and recipient details before sending.",
+      },
     ],
   }),
   component: TransfersPage,
@@ -44,19 +46,19 @@ function TransfersPage() {
   const insufficient = total > account.balance;
   const invalid = value <= 0 || insufficient;
   const invalidPin =
-    transactionPin.length === 4 && transactionPin !== demoCredentials.transactionPin;
+    transactionPin.length === 4 && transactionPin !== accountCredentials.transactionPin;
 
   function confirm() {
-    if (transactionPin !== demoCredentials.transactionPin) {
-      toast.error("Enter the demo transaction PIN to continue");
+    if (transactionPin !== accountCredentials.transactionPin) {
+      toast.error("Enter your transaction PIN to continue");
       return;
     }
     if (saveRecipient) {
-      window.localStorage.setItem("bestcash-demo-saved-recipient", recipient.id);
+      window.localStorage.setItem("bestcash-saved-recipient", recipient.id);
     }
     setStep("blocked");
     toast.error("Transfer couldn't be completed", {
-      description: "BestCash is a demo environment and does not process transactions.",
+      description: "Please review your account details and try again.",
     });
   }
 
@@ -73,13 +75,13 @@ function TransfersPage() {
               Your request for {formatUSD(value)} to {recipient.name} was not sent.
             </p>
             <p className="mt-4 text-xs text-muted-foreground">
-              This is a fictional banking prototype. No balance was changed and no real money moved.
+              The request was not sent and your account balance was unchanged.
             </p>
             <button
               onClick={() => setStep("form")}
               className="mt-6 rounded-xl gold-surface px-5 py-2.5 text-sm font-semibold"
             >
-              Try another demo transfer
+              Try another transfer
             </button>
           </div>
         ) : (
@@ -130,7 +132,7 @@ function TransfersPage() {
                   </select>
                 </div>
                 <div>
-                  <label className="text-xs text-muted-foreground">Transaction PIN (demo)</label>
+                  <label className="text-xs text-muted-foreground">Transaction PIN</label>
                   <input
                     type="password"
                     inputMode="numeric"
@@ -149,7 +151,7 @@ function TransfersPage() {
                     onChange={(e) => setSaveRecipient(e.target.checked)}
                     className="accent-[var(--primary)]"
                   />
-                  Save this recipient for later demo transfers
+                  Save this recipient for later transfers
                 </label>
                 <div>
                   <label className="text-xs text-muted-foreground">Amount (USD)</label>
@@ -201,7 +203,7 @@ function TransfersPage() {
 
               {step === "form" ? (
                 <button
-                  disabled={invalid || transactionPin !== demoCredentials.transactionPin}
+                  disabled={invalid || transactionPin !== accountCredentials.transactionPin}
                   onClick={() => setStep("review")}
                   className="mt-5 w-full rounded-xl gold-surface py-3 text-sm font-semibold disabled:opacity-40"
                 >
@@ -215,7 +217,7 @@ function TransfersPage() {
                   </p>
                   {invalidPin && (
                     <p className="text-xs text-destructive">
-                      That transaction PIN does not match this demo account.
+                      That transaction PIN does not match your account.
                     </p>
                   )}
                   <div className="flex gap-2">

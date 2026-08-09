@@ -16,8 +16,8 @@ import { useAuth } from "@/lib/auth-store";
 export const Route = createFileRoute("/login")({
   head: () => ({
     meta: [
-      { title: "Sign in — BestCash Demo Banking" },
-      { name: "description", content: "Sign in to the fictional BestCash banking prototype." },
+      { title: "Sign in — BestCash Banking" },
+      { name: "description", content: "Sign in securely to BestCash online banking." },
     ],
   }),
   component: LoginPage,
@@ -26,8 +26,8 @@ export const Route = createFileRoute("/login")({
 function LoginPage() {
   const navigate = useNavigate();
   const { login } = useAuth();
-  const [username, setUsername] = useState("johansson5");
-  const [pin, setPin] = useState("Mats0@1");
+  const [username, setUsername] = useState("");
+  const [pin, setPin] = useState("");
   const [showPin, setShowPin] = useState(false);
   const [error, setError] = useState("");
 
@@ -38,7 +38,7 @@ function LoginPage() {
       toast.success("Welcome to BestCash");
       navigate({ to: "/" });
     } else {
-      setError("That demo username or login PIN doesn’t match.");
+      setError("That username or login PIN doesn’t match.");
     }
   }
 
@@ -52,7 +52,7 @@ function LoginPage() {
           </div>
           <div className="relative max-w-lg">
             <p className="mb-5 inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-3 py-1.5 text-xs text-white/70">
-              <Sparkles className="h-3.5 w-3.5 text-primary" /> Private demo workspace
+              <Sparkles className="h-3.5 w-3.5 text-primary" /> Private banking
             </p>
             <h1 className="font-display text-5xl font-semibold leading-tight tracking-tight">
               Your money,
@@ -60,12 +60,11 @@ function LoginPage() {
               <span className="gold-text">beautifully clear.</span>
             </h1>
             <p className="mt-5 max-w-md text-base leading-7 text-white/60">
-              Explore a calm, high-touch banking experience built for this fictional BestCash
-              prototype.
+              A calm, high-touch banking experience built around the way you manage your money.
             </p>
           </div>
           <p className="relative text-xs text-white/40">
-            BestCash is a fictional demo. No real money or banking credentials are handled.
+            BestCash keeps your account experience clear, secure and personal.
           </p>
         </section>
         <section className="flex items-center justify-center bg-background px-5 py-10 text-foreground sm:px-10">
@@ -80,7 +79,7 @@ function LoginPage() {
               Sign in to BestCash
             </h2>
             <p className="mt-3 text-sm leading-6 text-muted-foreground">
-              Use the preloaded demo account to continue your tour.
+              Sign in to view your accounts, cards, transfers and investments.
             </p>
             <form onSubmit={submit} className="mt-8 space-y-5">
               <label className="block text-sm font-medium">
@@ -123,13 +122,13 @@ function LoginPage() {
                 type="submit"
                 className="flex w-full items-center justify-center gap-2 rounded-xl gold-surface py-3.5 text-sm font-semibold shadow-[var(--shadow-gold)]"
               >
-                Enter demo account <ArrowRight className="h-4 w-4" />
+                Sign in <ArrowRight className="h-4 w-4" />
               </button>
             </form>
             <div className="mt-7 flex items-start gap-3 rounded-2xl border border-border bg-secondary/50 p-4 text-xs leading-5 text-muted-foreground">
               <ShieldCheck className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
-              Fictional account for product testing only. Transfers and crypto orders are simulated
-              and never settle.
+              For your security, never share your password or transaction PIN. BestCash support will
+              never ask for them.
             </div>
           </div>
         </section>

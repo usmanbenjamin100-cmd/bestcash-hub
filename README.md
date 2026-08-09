@@ -1,154 +1,148 @@
 # BestCash Mobile Banking
 
-Create online banking mvp make it so real , under the atm section use that ATM card and use the first picture as logo  add full functionality to bestcash/
+Create online banking mvp make it so real , under the atm section use that ATM card and use the first picture as logo add full functionality to bestcash/
 
 ├── src/
 
-│   ├── app/
+│ ├── app/
 
-│   │   ├── router.tsx
+│ │ ├── router.tsx
 
-│   │   ├── App.tsx
+│ │ ├── App.tsx
 
-│   │   └── providers.tsx
+│ │ └── providers.tsx
 
-│   ├── components/
+│ ├── components/
 
-│   │   ├── layout/
+│ │ ├── layout/
 
-│   │   │   ├── AppShell.tsx
+│ │ │ ├── AppShell.tsx
 
-│   │   │   ├── Sidebar.tsx
+│ │ │ ├── Sidebar.tsx
 
-│   │   │   ├── MobileNav.tsx
+│ │ │ ├── MobileNav.tsx
 
-│   │   │   └── Topbar.tsx
+│ │ │ └── Topbar.tsx
 
-│   │   ├── dashboard/
+│ │ ├── dashboard/
 
-│   │   │   ├── BalanceCard.tsx
+│ │ │ ├── BalanceCard.tsx
 
-│   │   │   ├── QuickActions.tsx
+│ │ │ ├── QuickActions.tsx
 
-│   │   │   ├── InsightsCard.tsx
+│ │ │ ├── InsightsCard.tsx
 
-│   │   │   ├── SavingsGoals.tsx
+│ │ │ ├── SavingsGoals.tsx
 
-│   │   │   └── TransactionList.tsx
+│ │ │ └── TransactionList.tsx
 
-│   │   ├── cards/
+│ │ ├── cards/
 
-│   │   │   ├── VirtualCard.tsx
+│ │ │ ├── VirtualCard.tsx
 
-│   │   │   ├── CardControls.tsx
+│ │ │ ├── CardControls.tsx
 
-│   │   │   └── RewardsTracker.tsx
+│ │ │ └── RewardsTracker.tsx
 
-│   │   ├── transfers/
+│ │ ├── transfers/
 
-│   │   │   ├── TransferForm.tsx
+│ │ │ ├── TransferForm.tsx
 
-│   │   │   ├── RecipientPicker.tsx
+│ │ │ ├── RecipientPicker.tsx
 
-│   │   │   ├── FxPreview.tsx
+│ │ │ ├── FxPreview.tsx
 
-│   │   │   └── ConfirmationPanel.tsx
+│ │ │ └── ConfirmationPanel.tsx
 
-│   │   └── ui/
+│ │ └── ui/
 
-│   │       ├── Button.tsx
+│ │ ├── Button.tsx
 
-│   │       ├── Card.tsx
+│ │ ├── Card.tsx
 
-│   │       ├── Input.tsx
+│ │ ├── Input.tsx
 
-│   │       ├── Modal.tsx
+│ │ ├── Modal.tsx
 
-│   │       ├── Toast.tsx
+│ │ ├── Toast.tsx
 
-│   │       └── EmptyState.tsx
+│ │ └── EmptyState.tsx
 
-│   ├── pages/
+│ ├── pages/
 
-│   │   ├── HomePage.tsx
+│ │ ├── HomePage.tsx
 
-│   │   ├── SignInPage.tsx
+│ │ ├── SignInPage.tsx
 
-│   │   ├── DashboardPage.tsx
+│ │ ├── DashboardPage.tsx
 
-│   │   ├── TransferPage.tsx
+│ │ ├── TransferPage.tsx
 
-│   │   ├── HistoryPage.tsx
+│ │ ├── HistoryPage.tsx
 
-│   │   ├── CardsPage.tsx
+│ │ ├── CardsPage.tsx
 
-│   │   ├── CryptoPage.tsx
+│ │ ├── CryptoPage.tsx
 
-│   │   ├── ProfilePage.tsx
+│ │ ├── ProfilePage.tsx
 
-│   │   ├── ToolsPage.tsx
+│ │ ├── ToolsPage.tsx
 
-│   │   ├── NotificationsPage.tsx
+│ │ ├── NotificationsPage.tsx
 
-│   │   └── SupportPage.tsx
+│ │ └── SupportPage.tsx
 
-│   ├── data/
+│ ├── data/
 
-│   │   ├── accounts.ts
+│ │ ├── accounts.ts
 
-│   │   ├── transactions.ts
+│ │ ├── transactions.ts
 
-│   │   ├── cards.ts
+│ │ ├── cards.ts
 
-│   │   ├── crypto.ts
+│ │ ├── crypto.ts
 
-│   │   └── profile.ts
+│ │ └── profile.ts
 
-│   ├── hooks/
+│ ├── hooks/
 
-│   │   ├── useTheme.ts
+│ │ ├── useTheme.ts
 
-│   │   ├── useToast.ts
+│ │ ├── useToast.ts
 
-│   │   └── useMockTransfer.ts
+│ │ └── useMockTransfer.ts
 
-│   ├── types/
+│ ├── types/
 
-│   │   ├── account.ts
+│ │ ├── account.ts
 
-│   │   ├── transaction.ts
+│ │ ├── transaction.ts
 
-│   │   ├── card.ts
+│ │ ├── card.ts
 
-│   │   └── user.ts
+│ │ └── user.ts
 
-│   ├── lib/
+│ ├── lib/
 
-│   │   ├── currency.ts
+│ │ ├── currency.ts
 
-│   │   ├── date.ts
+│ │ ├── date.ts
 
-│   │   └── validation.ts
+│ │ └── validation.ts
 
-│   └── styles/
+│ └── styles/
 
-│       └── globals.css
+│ └── globals.css
 
 ├── public/
 
-│   └── bestcash-logo.png
+│ └── bestcash-logo.png
 
 ├── tailwind.config.ts
 
 ├── vite.config.ts
 
-└── package.json    use this mvp name  Name: mats Johansson
-Amount: 8,400,000.00 usd
-Currency : usd 
-Address : sweden 
-Transaction pin: 2236
-Login pin : Mats0@1
-Username : johansson5    ,  build everything on one goal add modern online banking functionality
+└── package.json
 
 This project was built with [Lovable](https://lovable.dev).
 

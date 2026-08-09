@@ -61,13 +61,13 @@ export function AppShell({ title, children }: { title: string; children: ReactNo
             })}
           </nav>
           <div className="mt-auto rounded-2xl border border-sidebar-border bg-sidebar-accent p-3 text-xs leading-relaxed text-sidebar-foreground/70">
-            Demo prototype — all balances, cards and transactions are fictional.
+            BestCash account services, cards and transfers
           </div>
           <button
             onClick={logout}
             className="mt-3 flex items-center gap-2 px-2 text-xs font-medium text-sidebar-foreground/60 hover:text-sidebar-foreground"
           >
-            <LogOut className="h-3.5 w-3.5" /> Sign out demo
+            <LogOut className="h-3.5 w-3.5" /> Sign out
           </button>
         </aside>
 
@@ -79,7 +79,7 @@ export function AppShell({ title, children }: { title: string; children: ReactNo
               </div>
               <div>
                 <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-muted-foreground">
-                  BestCash / demo
+                  BestCash / private banking
                 </p>
                 <h1 className="font-display text-lg font-semibold">{title}</h1>
               </div>

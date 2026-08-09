@@ -9,14 +9,13 @@ import { cn } from "@/lib/utils";
 export const Route = createFileRoute("/history")({
   head: () => ({
     meta: [
-      { title: "Transaction History — BestCash Demo Banking" },
+      { title: "Transaction History — BestCash Banking" },
       {
         name: "description",
-        content:
-          "Search and filter the fictional transaction history of the BestCash banking prototype.",
+        content: "Search and filter your BestCash transaction history.",
       },
-      { property: "og:title", content: "Transaction History — BestCash Demo Banking" },
-      { property: "og:description", content: "Filter demo transactions by direction and keyword." },
+      { property: "og:title", content: "Transaction History — BestCash Banking" },
+      { property: "og:description", content: "Filter transactions by direction and keyword." },
     ],
   }),
   component: HistoryPage,

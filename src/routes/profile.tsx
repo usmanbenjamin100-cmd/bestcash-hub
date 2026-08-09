@@ -19,16 +19,15 @@ import { cn } from "@/lib/utils";
 export const Route = createFileRoute("/profile")({
   head: () => ({
     meta: [
-      { title: "Profile & Security — BestCash Demo Banking" },
+      { title: "Profile & Security — BestCash Banking" },
       {
         name: "description",
-        content:
-          "Demo profile, security toggles and support options for the BestCash banking prototype.",
+        content: "Manage your BestCash profile, security settings and support preferences.",
       },
-      { property: "og:title", content: "Profile & Security — BestCash Demo Banking" },
+      { property: "og:title", content: "Profile & Security — BestCash Banking" },
       {
         property: "og:description",
-        content: "Manage demo profile settings and security preferences.",
+        content: "Manage your profile settings and security preferences.",
       },
     ],
   }),
@@ -140,7 +139,7 @@ function ProfilePage() {
             onClick={() => {
               setProfile({ ...profile, ...form });
               setSaved(true);
-              toast.success("Profile saved", { description: "Demo details updated locally." });
+              toast.success("Profile saved", { description: "Your account details were updated." });
             }}
             className="mt-4 inline-flex items-center gap-2 rounded-xl gold-surface px-4 py-2.5 text-sm font-semibold"
           >
@@ -198,8 +197,8 @@ function ProfilePage() {
 
         <p className="flex items-start gap-2 rounded-2xl border border-border bg-secondary/40 p-4 text-xs text-muted-foreground">
           <ShieldCheck className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
-          BestCash is a fictional prototype for design and demo purposes only. It is not a bank and
-          never handles real money or real credentials.
+          Your account security matters. Keep your sign-in and transaction PINs private and never
+          share them with anyone.
         </p>
       </div>
     </AppShell>

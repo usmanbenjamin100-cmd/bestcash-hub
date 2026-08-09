@@ -19,16 +19,16 @@ import { savingsGoals, spendingByCategory } from "@/data/bank";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "BestCash — Demo Online Banking Dashboard" },
+      { title: "BestCash — Online Banking Dashboard" },
       {
         name: "description",
         content:
-          "BestCash is a fictional online banking prototype: balances, transfers, cards, history and crypto in one modern demo dashboard.",
+          "Manage balances, transfers, cards, history and crypto from the BestCash online banking dashboard.",
       },
-      { property: "og:title", content: "BestCash — Demo Online Banking Dashboard" },
+      { property: "og:title", content: "BestCash — Online Banking Dashboard" },
       {
         property: "og:description",
-        content: "A modern demo banking prototype with dashboard, transfers, cards and crypto.",
+        content: "A modern online banking dashboard with transfers, cards and crypto.",
       },
     ],
   }),
@@ -155,8 +155,7 @@ function Dashboard() {
               , {profile.fullName.split(" ")[0]}
             </h2>
             <p className="mt-1 text-sm text-muted-foreground">
-              Your demo portfolio is ready. Here’s what’s happening across your BestCash accounts
-              today.
+              Your portfolio is ready. Here’s what’s happening across your BestCash accounts today.
             </p>
           </div>
         </section>

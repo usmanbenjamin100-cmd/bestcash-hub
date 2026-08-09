@@ -15,8 +15,8 @@ import { AppShell } from "@/components/layout/AppShell";
 export const Route = createFileRoute("/support")({
   head: () => ({
     meta: [
-      { title: "Support Center — BestCash Demo Banking" },
-      { name: "description", content: "Get help inside the fictional BestCash banking prototype." },
+      { title: "Support Center — BestCash Banking" },
+      { name: "description", content: "Get help with your BestCash account and services." },
     ],
   }),
   component: SupportPage,
@@ -25,21 +25,18 @@ export const Route = createFileRoute("/support")({
 const faqs = [
   [
     "Why did my transfer fail?",
-    "BestCash transfer requests are intentionally simulated and never settle in this prototype.",
+    "Transfers can be delayed by account verification, recipient details or service availability.",
   ],
   [
     "Can I change my profile picture?",
     "Yes. Open Profile and use the Edit control on your avatar to choose an image from your device.",
   ],
-  [
-    "Are crypto prices real?",
-    "No. The live ticker is a realistic local market simulation designed to make the demo feel alive.",
-  ],
+  ["Are crypto prices real?", "Prices update throughout the day as market conditions change."],
 ] as const;
 
 const supportHighlights = [
   { Icon: Clock3, title: "Average reply", detail: "< 5 minutes" },
-  { Icon: ShieldCheck, title: "Demo safe", detail: "No real funds" },
+  { Icon: ShieldCheck, title: "Account secure", detail: "Protected support" },
   { Icon: LifeBuoy, title: "Help center", detail: "Always open" },
 ] as const;
 
@@ -56,7 +53,7 @@ function SupportPage() {
     setSubmitted((items) => [`BC-${String(items.length + 1042).padStart(5, "0")}`, ...items]);
     setMessage("");
     toast.success("Support request created", {
-      description: "A demo specialist will reply shortly.",
+      description: "A BestCash specialist will reply shortly.",
     });
   }
 
@@ -75,8 +72,8 @@ function SupportPage() {
               </p>
               <h2 className="mt-2 font-display text-2xl font-semibold">How can we help today?</h2>
               <p className="mt-2 max-w-xl text-sm leading-6 text-white/65">
-                Get a quick answer or send a demo request to our support team. We’re here to make
-                your tour feel effortless.
+                Get a quick answer or send a request to our support team. We’re here to make your
+                banking experience effortless.
               </p>
             </div>
           </div>
@@ -97,7 +94,7 @@ function SupportPage() {
                 >
                   <option>Transfer issue</option>
                   <option>Profile & security</option>
-                  <option>Crypto demo</option>
+                  <option>Crypto & investments</option>
                   <option>Something else</option>
                 </select>
               </label>

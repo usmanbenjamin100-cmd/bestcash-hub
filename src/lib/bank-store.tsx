@@ -32,12 +32,12 @@ export function BankProvider({ children }: { children: ReactNode }) {
   const [profile, setProfileState] = useState<Profile>(seedProfile);
 
   useEffect(() => {
-    const stored = window.localStorage.getItem("bestcash-demo-profile");
+    const stored = window.localStorage.getItem("bestcash-profile");
     if (stored) {
       try {
         setProfileState({ ...seedProfile, ...(JSON.parse(stored) as Partial<Profile>) });
       } catch {
-        window.localStorage.removeItem("bestcash-demo-profile");
+        window.localStorage.removeItem("bestcash-profile");
       }
     }
   }, []);
@@ -53,7 +53,7 @@ export function BankProvider({ children }: { children: ReactNode }) {
       totalBalance,
       setProfile: (nextProfile) => {
         setProfileState(nextProfile);
-        window.localStorage.setItem("bestcash-demo-profile", JSON.stringify(nextProfile));
+        window.localStorage.setItem("bestcash-profile", JSON.stringify(nextProfile));
       },
       transfer: ({ recipient, amount, note, from }) => {
         setAccounts((prev) =>

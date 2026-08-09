@@ -11,16 +11,16 @@ import { cn } from "@/lib/utils";
 export const Route = createFileRoute("/cards")({
   head: () => ({
     meta: [
-      { title: "Cards & ATM — BestCash Demo Banking" },
+      { title: "Cards & ATM — BestCash Banking" },
       {
         name: "description",
         content:
-          "Manage demo BestCash cards: freeze, set spend limits, toggle online and ATM usage in this banking prototype.",
+          "Manage BestCash cards, freeze spending, set limits and control online and ATM usage.",
       },
-      { property: "og:title", content: "Cards & ATM — BestCash Demo Banking" },
+      { property: "og:title", content: "Cards & ATM — BestCash Banking" },
       {
         property: "og:description",
-        content: "Freeze cards, set limits and manage ATM controls in the demo.",
+        content: "Freeze cards, set limits and manage ATM controls.",
       },
     ],
   }),
@@ -82,8 +82,7 @@ function CardsPage() {
           </div>
 
           <p className="text-xs text-muted-foreground">
-            Demo card — the number, holder and expiry above are placeholders and cannot be used
-            anywhere.
+            Keep your card details secure. You can freeze or adjust this card at any time.
           </p>
         </section>
 

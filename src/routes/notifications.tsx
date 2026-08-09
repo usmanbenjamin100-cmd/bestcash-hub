@@ -8,16 +8,15 @@ import { cn } from "@/lib/utils";
 export const Route = createFileRoute("/notifications")({
   head: () => ({
     meta: [
-      { title: "Notifications — BestCash Demo Banking" },
+      { title: "Notifications — BestCash Banking" },
       {
         name: "description",
-        content:
-          "Demo alerts for payments, deposits and security tips in the BestCash banking prototype.",
+        content: "Payment, deposit and security alerts from BestCash.",
       },
-      { property: "og:title", content: "Notifications — BestCash Demo Banking" },
+      { property: "og:title", content: "Notifications — BestCash Banking" },
       {
         property: "og:description",
-        content: "Payment, deposit and security alerts in the demo app.",
+        content: "Payment, deposit and security alerts.",
       },
     ],
   }),

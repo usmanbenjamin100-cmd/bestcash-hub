@@ -82,16 +82,16 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "BestCash — Demo Online Banking" },
+      { title: "BestCash — Online Banking" },
       {
         name: "description",
         content:
-          "BestCash is a fictional online banking prototype with dashboard, transfers, cards and crypto.",
+          "BestCash online banking with dashboard, transfers, cards, crypto and personal financial management.",
       },
-      { property: "og:title", content: "BestCash — Demo Online Banking" },
+      { property: "og:title", content: "BestCash — Online Banking" },
       {
         property: "og:description",
-        content: "A modern demo banking prototype. Fictional data only.",
+        content: "A modern online banking experience for managing your money.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },

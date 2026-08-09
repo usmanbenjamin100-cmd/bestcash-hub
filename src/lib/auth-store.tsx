@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect, useMemo, useState, type ReactNode } from "react";
-import { demoCredentials } from "@/data/bank";
+import { accountCredentials } from "@/data/bank";
 
-const SESSION_KEY = "bestcash-demo-session";
+const SESSION_KEY = "bestcash-authenticated";
 
 interface AuthState {
   authenticated: boolean;
@@ -27,8 +27,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       loading,
       login: (username, pin) => {
         const valid =
-          username.trim().toLowerCase() === demoCredentials.username &&
-          pin === demoCredentials.loginPin;
+          username.trim().toLowerCase() === accountCredentials.username &&
+          pin === accountCredentials.loginPin;
         if (valid) {
           window.localStorage.setItem(SESSION_KEY, "active");
           setAuthenticated(true);

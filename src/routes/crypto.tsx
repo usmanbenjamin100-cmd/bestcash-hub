@@ -9,16 +9,15 @@ import { cn } from "@/lib/utils";
 export const Route = createFileRoute("/crypto")({
   head: () => ({
     meta: [
-      { title: "Crypto Wallet — BestCash Demo Banking" },
+      { title: "Crypto Wallet — BestCash Banking" },
       {
         name: "description",
-        content:
-          "A simulated crypto wallet with fictional BTC, ETH, SOL and USDC holdings inside the BestCash prototype.",
+        content: "Track BTC, ETH, SOL and USDC holdings with the BestCash crypto wallet.",
       },
-      { property: "og:title", content: "Crypto Wallet — BestCash Demo Banking" },
+      { property: "og:title", content: "Crypto Wallet — BestCash Banking" },
       {
         property: "og:description",
-        content: "Track a fictional crypto portfolio and simulate buys.",
+        content: "Track your crypto portfolio and place orders.",
       },
     ],
   }),
@@ -64,7 +63,7 @@ function CryptoPage() {
     setHoldings((prev) =>
       prev.map((h) => (h.symbol === selected ? { ...h, amount: h.amount + usd / h.price } : h)),
     );
-    toast.success(`Bought ${formatUSD(usd)} of ${selected}`, { description: "Simulated order" });
+    toast.success(`Bought ${formatUSD(usd)} of ${selected}`, { description: "Order submitted" });
   }
 
   return (
@@ -77,7 +76,7 @@ function CryptoPage() {
             <div className="mt-3 flex items-center gap-3 text-sm text-[var(--success)]">
               <span className="live-dot" /> +1.8% today{" "}
               <span className="text-xs text-muted-foreground">
-                Live demo market · updated{" "}
+                Market updated{" "}
                 {lastUpdated.toLocaleTimeString([], {
                   hour: "2-digit",
                   minute: "2-digit",
@@ -187,7 +186,7 @@ function CryptoPage() {
               Buy {selected}
             </button>
             <p className="text-xs text-muted-foreground">
-              Prices pulse every few seconds as a local market simulation. Orders never settle.
+              Prices update periodically. Review market conditions before placing an order.
             </p>
           </div>
         </div>

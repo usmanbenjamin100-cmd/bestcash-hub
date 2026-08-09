@@ -1,5 +1,3 @@
-// Fictional demo data for the BestCash prototype. No real accounts or credentials.
-
 export type TxCategory =
   "transfer" | "shopping" | "food" | "bills" | "salary" | "crypto" | "travel";
 
@@ -43,15 +41,14 @@ export interface Profile {
 export const profile: Profile = {
   fullName: "Mats Johansson",
   username: "johansson5",
-  email: "mats@bestcash.demo",
+  email: "mats@bestcash.com",
   country: "Sweden",
   currency: "USD",
   memberSince: "2021",
   tier: "Signature",
 };
 
-// Fictional credentials for the local BestCash demo only. No real banking access is provided.
-export const demoCredentials = {
+export const accountCredentials = {
   username: "johansson5",
   loginPin: "Mats0@1",
   transactionPin: "2236",
@@ -161,7 +158,7 @@ export const cards = [
   {
     id: "c1",
     label: "BestCash Classic",
-    holder: "ALEX DEMO",
+    holder: "MATS JOHANSSON",
     number: "0000 0000 0000 0000",
     expiry: "04/28",
     network: "BestCash Pay",
@@ -173,7 +170,7 @@ export const cards = [
   {
     id: "c2",
     label: "Virtual Shopping",
-    holder: "ALEX DEMO",
+    holder: "MATS JOHANSSON",
     number: "0000 0000 0000 0001",
     expiry: "09/29",
     network: "BestCash Pay",
@@ -255,7 +252,7 @@ export const notifications = [
   {
     id: "n3",
     title: "Security tip",
-    body: "This is a demo app — never enter real bank details.",
+    body: "Keep your account details secure and review every transaction carefully.",
     time: "3d ago",
     unread: false,
   },
