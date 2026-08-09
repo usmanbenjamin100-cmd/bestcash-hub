@@ -58,7 +58,7 @@ export function VirtualCard({ card, revealed }: { card: CardData; revealed?: boo
         </div>
 
         <div className="space-y-2">
-          <div className="flex gap-3 font-display text-[15px] font-semibold tracking-[0.12em] text-black/80 sm:text-xl">
+          <div className="flex gap-2.5 font-display text-[16px] font-semibold tracking-[0.12em] text-black/80 sm:gap-3 sm:text-xl">
             {groups.map((g, i) => (
               <span key={i}>{g}</span>
             ))}

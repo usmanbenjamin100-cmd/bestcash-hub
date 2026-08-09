@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { toast } from "sonner";
-import { Eye, EyeOff, Snowflake, Lock, Globe, ShoppingBag } from "lucide-react";
+import { Eye, EyeOff, Snowflake, Lock, Globe, ShoppingBag, CheckCircle2, Copy } from "lucide-react";
 import { AppShell } from "@/components/layout/AppShell";
 import { VirtualCard } from "@/components/cards/VirtualCard";
 import { useBank } from "@/lib/bank-store";
@@ -29,11 +29,16 @@ export const Route = createFileRoute("/cards")({
 
 function CardsPage() {
   const { cards, toggleFreeze, setLimit } = useBank();
-  const [activeId, setActiveId] = useState(cards[0]!.id);
-  const [revealed, setRevealed] = useState(false);
+  const [activeId, setActiveId] = useState(
+    cards.find((card) => !card.physical)?.id ?? cards[0]!.id,
+  );
+  const [revealed, setRevealed] = useState(true);
   const [controls, setControls] = useState({ online: true, atm: true, abroad: false });
 
   const card = cards.find((c) => c.id === activeId)!;
+  const displayNumber = revealed
+    ? card.number
+    : `•••• •••• •••• ${card.number.replace(/\s/g, "").slice(-4)}`;
 
   return (
     <AppShell title="Cards & ATM">
@@ -79,6 +84,63 @@ function CardsPage() {
               <Snowflake className="h-4 w-4" />
               {card.frozen ? "Unfreeze" : "Freeze card"}
             </button>
+          </div>
+
+          <div className="rounded-2xl border border-border bg-card p-4">
+            <div className="flex items-center justify-between gap-3">
+              <div>
+                <h2 className="text-sm font-semibold">Card details</h2>
+                <p className="mt-1 text-xs text-muted-foreground">
+                  {revealed ? "Full card number visible" : "Card number protected"}
+                </p>
+              </div>
+              <span
+                className={cn(
+                  "flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[10px] font-semibold",
+                  card.frozen
+                    ? "bg-secondary text-muted-foreground"
+                    : "bg-emerald-500/10 text-emerald-600 dark:text-emerald-300",
+                )}
+              >
+                <CheckCircle2 className="h-3 w-3" /> {card.frozen ? "Frozen" : "Active"}
+              </span>
+            </div>
+            <dl className="mt-4 grid grid-cols-2 gap-x-4 gap-y-4 text-sm sm:grid-cols-4">
+              <div className="col-span-2 min-w-0">
+                <dt className="text-[10px] font-semibold uppercase tracking-[0.14em] text-muted-foreground">
+                  Card number
+                </dt>
+                <dd className="mt-1 flex items-center gap-2 truncate font-mono text-xs font-semibold">
+                  {displayNumber}
+                  {revealed && (
+                    <button
+                      type="button"
+                      aria-label="Copy card number"
+                      title="Copy card number"
+                      onClick={() => {
+                        navigator.clipboard?.writeText(card.number);
+                        toast.success("Card number copied");
+                      }}
+                      className="rounded-md p-1 text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground"
+                    >
+                      <Copy className="h-3.5 w-3.5" />
+                    </button>
+                  )}
+                </dd>
+              </div>
+              <div>
+                <dt className="text-[10px] font-semibold uppercase tracking-[0.14em] text-muted-foreground">
+                  Expires
+                </dt>
+                <dd className="mt-1 font-semibold">{card.expiry}</dd>
+              </div>
+              <div>
+                <dt className="text-[10px] font-semibold uppercase tracking-[0.14em] text-muted-foreground">
+                  Type
+                </dt>
+                <dd className="mt-1 font-semibold">{card.physical ? "Physical" : "Virtual"}</dd>
+              </div>
+            </dl>
           </div>
 
           <p className="text-xs text-muted-foreground">
