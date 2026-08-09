@@ -27,8 +27,19 @@ export function VirtualCard({ card, revealed }: { card: CardData; revealed?: boo
     >
       <img
         src="/bestcash-virtual-card.jpeg"
-        alt="BestCash virtual card preview"
-        className="absolute inset-0 h-full w-full object-cover opacity-[0.22] mix-blend-multiply"
+        alt=""
+        aria-hidden="true"
+        className="absolute inset-0 h-full w-full object-cover opacity-[0.12] mix-blend-multiply"
+      />
+      {/* The source artwork has its own printed number and expiry. Keep the artwork as texture,
+          but cover those static details so the live card data below is always authoritative. */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-x-0 top-[43%] h-[31%]"
+        style={{
+          background:
+            "linear-gradient(180deg, rgba(244,239,229,0.94) 0%, rgba(244,239,229,0.98) 100%)",
+        }}
       />
       {/* brand swoosh */}
       <div
