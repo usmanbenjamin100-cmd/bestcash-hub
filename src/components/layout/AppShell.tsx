@@ -17,12 +17,12 @@ import { useBank } from "@/lib/bank-store";
 import { useAuth } from "@/lib/auth-store";
 
 const nav = [
-  { to: "/", label: "Dashboard", icon: LayoutDashboard },
-  { to: "/transfers", label: "Transfers", icon: ArrowLeftRight },
-  { to: "/cards", label: "Cards", icon: CreditCard },
-  { to: "/history", label: "History", icon: Receipt },
-  { to: "/crypto", label: "Crypto", icon: Bitcoin },
-  { to: "/profile", label: "Profile", icon: User },
+  { to: "/", label: "Översikt", icon: LayoutDashboard },
+  { to: "/transfers", label: "Överföringar", icon: ArrowLeftRight },
+  { to: "/cards", label: "Kort", icon: CreditCard },
+  { to: "/history", label: "Historik", icon: Receipt },
+  { to: "/crypto", label: "Krypto", icon: Bitcoin },
+  { to: "/profile", label: "Profil", icon: User },
   { to: "/support", label: "Support", icon: LifeBuoy },
 ] as const;
 
@@ -101,7 +101,7 @@ export function AppShell({ title, children }: { title: string; children: ReactNo
               <Link
                 to="/notifications"
                 className="relative rounded-full border border-border p-2 text-muted-foreground transition-colors hover:text-foreground"
-                aria-label="Notifications"
+                aria-label="Aviseringar"
               >
                 <Bell className="h-4.5 w-4.5" />
                 <span className="absolute right-1.5 top-1.5 h-2 w-2 rounded-full bg-accent" />
