@@ -33,6 +33,7 @@ export interface Profile {
   email: string;
   country: string;
   currency: string;
+  language: string;
   memberSince: string;
   tier: string;
   avatar?: string;
@@ -43,7 +44,8 @@ export const profile: Profile = {
   username: "johansson5",
   email: "mats@bestcash.com",
   country: "Sweden",
-  currency: "USD",
+  currency: "SEK — Svenska kronor",
+  language: "Svenska (Swedish)",
   memberSince: "2021",
   tier: "Signature",
 };

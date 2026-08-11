@@ -99,7 +99,7 @@ function DetailRow({
 function ProfilePage() {
   const { profile, accounts, totalBalance } = useBank();
   const memberSince = new Date(`${profile.memberSince}-01-01T00:00:00Z`).toLocaleDateString(
-    "en-US",
+    "sv-SE",
     { month: "short", year: "numeric" },
   );
 
@@ -201,6 +201,12 @@ function ProfilePage() {
               <DetailRow icon={UserRound} label="Full name" value={profile.fullName} />
               <DetailRow icon={Mail} label="Email address" value={profile.email} />
               <DetailRow icon={MapPin} label="Country of residence" value={profile.country} />
+              <DetailRow
+                icon={Globe2}
+                label="Language"
+                value={profile.language}
+                detail="Language used across BestCash"
+              />
               <DetailRow
                 icon={WalletCards}
                 label="Base currency"
