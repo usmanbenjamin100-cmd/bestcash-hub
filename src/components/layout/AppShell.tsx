@@ -17,12 +17,12 @@ import { useBank } from "@/lib/bank-store";
 import { useAuth } from "@/lib/auth-store";
 
 const nav = [
-  { to: "/", label: "Dashboard", icon: LayoutDashboard },
-  { to: "/transfers", label: "Transfers", icon: ArrowLeftRight },
-  { to: "/cards", label: "Cards", icon: CreditCard },
-  { to: "/history", label: "History", icon: Receipt },
-  { to: "/crypto", label: "Crypto", icon: Bitcoin },
-  { to: "/profile", label: "Profile", icon: User },
+  { to: "/", label: "Översikt", icon: LayoutDashboard },
+  { to: "/transfers", label: "Överföringar", icon: ArrowLeftRight },
+  { to: "/cards", label: "Kort", icon: CreditCard },
+  { to: "/history", label: "Historik", icon: Receipt },
+  { to: "/crypto", label: "Krypto", icon: Bitcoin },
+  { to: "/profile", label: "Profil", icon: User },
   { to: "/support", label: "Support", icon: LifeBuoy },
 ] as const;
 
@@ -61,13 +61,13 @@ export function AppShell({ title, children }: { title: string; children: ReactNo
             })}
           </nav>
           <div className="mt-auto rounded-2xl border border-sidebar-border bg-sidebar-accent p-3 text-xs leading-relaxed text-sidebar-foreground/70">
-            BestCash account services, cards and transfers
+            BestCash kontotjänster, kort och överföringar
           </div>
           <button
             onClick={logout}
             className="mt-3 flex items-center gap-2 px-2 text-xs font-medium text-sidebar-foreground/60 hover:text-sidebar-foreground"
           >
-            <LogOut className="h-3.5 w-3.5" /> Sign out
+            <LogOut className="h-3.5 w-3.5" /> Logga ut
           </button>
         </aside>
 
@@ -101,7 +101,7 @@ export function AppShell({ title, children }: { title: string; children: ReactNo
               <Link
                 to="/notifications"
                 className="relative rounded-full border border-border p-2 text-muted-foreground transition-colors hover:text-foreground"
-                aria-label="Notifications"
+                aria-label="Aviseringar"
               >
                 <Bell className="h-4.5 w-4.5" />
                 <span className="absolute right-1.5 top-1.5 h-2 w-2 rounded-full bg-accent" />
