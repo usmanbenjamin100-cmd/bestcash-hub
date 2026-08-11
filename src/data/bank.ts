@@ -43,9 +43,9 @@ export const profile: Profile = {
   fullName: "Mats Johansson",
   username: "johansson5",
   email: "mats@bestcash.com",
-  country: "Sweden",
+  country: "Sverige",
   currency: "SEK — Svenska kronor",
-  language: "Svenska (Swedish)",
+  language: "Svenska",
   memberSince: "2021",
   tier: "Signature",
 };

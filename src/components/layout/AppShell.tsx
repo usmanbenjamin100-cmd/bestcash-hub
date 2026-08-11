@@ -61,13 +61,13 @@ export function AppShell({ title, children }: { title: string; children: ReactNo
             })}
           </nav>
           <div className="mt-auto rounded-2xl border border-sidebar-border bg-sidebar-accent p-3 text-xs leading-relaxed text-sidebar-foreground/70">
-            BestCash account services, cards and transfers
+            BestCash kontotjänster, kort och överföringar
           </div>
           <button
             onClick={logout}
             className="mt-3 flex items-center gap-2 px-2 text-xs font-medium text-sidebar-foreground/60 hover:text-sidebar-foreground"
           >
-            <LogOut className="h-3.5 w-3.5" /> Sign out
+            <LogOut className="h-3.5 w-3.5" /> Logga ut
           </button>
         </aside>
 

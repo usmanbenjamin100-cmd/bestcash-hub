@@ -296,7 +296,7 @@ function ProfilePage() {
                 <LifeBuoy className="h-4 w-4" />
               </span>
               <div>
-                <h3 className="text-sm font-semibold">Need to update something?</h3>
+                <h3 className="text-sm font-semibold">Behöver du ändra något?</h3>
                 <p className="mt-0.5 text-xs text-muted-foreground">
                   Vårt supportteam kan hjälpa dig att se över kontouppgifter.
                 </p>
