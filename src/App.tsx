@@ -12,7 +12,9 @@ type CardData = { id: string; type: 'Virtual' | 'Physical'; lastFour: string; st
 type Goal = { id: string; name: string; target: number; saved: number; };
 type Notification = { id: string; title: string; detail: string; date: string; read: boolean; };
 type Language = 'sv' | 'en';
-type Profile = { name: string; username: string; address: string; currency: string; emailAlerts: boolean; biometric: boolean; language: Language; };
+type Profile = { profileId: string; name: string; username: string; address: string; currency: string; emailAlerts: boolean; biometric: boolean; language: Language; };
+const ENROLLED_PROFILE_ID = 'mats.johansson';
+const defaultProfile: Profile = { profileId: ENROLLED_PROFILE_ID, name: 'Mats Johansson', username: 'mats.johansson', address: 'Sankt Eriksgatan 42, 112 34 Stockholm', currency: 'SEK — Swedish krona', emailAlerts: true, biometric: true, language: 'sv' };
 
 const initialTransactions: Transaction[] = [
   { id: 't1', merchant: 'Coop Forum', amount: -684.5, date: 'Today, 13:42', category: 'Groceries', status: 'Completed', direction: 'out' },
@@ -80,6 +82,14 @@ function usePersistentState<T>(key: string, initial: T) {
   });
   useEffect(() => { localStorage.setItem(key, JSON.stringify(value)); }, [key, value]);
   return [value, setValue] as const;
+}
+
+function useProfileState() {
+  const [profile, setProfile] = usePersistentState<Profile>(
+    `bestcash-profile:${ENROLLED_PROFILE_ID}`,
+    defaultProfile,
+  );
+  return [profile, setProfile] as const;
 }
 
 function Logo() {
@@ -179,14 +189,15 @@ function App() {
   const [transactions, setTransactions] = usePersistentState<Transaction[]>('bestcash-transactions', initialTransactions);
   const [cards, setCards] = usePersistentState<CardData[]>('bestcash-cards', initialCards);
   const [notifications, setNotifications] = usePersistentState<Notification[]>('bestcash-notifications', initialNotifications);
-  const [profile, setProfile] = usePersistentState<Profile>('bestcash-profile', { name: 'Mats Johansson', username: 'mats.johansson', address: 'Sankt Eriksgatan 42, 112 34 Stockholm', currency: 'SEK — Swedish krona', emailAlerts: true, biometric: true, language: 'sv' });
+  const [profile, setProfile] = useProfileState();
   const [visible, setVisible] = usePersistentState('bestcash-balance-visible', true);
   const [toast, setToast] = useState('');
   const showToast = (message: string) => { setToast(message); window.setTimeout(() => setToast(''), 2800); };
-  const language = profile.language ?? 'sv';
+  const activeProfileId = profile.profileId ?? ENROLLED_PROFILE_ID;
+  const language: Language = activeProfileId === ENROLLED_PROFILE_ID ? (profile.language ?? 'sv') : 'en';
   useEffect(() => { document.documentElement.lang = language; }, [language]);
   const unread = notifications.filter(n => !n.read).length;
-  return <Shell unread={unread} language={language}><Switch><Route path="/"><Dashboard transactions={transactions} goals={initialGoals} visible={visible} setVisible={setVisible} onToast={showToast} /></Route><Route path="/transfers"><Transfers transactions={transactions} setTransactions={setTransactions} onToast={showToast} /></Route><Route path="/cards"><Cards cards={cards} setCards={setCards} onToast={showToast} /></Route><Route path="/history"><History transactions={transactions} /></Route><Route path="/crypto"><Crypto /></Route><Route path="/profile"><Profile profile={{ ...profile, language }} setProfile={setProfile} onToast={showToast} /></Route><Route path="/notifications"><Notifications notifications={notifications} setNotifications={setNotifications} onToast={showToast} /></Route><Route><main className="content"><Intro kicker="BestCash" title="Page not found." detail="This is not a place we recognize." /><Link href="/" className="primary-button" data-testid="link-back-home">Back to overview</Link></main></Route></Switch>{toast && <div className="toast" role="status" data-testid="status-toast">{toast}</div>}</Shell>;
+  return <Shell unread={unread} language={language}><Switch><Route path="/"><Dashboard transactions={transactions} goals={initialGoals} visible={visible} setVisible={setVisible} onToast={showToast} /></Route><Route path="/transfers"><Transfers transactions={transactions} setTransactions={setTransactions} onToast={showToast} /></Route><Route path="/cards"><Cards cards={cards} setCards={setCards} onToast={showToast} /></Route><Route path="/history"><History transactions={transactions} /></Route><Route path="/crypto"><Crypto /></Route><Route path="/profile"><Profile profile={{ ...profile, profileId: activeProfileId, language }} setProfile={setProfile} onToast={showToast} /></Route><Route path="/notifications"><Notifications notifications={notifications} setNotifications={setNotifications} onToast={showToast} /></Route><Route><main className="content"><Intro kicker="BestCash" title="Page not found." detail="This is not a place we recognize." /><Link href="/" className="primary-button" data-testid="link-back-home">Back to overview</Link></main></Route></Switch>{toast && <div className="toast" role="status" data-testid="status-toast">{toast}</div>}</Shell>;
 }
 
 export default App;
