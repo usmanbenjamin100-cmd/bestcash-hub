@@ -240,14 +240,14 @@ export const notifications = [
   {
     id: "n1",
     title: "Card payment approved",
-    body: "Elgiganten · $229.99",
+    body: "Elgiganten · 2 414,89 kr",
     time: "2h ago",
     unread: true,
   },
   {
     id: "n2",
     title: "Salary received",
-    body: "Northwind AB · $6,200.00",
+    body: "Northwind AB · 65 100,00 kr",
     time: "1d ago",
     unread: true,
   },
