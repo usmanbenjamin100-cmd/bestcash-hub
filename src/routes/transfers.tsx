@@ -154,7 +154,7 @@ function TransfersPage() {
                   Save this recipient for later transfers
                 </label>
                 <div>
-                  <label className="text-xs text-muted-foreground">Amount (USD)</label>
+                  <label className="text-xs text-muted-foreground">Belopp (SEK)</label>
                   <input
                     inputMode="decimal"
                     value={amount}
