@@ -1,7 +1,7 @@
 export function formatUSD(amount: number, opts: { compact?: boolean } = {}) {
   return new Intl.NumberFormat("sv-SE", {
     style: "currency",
-    currency: "SEK",
+    currency: "USD",
     notation: opts.compact ? "compact" : "standard",
     maximumFractionDigits: opts.compact ? 2 : 2,
     minimumFractionDigits: opts.compact ? 0 : 2,
