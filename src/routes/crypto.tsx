@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
 import { toast } from "sonner";
 import { AppShell } from "@/components/layout/AppShell";
-import { cryptoHoldings } from "@/data/bank";
+import { useBank } from "@/lib/bank-store";
 import { formatUSD, formatCrypto } from "@/lib/currency";
 import { cn } from "@/lib/utils";
 
@@ -25,11 +25,17 @@ export const Route = createFileRoute("/crypto")({
 });
 
 function CryptoPage() {
-  const [holdings, setHoldings] = useState(cryptoHoldings);
-  const [selected, setSelected] = useState(cryptoHoldings[0]!.symbol);
+  const { cryptoHoldings: initialHoldings } = useBank();
+  const [holdings, setHoldings] = useState(initialHoldings);
+  const [selected, setSelected] = useState(initialHoldings[0]?.symbol ?? "");
   const [buyAmount, setBuyAmount] = useState("100");
   const [lastUpdated, setLastUpdated] = useState(new Date());
   const [ticks, setTicks] = useState(0);
+
+  useEffect(() => {
+    setHoldings(initialHoldings);
+    setSelected(initialHoldings[0]?.symbol ?? "");
+  }, [initialHoldings]);
 
   useEffect(() => {
     const timer = window.setInterval(() => {
@@ -47,7 +53,7 @@ function CryptoPage() {
   }, []);
 
   const total = holdings.reduce((s, h) => s + h.amount * h.price, 0);
-  const asset = holdings.find((h) => h.symbol === selected)!;
+  const asset = holdings.find((h) => h.symbol === selected);
   const chart = useMemo(
     () =>
       Array.from(
@@ -59,7 +65,7 @@ function CryptoPage() {
 
   function buy() {
     const usd = Number(buyAmount) || 0;
-    if (usd <= 0) return;
+    if (usd <= 0 || !asset) return;
     setHoldings((prev) =>
       prev.map((h) => (h.symbol === selected ? { ...h, amount: h.amount + usd / h.price } : h)),
     );
@@ -175,15 +181,18 @@ function CryptoPage() {
               onChange={(e) => setBuyAmount(e.target.value.replace(/[^0-9.]/g, ""))}
               className="w-full rounded-xl border border-input bg-background px-3 py-3 font-display text-2xl font-semibold outline-none focus:border-primary"
             />
-            <p className="text-xs text-muted-foreground">
-              ≈ {formatCrypto((Number(buyAmount) || 0) / asset.price, asset.symbol)} at{" "}
-              {formatUSD(asset.price)}
-            </p>
+            {asset && (
+              <p className="text-xs text-muted-foreground">
+                ≈ {formatCrypto((Number(buyAmount) || 0) / asset.price, asset.symbol)} at{" "}
+                {formatUSD(asset.price)}
+              </p>
+            )}
             <button
               onClick={buy}
-              className="w-full rounded-xl gold-surface py-3 text-sm font-semibold"
+              disabled={!asset}
+              className="w-full rounded-xl gold-surface py-3 text-sm font-semibold disabled:opacity-40"
             >
-              Buy {selected}
+              {asset ? `Buy ${selected}` : "No assets available"}
             </button>
             <p className="text-xs text-muted-foreground">
               Prices update periodically. Review market conditions before placing an order.

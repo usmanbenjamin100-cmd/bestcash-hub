@@ -14,7 +14,6 @@ import { useState } from "react";
 import { AppShell } from "@/components/layout/AppShell";
 import { useBank } from "@/lib/bank-store";
 import { formatUSD, formatDate } from "@/lib/currency";
-import { savingsGoals, spendingByCategory } from "@/data/bank";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -43,9 +42,16 @@ const quickActions = [
 ] as const;
 
 function Dashboard() {
-  const { totalBalance, accounts, transactions, profile } = useBank();
+  const {
+    totalBalance,
+    accounts,
+    transactions,
+    profile,
+    savingsGoals,
+    spendingByCategory,
+  } = useBank();
   const [hidden, setHidden] = useState(false);
-  const maxSpend = Math.max(...spendingByCategory.map((s) => s.value));
+  const maxSpend = Math.max(...spendingByCategory.map((s) => s.value), 1);
 
   const inflow = transactions.filter((t) => t.amount > 0).reduce((s, t) => s + t.amount, 0);
   const outflow = transactions.filter((t) => t.amount < 0).reduce((s, t) => s - t.amount, 0);
@@ -110,37 +116,43 @@ function Dashboard() {
                 View all
               </Link>
             </div>
-            <ul className="mt-4 divide-y divide-border">
-              {transactions.slice(0, 6).map((t) => (
-                <li key={t.id} className="flex items-center gap-3 py-3">
-                  <span
-                    className={`flex h-9 w-9 items-center justify-center rounded-full ${
-                      t.amount > 0 ? "bg-[var(--success)]/15" : "bg-secondary"
-                    }`}
-                  >
-                    {t.amount > 0 ? (
-                      <ArrowDownLeft className="h-4 w-4 text-[var(--success)]" />
-                    ) : (
-                      <ArrowUpRight className="h-4 w-4 text-muted-foreground" />
-                    )}
-                  </span>
-                  <div className="min-w-0 flex-1">
-                    <p className="truncate text-sm font-medium">{t.title}</p>
-                    <p className="text-xs text-muted-foreground">
-                      {formatDate(t.date)} · {t.status}
+            {transactions.length > 0 ? (
+              <ul className="mt-4 divide-y divide-border">
+                {transactions.slice(0, 6).map((t) => (
+                  <li key={t.id} className="flex items-center gap-3 py-3">
+                    <span
+                      className={`flex h-9 w-9 items-center justify-center rounded-full ${
+                        t.amount > 0 ? "bg-[var(--success)]/15" : "bg-secondary"
+                      }`}
+                    >
+                      {t.amount > 0 ? (
+                        <ArrowDownLeft className="h-4 w-4 text-[var(--success)]" />
+                      ) : (
+                        <ArrowUpRight className="h-4 w-4 text-muted-foreground" />
+                      )}
+                    </span>
+                    <div className="min-w-0 flex-1">
+                      <p className="truncate text-sm font-medium">{t.title}</p>
+                      <p className="text-xs text-muted-foreground">
+                        {formatDate(t.date)} · {t.status}
+                      </p>
+                    </div>
+                    <p
+                      className={`text-sm font-semibold ${
+                        t.amount > 0 ? "text-[var(--success)]" : "text-foreground"
+                      }`}
+                    >
+                      {t.amount > 0 ? "+" : "−"}
+                      {formatUSD(Math.abs(t.amount))}
                     </p>
-                  </div>
-                  <p
-                    className={`text-sm font-semibold ${
-                      t.amount > 0 ? "text-[var(--success)]" : "text-foreground"
-                    }`}
-                  >
-                    {t.amount > 0 ? "+" : "−"}
-                    {formatUSD(Math.abs(t.amount))}
-                  </p>
-                </li>
-              ))}
-            </ul>
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p className="mt-4 rounded-xl bg-secondary/60 p-4 text-sm text-muted-foreground">
+                No account activity yet.
+              </p>
+            )}
           </div>
           <div className="rounded-2xl border border-border bg-card p-5">
             <p className="text-xs font-semibold uppercase tracking-[0.18em] text-primary">
@@ -196,27 +208,33 @@ function Dashboard() {
 
           <div className="rounded-2xl border border-border bg-card p-5">
             <h2 className="text-base font-semibold">Savings goals</h2>
-            <div className="mt-4 space-y-4">
-              {savingsGoals.map((g) => (
-                <div key={g.id}>
-                  <div className="flex justify-between text-sm">
-                    <span className="font-medium">{g.name}</span>
-                    <span className="text-muted-foreground">
-                      {Math.round((g.saved / g.target) * 100)}%
-                    </span>
+            {savingsGoals.length > 0 ? (
+              <div className="mt-4 space-y-4">
+                {savingsGoals.map((g) => (
+                  <div key={g.id}>
+                    <div className="flex justify-between text-sm">
+                      <span className="font-medium">{g.name}</span>
+                      <span className="text-muted-foreground">
+                        {Math.round((g.saved / g.target) * 100)}%
+                      </span>
+                    </div>
+                    <div className="mt-1.5 h-2 w-full rounded-full bg-secondary">
+                      <div
+                        className="h-full rounded-full bg-primary"
+                        style={{ width: `${(g.saved / g.target) * 100}%` }}
+                      />
+                    </div>
+                    <p className="mt-1 text-xs text-muted-foreground">
+                      {formatUSD(g.saved)} of {formatUSD(g.target)}
+                    </p>
                   </div>
-                  <div className="mt-1.5 h-2 w-full rounded-full bg-secondary">
-                    <div
-                      className="h-full rounded-full bg-primary"
-                      style={{ width: `${(g.saved / g.target) * 100}%` }}
-                    />
-                  </div>
-                  <p className="mt-1 text-xs text-muted-foreground">
-                    {formatUSD(g.saved)} of {formatUSD(g.target)}
-                  </p>
-                </div>
-              ))}
-            </div>
+                ))}
+              </div>
+            ) : (
+              <p className="mt-4 rounded-xl bg-secondary/60 p-4 text-sm text-muted-foreground">
+                No savings goals have been added yet.
+              </p>
+            )}
           </div>
         </aside>
       </div>

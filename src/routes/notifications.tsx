@@ -1,8 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Bell, CheckCheck } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AppShell } from "@/components/layout/AppShell";
-import { notifications as seed } from "@/data/bank";
+import { useBank } from "@/lib/bank-store";
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/notifications")({
@@ -24,7 +24,12 @@ export const Route = createFileRoute("/notifications")({
 });
 
 function NotificationsPage() {
+  const { notifications: seed } = useBank();
   const [items, setItems] = useState(seed);
+
+  useEffect(() => {
+    setItems(seed);
+  }, [seed]);
 
   return (
     <AppShell title="Notifications">

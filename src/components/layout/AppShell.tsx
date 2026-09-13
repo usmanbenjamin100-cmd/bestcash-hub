@@ -96,7 +96,7 @@ export function AppShell({ title, children }: { title: string; children: ReactNo
                       .join("")
                   )}
                 </span>
-                <span className="text-xs font-semibold">{profile.fullName.split(" ")[0]}</span>
+                <span className="max-w-40 truncate text-xs font-semibold">{profile.fullName}</span>
               </Link>
               <Link
                 to="/notifications"

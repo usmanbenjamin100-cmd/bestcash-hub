@@ -200,7 +200,23 @@ function ProfilePage() {
             <dl className="mt-3">
               <DetailRow icon={UserRound} label="Fullständigt namn" value={profile.fullName} />
               <DetailRow icon={Mail} label="E-postadress" value={profile.email} />
+              {profile.phone && <DetailRow icon={Smartphone} label="Telefonnummer" value={profile.phone} />}
               <DetailRow icon={MapPin} label="Bosättningsland" value={profile.country} />
+              {(profile.city || profile.state) && (
+                <DetailRow
+                  icon={MapPin}
+                  label="Ort och delstat"
+                  value={[profile.city, profile.state].filter(Boolean).join(", ")}
+                />
+              )}
+              {profile.address && <DetailRow icon={MapPin} label="Adress" value={profile.address} />}
+              {profile.dateOfBirth && (
+                <DetailRow icon={CalendarDays} label="Födelsedatum" value={profile.dateOfBirth} />
+              )}
+              {profile.gender && <DetailRow icon={UserRound} label="Kön" value={profile.gender} />}
+              {profile.occupation && (
+                <DetailRow icon={WalletCards} label="Yrke" value={profile.occupation} />
+              )}
               <DetailRow
                 icon={Globe2}
                 label="Språk"

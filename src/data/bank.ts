@@ -46,6 +46,36 @@ export interface Profile {
   address?: string;
 }
 
+export interface CryptoHolding {
+  symbol: string;
+  name: string;
+  amount: number;
+  price: number;
+  change: number;
+  volume: number;
+  marketCap: number;
+}
+
+export interface SavingsGoal {
+  id: string;
+  name: string;
+  target: number;
+  saved: number;
+}
+
+export interface SpendingCategory {
+  category: string;
+  value: number;
+}
+
+export interface Notification {
+  id: string;
+  title: string;
+  body: string;
+  time: string;
+  unread: boolean;
+}
+
 export const profile: Profile = {
   fullName: "Mats Johansson",
   username: "johansson5",
@@ -231,11 +261,15 @@ export const cryptoHoldings = [
   },
 ];
 
+export type { CryptoHolding as CryptoHoldingRecord };
+
 export const savingsGoals = [
   { id: "g1", name: "Emergency fund", target: 210000.0, saved: 149100.0 },
   { id: "g2", name: "Lofoten trip", target: 42000.0, saved: 17325.0 },
   { id: "g3", name: "New studio gear", target: 31500.0, saved: 25200.0 },
 ];
+
+export type { SavingsGoal as SavingsGoalRecord };
 
 export const spendingByCategory = [
   { category: "Food", value: 6510.0 },
@@ -244,6 +278,8 @@ export const spendingByCategory = [
   { category: "Travel", value: 3570.0 },
   { category: "Other", value: 2625.0 },
 ];
+
+export type { SpendingCategory as SpendingCategoryRecord };
 
 export const notifications = [
   {
@@ -269,6 +305,8 @@ export const notifications = [
   },
 ];
 
+export type { Notification as NotificationRecord };
+
 export interface DemoAccount {
   credentials: {
     username: string;
@@ -279,10 +317,24 @@ export interface DemoAccount {
   accounts: Account[];
   initialTransactions: Transaction[];
   cards: Card[];
+  cryptoHoldings: CryptoHolding[];
+  savingsGoals: SavingsGoal[];
+  spendingByCategory: SpendingCategory[];
+  notifications: Notification[];
 }
 
 export const demoAccounts: DemoAccount[] = [
-  { credentials: accountCredentials, profile, accounts, initialTransactions, cards },
+  {
+    credentials: accountCredentials,
+    profile,
+    accounts,
+    initialTransactions,
+    cards,
+    cryptoHoldings,
+    savingsGoals,
+    spendingByCategory,
+    notifications,
+  },
   {
     credentials: {
       username: "soniadembo23",
@@ -328,6 +380,28 @@ export const demoAccounts: DemoAccount[] = [
         limit: 1000,
         spent: 0,
         physical: true,
+      },
+    ],
+    cryptoHoldings: [
+      {
+        symbol: "USD",
+        name: "US Dollar",
+        amount: 1000,
+        price: 1,
+        change: 0,
+        volume: 0,
+        marketCap: 0,
+      },
+    ],
+    savingsGoals: [],
+    spendingByCategory: [],
+    notifications: [
+      {
+        id: "william-n1",
+        title: "Account ready",
+        body: "Your BestCash account is ready to use.",
+        time: "Just now",
+        unread: true,
       },
     ],
   },

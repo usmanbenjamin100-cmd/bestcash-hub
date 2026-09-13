@@ -3,7 +3,11 @@ import {
   getDemoAccount,
   type Account,
   type Card,
+  type CryptoHolding,
+  type Notification,
   type Profile,
+  type SavingsGoal,
+  type SpendingCategory,
   type Transaction,
 } from "@/data/bank";
 import { useAuth } from "@/lib/auth-store";
@@ -12,6 +16,10 @@ interface BankState {
   accounts: Account[];
   transactions: Transaction[];
   cards: Card[];
+  cryptoHoldings: CryptoHolding[];
+  savingsGoals: SavingsGoal[];
+  spendingByCategory: SpendingCategory[];
+  notifications: Notification[];
   profile: Profile;
   totalBalance: number;
   transfer: (input: { recipient: string; amount: number; note?: string; from: string }) => void;
@@ -27,6 +35,12 @@ export function BankProvider({ children }: { children: ReactNode }) {
   const [accounts, setAccounts] = useState<Account[]>(demoAccount.accounts);
   const [transactions, setTransactions] = useState<Transaction[]>(demoAccount.initialTransactions);
   const [cards, setCards] = useState<Card[]>(demoAccount.cards);
+  const [cryptoHoldings, setCryptoHoldings] = useState<CryptoHolding[]>(demoAccount.cryptoHoldings);
+  const [savingsGoals, setSavingsGoals] = useState<SavingsGoal[]>(demoAccount.savingsGoals);
+  const [spendingByCategory, setSpendingByCategory] = useState<SpendingCategory[]>(
+    demoAccount.spendingByCategory,
+  );
+  const [notifications, setNotifications] = useState<Notification[]>(demoAccount.notifications);
   const profile = demoAccount.profile;
 
   useEffect(() => {
@@ -34,6 +48,10 @@ export function BankProvider({ children }: { children: ReactNode }) {
     setAccounts(nextAccount.accounts);
     setTransactions(nextAccount.initialTransactions);
     setCards(nextAccount.cards);
+    setCryptoHoldings(nextAccount.cryptoHoldings);
+    setSavingsGoals(nextAccount.savingsGoals);
+    setSpendingByCategory(nextAccount.spendingByCategory);
+    setNotifications(nextAccount.notifications);
   }, [accountUsername]);
 
   const value = useMemo<BankState>(() => {
@@ -43,6 +61,10 @@ export function BankProvider({ children }: { children: ReactNode }) {
       accounts,
       transactions,
       cards,
+      cryptoHoldings,
+      savingsGoals,
+      spendingByCategory,
+      notifications,
       profile,
       totalBalance,
       transfer: ({ recipient, amount, note, from }) => {
@@ -67,7 +89,16 @@ export function BankProvider({ children }: { children: ReactNode }) {
       setLimit: (cardId, limit) =>
         setCards((prev) => prev.map((c) => (c.id === cardId ? { ...c, limit } : c))),
     };
-  }, [accounts, transactions, cards, profile]);
+  }, [
+    accounts,
+    transactions,
+    cards,
+    cryptoHoldings,
+    savingsGoals,
+    spendingByCategory,
+    notifications,
+    profile,
+  ]);
 
   return <BankContext.Provider value={value}>{children}</BankContext.Provider>;
 }
