@@ -37,6 +37,13 @@ export interface Profile {
   memberSince: string;
   tier: string;
   avatar?: string;
+  dateOfBirth?: string;
+  phone?: string;
+  state?: string;
+  city?: string;
+  gender?: string;
+  occupation?: string;
+  address?: string;
 }
 
 export const profile: Profile = {
@@ -183,6 +190,8 @@ export const cards = [
   },
 ];
 
+export type Card = (typeof cards)[number];
+
 export const cryptoHoldings = [
   {
     symbol: "BTC",
@@ -259,3 +268,71 @@ export const notifications = [
     unread: false,
   },
 ];
+
+export interface DemoAccount {
+  credentials: {
+    username: string;
+    loginPin: string;
+    transactionPin: string;
+  };
+  profile: Profile;
+  accounts: Account[];
+  initialTransactions: Transaction[];
+  cards: Card[];
+}
+
+export const demoAccounts: DemoAccount[] = [
+  { credentials: accountCredentials, profile, accounts, initialTransactions, cards },
+  {
+    credentials: {
+      username: "soniadembo23",
+      loginPin: "2000",
+      transactionPin: "2000",
+    },
+    profile: {
+      fullName: "William Moses Thomas",
+      username: "soniadembo23",
+      email: "soniademboacc@gmail.com",
+      country: "USA",
+      currency: "USD — US dollars",
+      language: "English",
+      memberSince: "2026",
+      tier: "Signature",
+      dateOfBirth: "12/02/1950",
+      phone: "+12105437173",
+      state: "Kentucky",
+      city: "Louisville",
+      gender: "Male",
+      occupation: "Construction management",
+      address: "7310 Vaughn Mill Rd, Louisville, KY",
+    },
+    accounts: [
+      {
+        id: "william-checking",
+        name: "Available balance",
+        type: "Checking",
+        number: "0000 1000",
+        balance: 1000,
+      },
+    ],
+    initialTransactions: [],
+    cards: [
+      {
+        id: "william-card",
+        label: "BestCash Classic",
+        holder: "WILLIAM MOSES THOMAS",
+        number: "4827 9134 2608 7417",
+        expiry: "09/30",
+        network: "BestCash Pay",
+        frozen: false,
+        limit: 1000,
+        spent: 0,
+        physical: true,
+      },
+    ],
+  },
+];
+
+export function getDemoAccount(username?: string | null) {
+  return demoAccounts.find((account) => account.credentials.username === username) ?? demoAccounts[0]!;
+}

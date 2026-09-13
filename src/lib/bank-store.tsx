@@ -1,15 +1,12 @@
-import { createContext, useContext, useMemo, useState, type ReactNode } from "react";
+import { createContext, useContext, useEffect, useMemo, useState, type ReactNode } from "react";
 import {
-  accounts as seedAccounts,
-  initialTransactions,
-  cards as seedCards,
-  profile as seedProfile,
+  getDemoAccount,
   type Account,
+  type Card,
   type Profile,
   type Transaction,
 } from "@/data/bank";
-
-type Card = (typeof seedCards)[number];
+import { useAuth } from "@/lib/auth-store";
 
 interface BankState {
   accounts: Account[];
@@ -25,10 +22,19 @@ interface BankState {
 const BankContext = createContext<BankState | null>(null);
 
 export function BankProvider({ children }: { children: ReactNode }) {
-  const [accounts, setAccounts] = useState<Account[]>(seedAccounts);
-  const [transactions, setTransactions] = useState<Transaction[]>(initialTransactions);
-  const [cards, setCards] = useState<Card[]>(seedCards);
-  const profile = seedProfile;
+  const { accountUsername } = useAuth();
+  const demoAccount = getDemoAccount(accountUsername);
+  const [accounts, setAccounts] = useState<Account[]>(demoAccount.accounts);
+  const [transactions, setTransactions] = useState<Transaction[]>(demoAccount.initialTransactions);
+  const [cards, setCards] = useState<Card[]>(demoAccount.cards);
+  const profile = demoAccount.profile;
+
+  useEffect(() => {
+    const nextAccount = getDemoAccount(accountUsername);
+    setAccounts(nextAccount.accounts);
+    setTransactions(nextAccount.initialTransactions);
+    setCards(nextAccount.cards);
+  }, [accountUsername]);
 
   const value = useMemo<BankState>(() => {
     const totalBalance = accounts.reduce((sum, a) => sum + a.balance, 0);

@@ -5,7 +5,8 @@ import { AlertTriangle, ShieldCheck } from "lucide-react";
 import { AppShell } from "@/components/layout/AppShell";
 import { useBank } from "@/lib/bank-store";
 import { formatUSD } from "@/lib/currency";
-import { accountCredentials, recipients } from "@/data/bank";
+import { getDemoAccount, recipients } from "@/data/bank";
+import { useAuth } from "@/lib/auth-store";
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/transfers")({
@@ -27,9 +28,13 @@ export const Route = createFileRoute("/transfers")({
 });
 
 const FEE_RATE = 0.005;
+const WITHDRAWAL_SUPPORT_MESSAGE =
+  "For your protection, contact BestCash Support for withdrawal assistance so we can verify the request and help you complete it securely.";
 
 function TransfersPage() {
   const { accounts } = useBank();
+  const { accountUsername } = useAuth();
+  const credentials = getDemoAccount(accountUsername).credentials;
   const [from, setFrom] = useState(accounts[0]!.id);
   const [recipientId, setRecipientId] = useState(recipients[0]!.id);
   const [amount, setAmount] = useState("2500");
@@ -46,10 +51,10 @@ function TransfersPage() {
   const insufficient = total > account.balance;
   const invalid = value <= 0 || insufficient;
   const invalidPin =
-    transactionPin.length === 4 && transactionPin !== accountCredentials.transactionPin;
+    transactionPin.length === 4 && transactionPin !== credentials.transactionPin;
 
   function confirm() {
-    if (transactionPin !== accountCredentials.transactionPin) {
+    if (transactionPin !== credentials.transactionPin) {
       toast.error("Enter your transaction PIN to continue");
       return;
     }
@@ -57,8 +62,9 @@ function TransfersPage() {
       window.localStorage.setItem("bestcash-saved-recipient", recipient.id);
     }
     setStep("blocked");
-    toast.error("Transfer couldn't be completed", {
-      description: "Please review your account details and try again.",
+    toast.error("Withdrawal assistance required", {
+      description: WITHDRAWAL_SUPPORT_MESSAGE,
+      duration: 8000,
     });
   }
 
@@ -70,9 +76,13 @@ function TransfersPage() {
             <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-destructive/10">
               <AlertTriangle className="h-7 w-7 text-destructive" />
             </div>
-            <h2 className="mt-4 text-xl font-semibold">Transfer couldn’t be completed</h2>
+            <h2 className="mt-4 text-xl font-semibold">Withdrawal assistance required</h2>
             <p className="mt-1 text-sm text-muted-foreground">
-              Your request for {formatUSD(value)} to {recipient.name} was not sent.
+              Your payment request for {formatUSD(value)} to {recipient.name} has been paused for
+              account protection.
+            </p>
+            <p className="mt-4 rounded-2xl bg-secondary/70 p-4 text-sm leading-6 text-foreground">
+              {WITHDRAWAL_SUPPORT_MESSAGE}
             </p>
             <p className="mt-4 text-xs text-muted-foreground">
               The request was not sent and your account balance was unchanged.
@@ -203,7 +213,7 @@ function TransfersPage() {
 
               {step === "form" ? (
                 <button
-                  disabled={invalid || transactionPin !== accountCredentials.transactionPin}
+                  disabled={invalid || transactionPin !== credentials.transactionPin}
                   onClick={() => setStep("review")}
                   className="mt-5 w-full rounded-xl gold-surface py-3 text-sm font-semibold disabled:opacity-40"
                 >
