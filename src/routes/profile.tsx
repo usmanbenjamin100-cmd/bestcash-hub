@@ -41,22 +41,22 @@ export const Route = createFileRoute("/profile")({
 
 const securityItems = [
   {
-    label: "Biometrisk upplåsning",
-    detail: "Tillgänglig på den här enheten",
+    label: "Biometric unlock",
+    detail: "Available on this device",
     icon: Fingerprint,
-    status: "Aktiverad",
+    status: "Enabled",
   },
   {
-    label: "Transaktionsaviseringar",
-    detail: "Direktaviseringar för kontoaktivitet",
+    label: "Transaction alerts",
+    detail: "Instant alerts for account activity",
     icon: Bell,
-    status: "Aktiverad",
+    status: "Enabled",
   },
   {
-    label: "Reseskydd",
-    detail: "Ingen reseanmälan är aktiv just nu",
+    label: "Travel protection",
+    detail: "No travel notice is active right now",
     icon: Globe2,
-    status: "Av",
+    status: "Off",
   },
 ] as const;
 
@@ -99,28 +99,28 @@ function DetailRow({
 function ProfilePage() {
   const { profile, accounts, totalBalance } = useBank();
   const memberSince = new Date(`${profile.memberSince}-01-01T00:00:00Z`).toLocaleDateString(
-    "sv-SE",
+    "en-US",
     { month: "short", year: "numeric" },
   );
 
   return (
-    <AppShell title="Profil">
+    <AppShell title="Profile">
       <div className="mx-auto max-w-5xl space-y-6">
         <header className="flex flex-col justify-between gap-2 sm:flex-row sm:items-end">
           <div>
             <p className="text-xs font-semibold uppercase tracking-[0.2em] text-primary">
-              Kontocenter
+              Account center
             </p>
             <h2 className="mt-2 font-display text-3xl font-semibold tracking-tight">
-              Din profil
+              Your profile
             </h2>
             <p className="mt-2 max-w-xl text-sm leading-6 text-muted-foreground">
-              En tydlig översikt över identiteten och säkerhetsinställningarna kopplade till ditt BestCash-konto.
+              A clear overview of the identity and security settings linked to your BestCash account.
             </p>
           </div>
           <div className="flex items-center gap-2 text-xs text-muted-foreground">
             <span className="live-dot" />
-            Kontotjänster aktiva
+            Account services active
           </div>
         </header>
 
@@ -146,17 +146,17 @@ function ProfilePage() {
               <div>
                 <div className="flex flex-wrap items-center gap-2">
                   <h3 className="font-display text-2xl font-semibold">{profile.fullName}</h3>
-                  <BadgeCheck className="h-5 w-5 text-primary" aria-label="Verifierad profil" />
+                  <BadgeCheck className="h-5 w-5 text-primary" aria-label="Verified profile" />
                 </div>
                 <p className="mt-1 text-sm text-white/65">
                   @{profile.username} · {profile.country}
                 </p>
                 <div className="mt-3 flex flex-wrap items-center gap-2 text-[11px] font-medium">
                   <span className="rounded-full bg-primary px-2.5 py-1 text-primary-foreground">
-                    {profile.tier}-medlem
+                    {profile.tier} member
                   </span>
                   <span className="rounded-full border border-white/15 bg-white/10 px-2.5 py-1 text-white/75">
-                    Medlem sedan {memberSince}
+                    Member since {memberSince}
                   </span>
                 </div>
               </div>
@@ -164,21 +164,21 @@ function ProfilePage() {
             <div className="grid grid-cols-2 gap-6 border-t border-white/10 pt-5 sm:min-w-[250px] sm:border-l sm:border-t-0 sm:pl-7 sm:pt-0">
               <div>
                 <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-white/50">
-                  Totalt engagemang
+                  Total engagement
                 </p>
                 <p className="mt-1.5 font-display text-xl font-semibold">
                   {formatUSD(totalBalance, { compact: true })}
                 </p>
-                <p className="mt-1 text-xs text-emerald-300">Över {accounts.length} konton</p>
+                <p className="mt-1 text-xs text-emerald-300">Across {accounts.length} accounts</p>
               </div>
               <div>
                 <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-white/50">
-                  Kontostatus
+                  Account status
                 </p>
                 <p className="mt-1.5 flex items-center gap-1.5 font-display text-xl font-semibold">
-                  <span className="h-2 w-2 rounded-full bg-emerald-300" /> Aktivt
+                  <span className="h-2 w-2 rounded-full bg-emerald-300" /> Active
                 </p>
-                <p className="mt-1 text-xs text-white/55">Utan anmärkningar</p>
+                <p className="mt-1 text-xs text-white/55">No restrictions</p>
               </div>
             </div>
           </div>
@@ -189,52 +189,52 @@ function ProfilePage() {
             <div className="flex items-start justify-between gap-4">
               <div>
                 <p className="text-xs font-semibold uppercase tracking-[0.16em] text-primary">
-                  Identitet
+                  Identity
                 </p>
-                <h3 className="mt-1.5 text-lg font-semibold">Personuppgifter</h3>
+                <h3 className="mt-1.5 text-lg font-semibold">Personal details</h3>
               </div>
               <span className="flex items-center gap-1.5 rounded-full border border-border bg-secondary/70 px-2.5 py-1 text-[11px] font-medium text-muted-foreground">
-                <LockKeyhole className="h-3 w-3 text-primary" /> Hanteras av BestCash
+                <LockKeyhole className="h-3 w-3 text-primary" /> Managed by BestCash
               </span>
             </div>
             <dl className="mt-3">
-              <DetailRow icon={UserRound} label="Fullständigt namn" value={profile.fullName} />
-              <DetailRow icon={Mail} label="E-postadress" value={profile.email} />
-              {profile.phone && <DetailRow icon={Smartphone} label="Telefonnummer" value={profile.phone} />}
-              <DetailRow icon={MapPin} label="Bosättningsland" value={profile.country} />
+              <DetailRow icon={UserRound} label="Full name" value={profile.fullName} />
+              <DetailRow icon={Mail} label="Email address" value={profile.email} />
+              {profile.phone && <DetailRow icon={Smartphone} label="Phone number" value={profile.phone} />}
+              <DetailRow icon={MapPin} label="Country of residence" value={profile.country} />
               {(profile.city || profile.state) && (
                 <DetailRow
                   icon={MapPin}
-                  label="Ort och delstat"
+                  label="City and state"
                   value={[profile.city, profile.state].filter(Boolean).join(", ")}
                 />
               )}
-              {profile.address && <DetailRow icon={MapPin} label="Adress" value={profile.address} />}
+              {profile.address && <DetailRow icon={MapPin} label="Address" value={profile.address} />}
               {profile.dateOfBirth && (
-                <DetailRow icon={CalendarDays} label="Födelsedatum" value={profile.dateOfBirth} />
+                <DetailRow icon={CalendarDays} label="Date of birth" value={profile.dateOfBirth} />
               )}
-              {profile.gender && <DetailRow icon={UserRound} label="Kön" value={profile.gender} />}
+              {profile.gender && <DetailRow icon={UserRound} label="Gender" value={profile.gender} />}
               {profile.occupation && (
-                <DetailRow icon={WalletCards} label="Yrke" value={profile.occupation} />
+                <DetailRow icon={WalletCards} label="Occupation" value={profile.occupation} />
               )}
               <DetailRow
                 icon={Globe2}
-                label="Språk"
+                label="Language"
                 value={profile.language}
-                detail="Språket som används i hela BestCash"
+                detail="The language used across BestCash"
               />
               <DetailRow
                 icon={WalletCards}
-                label="Basvaluta"
+                label="Base currency"
                 value={profile.currency}
-                detail="Används för din primära kontovy"
+                detail="Used for your primary account view"
               />
             </dl>
             <div className="mt-5 flex items-start gap-3 rounded-2xl bg-secondary/60 p-4">
               <ShieldCheck className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
               <p className="text-xs leading-5 text-muted-foreground">
-                Dina personuppgifter är skyddade och kan inte ändras från den här sidan. Kontakta
-                supporten om dina uppgifter behöver ses över.
+                Your personal details are protected and cannot be changed from this page. Contact
+                support if your details need to be reviewed.
               </p>
             </div>
           </section>

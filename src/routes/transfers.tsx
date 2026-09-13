@@ -37,7 +37,7 @@ function TransfersPage() {
   const credentials = getAccountRecord(accountUsername).credentials;
   const [from, setFrom] = useState(accounts[0]!.id);
   const [recipientId, setRecipientId] = useState(recipients[0]!.id);
-  const [amount, setAmount] = useState("2500");
+  const [amount, setAmount] = useState("250");
   const [note, setNote] = useState("");
   const [step, setStep] = useState<"form" | "review" | "blocked">("form");
   const [transactionPin, setTransactionPin] = useState("");
@@ -164,7 +164,7 @@ function TransfersPage() {
                   Save this recipient for later transfers
                 </label>
                 <div>
-                  <label className="text-xs text-muted-foreground">Belopp (SEK)</label>
+                  <label className="text-xs text-muted-foreground">Amount (USD)</label>
                   <input
                     inputMode="decimal"
                     value={amount}
@@ -172,13 +172,13 @@ function TransfersPage() {
                     className="mt-1 w-full rounded-xl border border-input bg-background px-3 py-3 font-display text-2xl font-semibold outline-none focus:border-primary"
                   />
                   <div className="mt-2 flex gap-2">
-                    {[1000, 2500, 5000, 10000].map((v) => (
+                    {[100, 250, 500, 1000].map((v) => (
                       <button
                         key={v}
                         onClick={() => setAmount(String(v))}
                         className="rounded-lg border border-border px-3 py-1 text-xs text-muted-foreground hover:border-primary hover:text-foreground"
                       >
-                        {v.toLocaleString("sv-SE")} kr
+                        ${v}
                       </button>
                     ))}
                   </div>
