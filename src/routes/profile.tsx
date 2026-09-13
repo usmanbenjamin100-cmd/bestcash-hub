@@ -99,28 +99,28 @@ function DetailRow({
 function ProfilePage() {
   const { profile, accounts, totalBalance } = useBank();
   const memberSince = new Date(`${profile.memberSince}-01-01T00:00:00Z`).toLocaleDateString(
-    "sv-SE",
+    "en-US",
     { month: "short", year: "numeric" },
   );
 
   return (
-    <AppShell title="Profil">
+    <AppShell title="Profile">
       <div className="mx-auto max-w-5xl space-y-6">
         <header className="flex flex-col justify-between gap-2 sm:flex-row sm:items-end">
           <div>
             <p className="text-xs font-semibold uppercase tracking-[0.2em] text-primary">
-              Kontocenter
+              Account center
             </p>
             <h2 className="mt-2 font-display text-3xl font-semibold tracking-tight">
-              Din profil
+              Your profile
             </h2>
             <p className="mt-2 max-w-xl text-sm leading-6 text-muted-foreground">
-              En tydlig översikt över identiteten och säkerhetsinställningarna kopplade till ditt BestCash-konto.
+              A clear overview of the identity and security settings linked to your BestCash account.
             </p>
           </div>
           <div className="flex items-center gap-2 text-xs text-muted-foreground">
             <span className="live-dot" />
-            Kontotjänster aktiva
+            Account services active
           </div>
         </header>
 
