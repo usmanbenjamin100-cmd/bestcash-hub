@@ -164,21 +164,21 @@ function ProfilePage() {
             <div className="grid grid-cols-2 gap-6 border-t border-white/10 pt-5 sm:min-w-[250px] sm:border-l sm:border-t-0 sm:pl-7 sm:pt-0">
               <div>
                 <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-white/50">
-                  Totalt engagemang
+                  Total engagement
                 </p>
                 <p className="mt-1.5 font-display text-xl font-semibold">
                   {formatUSD(totalBalance, { compact: true })}
                 </p>
-                <p className="mt-1 text-xs text-emerald-300">Över {accounts.length} konton</p>
+                <p className="mt-1 text-xs text-emerald-300">Across {accounts.length} accounts</p>
               </div>
               <div>
                 <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-white/50">
-                  Kontostatus
+                  Account status
                 </p>
                 <p className="mt-1.5 flex items-center gap-1.5 font-display text-xl font-semibold">
-                  <span className="h-2 w-2 rounded-full bg-emerald-300" /> Aktivt
+                  <span className="h-2 w-2 rounded-full bg-emerald-300" /> Active
                 </p>
-                <p className="mt-1 text-xs text-white/55">Utan anmärkningar</p>
+                <p className="mt-1 text-xs text-white/55">No restrictions</p>
               </div>
             </div>
           </div>
