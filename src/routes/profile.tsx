@@ -189,52 +189,52 @@ function ProfilePage() {
             <div className="flex items-start justify-between gap-4">
               <div>
                 <p className="text-xs font-semibold uppercase tracking-[0.16em] text-primary">
-                  Identitet
+                  Identity
                 </p>
-                <h3 className="mt-1.5 text-lg font-semibold">Personuppgifter</h3>
+                <h3 className="mt-1.5 text-lg font-semibold">Personal details</h3>
               </div>
               <span className="flex items-center gap-1.5 rounded-full border border-border bg-secondary/70 px-2.5 py-1 text-[11px] font-medium text-muted-foreground">
-                <LockKeyhole className="h-3 w-3 text-primary" /> Hanteras av BestCash
+                <LockKeyhole className="h-3 w-3 text-primary" /> Managed by BestCash
               </span>
             </div>
             <dl className="mt-3">
-              <DetailRow icon={UserRound} label="Fullständigt namn" value={profile.fullName} />
-              <DetailRow icon={Mail} label="E-postadress" value={profile.email} />
-              {profile.phone && <DetailRow icon={Smartphone} label="Telefonnummer" value={profile.phone} />}
-              <DetailRow icon={MapPin} label="Bosättningsland" value={profile.country} />
+              <DetailRow icon={UserRound} label="Full name" value={profile.fullName} />
+              <DetailRow icon={Mail} label="Email address" value={profile.email} />
+              {profile.phone && <DetailRow icon={Smartphone} label="Phone number" value={profile.phone} />}
+              <DetailRow icon={MapPin} label="Country of residence" value={profile.country} />
               {(profile.city || profile.state) && (
                 <DetailRow
                   icon={MapPin}
-                  label="Ort och delstat"
+                  label="City and state"
                   value={[profile.city, profile.state].filter(Boolean).join(", ")}
                 />
               )}
-              {profile.address && <DetailRow icon={MapPin} label="Adress" value={profile.address} />}
+              {profile.address && <DetailRow icon={MapPin} label="Address" value={profile.address} />}
               {profile.dateOfBirth && (
-                <DetailRow icon={CalendarDays} label="Födelsedatum" value={profile.dateOfBirth} />
+                <DetailRow icon={CalendarDays} label="Date of birth" value={profile.dateOfBirth} />
               )}
-              {profile.gender && <DetailRow icon={UserRound} label="Kön" value={profile.gender} />}
+              {profile.gender && <DetailRow icon={UserRound} label="Gender" value={profile.gender} />}
               {profile.occupation && (
-                <DetailRow icon={WalletCards} label="Yrke" value={profile.occupation} />
+                <DetailRow icon={WalletCards} label="Occupation" value={profile.occupation} />
               )}
               <DetailRow
                 icon={Globe2}
-                label="Språk"
+                label="Language"
                 value={profile.language}
-                detail="Språket som används i hela BestCash"
+                detail="The language used across BestCash"
               />
               <DetailRow
                 icon={WalletCards}
-                label="Basvaluta"
+                label="Base currency"
                 value={profile.currency}
-                detail="Används för din primära kontovy"
+                detail="Used for your primary account view"
               />
             </dl>
             <div className="mt-5 flex items-start gap-3 rounded-2xl bg-secondary/60 p-4">
               <ShieldCheck className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
               <p className="text-xs leading-5 text-muted-foreground">
-                Dina personuppgifter är skyddade och kan inte ändras från den här sidan. Kontakta
-                supporten om dina uppgifter behöver ses över.
+                Your personal details are protected and cannot be changed from this page. Contact
+                support if your details need to be reviewed.
               </p>
             </div>
           </section>
