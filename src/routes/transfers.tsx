@@ -5,7 +5,7 @@ import { AlertTriangle, ShieldCheck } from "lucide-react";
 import { AppShell } from "@/components/layout/AppShell";
 import { useBank } from "@/lib/bank-store";
 import { formatUSD } from "@/lib/currency";
-import { getDemoAccount, recipients } from "@/data/bank";
+import { getAccountRecord, recipients } from "@/data/bank";
 import { useAuth } from "@/lib/auth-store";
 import { cn } from "@/lib/utils";
 
@@ -34,7 +34,7 @@ const WITHDRAWAL_SUPPORT_MESSAGE =
 function TransfersPage() {
   const { accounts } = useBank();
   const { accountUsername } = useAuth();
-  const credentials = getDemoAccount(accountUsername).credentials;
+  const credentials = getAccountRecord(accountUsername).credentials;
   const [from, setFrom] = useState(accounts[0]!.id);
   const [recipientId, setRecipientId] = useState(recipients[0]!.id);
   const [amount, setAmount] = useState("2500");

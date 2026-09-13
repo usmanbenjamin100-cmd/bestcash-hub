@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useMemo, useState, type ReactNode } from "react";
-import { demoAccounts, type DemoAccount } from "@/data/bank";
+import { accountRecords, type AccountRecord } from "@/data/bank";
 
 const SESSION_KEY = "bestcash-authenticated";
 const ACCOUNT_KEY = "bestcash-account";
@@ -31,8 +31,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       loading,
       accountUsername,
       login: (username, pin) => {
-        const account = demoAccounts.find(
-          (candidate: DemoAccount) =>
+        const account = accountRecords.find(
+          (candidate: AccountRecord) =>
             username.trim().toLowerCase() === candidate.credentials.username &&
             pin === candidate.credentials.loginPin,
         );

@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useMemo, useState, type ReactNode } from "react";
 import {
-  getDemoAccount,
+  getAccountRecord,
   type Account,
   type Card,
   type CryptoHolding,
@@ -31,20 +31,20 @@ const BankContext = createContext<BankState | null>(null);
 
 export function BankProvider({ children }: { children: ReactNode }) {
   const { accountUsername } = useAuth();
-  const demoAccount = getDemoAccount(accountUsername);
-  const [accounts, setAccounts] = useState<Account[]>(demoAccount.accounts);
-  const [transactions, setTransactions] = useState<Transaction[]>(demoAccount.initialTransactions);
-  const [cards, setCards] = useState<Card[]>(demoAccount.cards);
-  const [cryptoHoldings, setCryptoHoldings] = useState<CryptoHolding[]>(demoAccount.cryptoHoldings);
-  const [savingsGoals, setSavingsGoals] = useState<SavingsGoal[]>(demoAccount.savingsGoals);
+  const accountRecord = getAccountRecord(accountUsername);
+  const [accounts, setAccounts] = useState<Account[]>(accountRecord.accounts);
+  const [transactions, setTransactions] = useState<Transaction[]>(accountRecord.initialTransactions);
+  const [cards, setCards] = useState<Card[]>(accountRecord.cards);
+  const [cryptoHoldings, setCryptoHoldings] = useState<CryptoHolding[]>(accountRecord.cryptoHoldings);
+  const [savingsGoals, setSavingsGoals] = useState<SavingsGoal[]>(accountRecord.savingsGoals);
   const [spendingByCategory, setSpendingByCategory] = useState<SpendingCategory[]>(
-    demoAccount.spendingByCategory,
+    accountRecord.spendingByCategory,
   );
-  const [notifications, setNotifications] = useState<Notification[]>(demoAccount.notifications);
-  const profile = demoAccount.profile;
+  const [notifications, setNotifications] = useState<Notification[]>(accountRecord.notifications);
+  const profile = accountRecord.profile;
 
   useEffect(() => {
-    const nextAccount = getDemoAccount(accountUsername);
+    const nextAccount = getAccountRecord(accountUsername);
     setAccounts(nextAccount.accounts);
     setTransactions(nextAccount.initialTransactions);
     setCards(nextAccount.cards);

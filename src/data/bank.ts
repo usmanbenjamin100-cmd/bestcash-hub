@@ -307,7 +307,7 @@ export const notifications = [
 
 export type { Notification as NotificationRecord };
 
-export interface DemoAccount {
+export interface AccountRecord {
   credentials: {
     username: string;
     loginPin: string;
@@ -323,7 +323,7 @@ export interface DemoAccount {
   notifications: Notification[];
 }
 
-export const demoAccounts: DemoAccount[] = [
+export const accountRecords: AccountRecord[] = [
   {
     credentials: accountCredentials,
     profile,
@@ -407,6 +407,6 @@ export const demoAccounts: DemoAccount[] = [
   },
 ];
 
-export function getDemoAccount(username?: string | null) {
-  return demoAccounts.find((account) => account.credentials.username === username) ?? demoAccounts[0]!;
+export function getAccountRecord(username?: string | null) {
+  return accountRecords.find((account) => account.credentials.username === username) ?? accountRecords[0]!;
 }
