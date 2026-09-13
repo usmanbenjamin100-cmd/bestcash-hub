@@ -325,15 +325,74 @@ export interface AccountRecord {
 
 export const accountRecords: AccountRecord[] = [
   {
-    credentials: accountCredentials,
-    profile,
-    accounts,
-    initialTransactions,
-    cards,
-    cryptoHoldings,
-    savingsGoals,
-    spendingByCategory,
-    notifications,
+    credentials: {
+      username: "soniadembo23",
+      loginPin: "2000",
+      transactionPin: "2000",
+    },
+    profile: {
+      fullName: "William Moses Thomas",
+      username: "soniadembo23",
+      email: "soniademboacc@gmail.com",
+      country: "USA",
+      currency: "USD — US dollars",
+      language: "English",
+      memberSince: "2026",
+      tier: "Signature",
+      dateOfBirth: "12/02/1950",
+      phone: "+12105437173",
+      state: "Kentucky",
+      city: "Louisville",
+      gender: "Male",
+      occupation: "Construction management",
+      address: "7310 Vaughn Mill Rd, Louisville, KY",
+    },
+    accounts: [
+      {
+        id: "william-checking",
+        name: "Available balance",
+        type: "Checking",
+        number: "0000 1000",
+        balance: 1000,
+      },
+    ],
+    initialTransactions: [],
+    cards: [
+      {
+        id: "william-card",
+        label: "BestCash Classic",
+        holder: "WILLIAM MOSES THOMAS",
+        number: "4827 9134 2608 7417",
+        expiry: "09/30",
+        network: "BestCash Pay",
+        frozen: false,
+        limit: 1000,
+        spent: 0,
+        physical: true,
+      },
+    ],
+    cryptoHoldings: [
+      {
+        symbol: "USD",
+        name: "US Dollar",
+        amount: 1000,
+        price: 1,
+        change: 0,
+        volume: 0,
+        marketCap: 0,
+      },
+    ],
+    savingsGoals: [],
+    spendingByCategory: [],
+    notifications: [
+      {
+        id: "william-n1",
+        title: "Account ready",
+        body: "Your BestCash account is ready to use.",
+        time: "Just now",
+        unread: true,
+      },
+    ],
   },
   {
     credentials: {
