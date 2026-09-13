@@ -41,22 +41,22 @@ export const Route = createFileRoute("/profile")({
 
 const securityItems = [
   {
-    label: "Biometrisk upplåsning",
-    detail: "Tillgänglig på den här enheten",
+    label: "Biometric unlock",
+    detail: "Available on this device",
     icon: Fingerprint,
-    status: "Aktiverad",
+    status: "Enabled",
   },
   {
-    label: "Transaktionsaviseringar",
-    detail: "Direktaviseringar för kontoaktivitet",
+    label: "Transaction alerts",
+    detail: "Instant alerts for account activity",
     icon: Bell,
-    status: "Aktiverad",
+    status: "Enabled",
   },
   {
-    label: "Reseskydd",
-    detail: "Ingen reseanmälan är aktiv just nu",
+    label: "Travel protection",
+    detail: "No travel notice is active right now",
     icon: Globe2,
-    status: "Av",
+    status: "Off",
   },
 ] as const;
 
