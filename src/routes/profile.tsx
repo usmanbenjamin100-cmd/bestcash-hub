@@ -146,17 +146,17 @@ function ProfilePage() {
               <div>
                 <div className="flex flex-wrap items-center gap-2">
                   <h3 className="font-display text-2xl font-semibold">{profile.fullName}</h3>
-                  <BadgeCheck className="h-5 w-5 text-primary" aria-label="Verifierad profil" />
+                  <BadgeCheck className="h-5 w-5 text-primary" aria-label="Verified profile" />
                 </div>
                 <p className="mt-1 text-sm text-white/65">
                   @{profile.username} · {profile.country}
                 </p>
                 <div className="mt-3 flex flex-wrap items-center gap-2 text-[11px] font-medium">
                   <span className="rounded-full bg-primary px-2.5 py-1 text-primary-foreground">
-                    {profile.tier}-medlem
+                    {profile.tier} member
                   </span>
                   <span className="rounded-full border border-white/15 bg-white/10 px-2.5 py-1 text-white/75">
-                    Medlem sedan {memberSince}
+                    Member since {memberSince}
                   </span>
                 </div>
               </div>
