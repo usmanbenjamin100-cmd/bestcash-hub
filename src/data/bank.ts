@@ -101,7 +101,13 @@ export const accounts: Account[] = [
     number: "0000 1111",
     balance: 3047343.25,
   },
-  { id: "acc-2", name: "Growth Savings", type: "Savings", number: "0000 2222", balance: 3047343.25 },
+  {
+    id: "acc-2",
+    name: "Growth Savings",
+    type: "Savings",
+    number: "0000 2222",
+    balance: 3047343.25,
+  },
   {
     id: "acc-3",
     name: "Index Portfolio",
@@ -396,6 +402,23 @@ export const accountRecords: AccountRecord[] = [
   },
 ];
 
+function normalizeLoginIdentifier(identifier: string) {
+  return identifier.trim().toLowerCase();
+}
+
+export function findAccountRecord(identifier?: string | null) {
+  if (!identifier?.trim()) return undefined;
+
+  const normalizedIdentifier = normalizeLoginIdentifier(identifier);
+  return accountRecords.find((account) => {
+    const usernameMatches =
+      normalizeLoginIdentifier(account.credentials.username) === normalizedIdentifier ||
+      normalizeLoginIdentifier(account.profile.username) === normalizedIdentifier;
+    const emailMatches = normalizeLoginIdentifier(account.profile.email) === normalizedIdentifier;
+    return usernameMatches || emailMatches;
+  });
+}
+
 export function getAccountRecord(username?: string | null) {
-  return accountRecords.find((account) => account.credentials.username === username) ?? accountRecords[0]!;
+  return findAccountRecord(username) ?? accountRecords[0]!;
 }

@@ -83,12 +83,14 @@ function LoginPage() {
             </p>
             <form onSubmit={submit} className="mt-8 space-y-5">
               <label className="block text-sm font-medium">
-                Username
+                Username or email
                 <span className="relative mt-2 block">
                   <UserRound className="pointer-events-none absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
                   <input
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
+                    autoComplete="username"
+                    placeholder="Enter your username or email"
                     className="w-full rounded-xl border border-input bg-card py-3 pl-10 pr-3 text-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/15"
                   />
                 </span>
@@ -101,6 +103,8 @@ function LoginPage() {
                     type={showPin ? "text" : "password"}
                     value={pin}
                     onChange={(e) => setPin(e.target.value)}
+                    autoComplete="current-password"
+                    inputMode="numeric"
                     className="w-full rounded-xl border border-input bg-card py-3 pl-10 pr-11 text-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/15"
                   />
                   <button
