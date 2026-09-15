@@ -1,9 +1,20 @@
+function activeMoneyFormat() {
+  const isCanadianAccount =
+    typeof window !== "undefined" &&
+    window.localStorage.getItem("bestcash-account") === "keanureeves22333";
+
+  return isCanadianAccount
+    ? { locale: "en-CA", currency: "CAD" }
+    : { locale: "en-US", currency: "USD" };
+}
+
 export function formatUSD(amount: number, opts: { compact?: boolean } = {}) {
-  return new Intl.NumberFormat("en-US", {
+  const { locale, currency } = activeMoneyFormat();
+  return new Intl.NumberFormat(locale, {
     style: "currency",
-    currency: "USD",
+    currency,
     notation: opts.compact ? "compact" : "standard",
-    maximumFractionDigits: opts.compact ? 2 : 2,
+    maximumFractionDigits: 2,
     minimumFractionDigits: opts.compact ? 0 : 2,
   }).format(amount);
 }
