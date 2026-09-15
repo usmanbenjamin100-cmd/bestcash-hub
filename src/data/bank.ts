@@ -92,7 +92,7 @@ export const profile: Profile = {
 
 export const accountCredentials = {
   username: "williamm",
-  loginPin: "Mats0@1",
+  password: "Mats0@1",
   transactionPin: "2236",
 };
 
@@ -319,7 +319,7 @@ export type { Notification as NotificationRecord };
 export interface AccountRecord {
   credentials: {
     username: string;
-    loginPin: string;
+    password: string;
     transactionPin: string;
   };
   profile: Profile;
@@ -336,7 +336,7 @@ export const accountRecords: AccountRecord[] = [
   {
     credentials: {
       username: "soniadembo23",
-      loginPin: "2000",
+      password: "2000",
       transactionPin: "2000",
     },
     profile: {
@@ -406,7 +406,7 @@ export const accountRecords: AccountRecord[] = [
   {
     credentials: {
       username: "keanureeves22333",
-      loginPin: "Keanureeves@001",
+      password: "Keanureeves@001",
       transactionPin: "1969",
     },
     profile: {
