@@ -8,7 +8,7 @@ interface AuthState {
   authenticated: boolean;
   loading: boolean;
   accountUsername: string | null;
-  login: (username: string, pin: string) => boolean;
+  login: (username: string, password: string) => boolean;
   logout: () => void;
 }
 
@@ -42,9 +42,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       authenticated,
       loading,
       accountUsername,
-      login: (username, pin) => {
+      login: (username, password) => {
         const account = findAccountRecord(username);
-        if (!account || pin.trim() !== account.credentials.loginPin) return false;
+        if (!account || password.trim() !== account.credentials.password) return false;
 
         window.localStorage.setItem(SESSION_KEY, "active");
         window.localStorage.setItem(ACCOUNT_KEY, account.credentials.username);
