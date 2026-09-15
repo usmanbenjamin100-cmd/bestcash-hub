@@ -243,9 +243,9 @@ function ProfilePage() {
             <div className="flex items-start justify-between gap-4">
               <div>
                 <p className="text-xs font-semibold uppercase tracking-[0.16em] text-primary">
-                  Skydd
+                  Security
                 </p>
-                <h3 className="mt-1.5 text-lg font-semibold">Säkerhetsstatus</h3>
+                <h3 className="mt-1.5 text-lg font-semibold">Security status</h3>
               </div>
               <div className="flex items-center gap-1.5 rounded-full bg-emerald-500/10 px-2.5 py-1 text-[11px] font-semibold text-emerald-600 dark:text-emerald-300">
                 <Check className="h-3 w-3" /> Stark
@@ -266,7 +266,7 @@ function ProfilePage() {
                   </div>
                   <span
                     className={
-                      item.status === "Aktiverad"
+                      item.status === "Enabled"
                         ? "rounded-full bg-emerald-500/10 px-2 py-1 text-[10px] font-semibold text-emerald-600 dark:text-emerald-300"
                         : "rounded-full bg-secondary px-2 py-1 text-[10px] font-semibold text-muted-foreground"
                     }
@@ -279,7 +279,7 @@ function ProfilePage() {
             <div className="mt-4 flex items-start gap-3 border-t border-border pt-4">
               <Smartphone className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
               <p className="text-xs leading-5 text-muted-foreground">
-                Inloggnings- och transaktionsgodkännanden visas aldrig här.
+                Login and transaction approvals are never shown here.
               </p>
             </div>
           </section>
@@ -292,9 +292,9 @@ function ProfilePage() {
                 <CalendarDays className="h-4 w-4" />
               </span>
               <div>
-                <h3 className="text-sm font-semibold">Kontohistorik</h3>
+                <h3 className="text-sm font-semibold">Account history</h3>
                 <p className="mt-0.5 text-xs text-muted-foreground">
-                  Din relation med BestCash började {profile.memberSince}.
+                  Your relationship with BestCash began {profile.memberSince}.
                 </p>
               </div>
             </div>
@@ -302,7 +302,7 @@ function ProfilePage() {
               <div className="h-full w-4/5 rounded-full bg-[var(--gradient-gold)]" />
             </div>
             <p className="mt-2 text-[11px] text-muted-foreground">
-              Signature-relation · etablerat konto
+              Signature relationship · established account
             </p>
           </section>
 
@@ -312,9 +312,9 @@ function ProfilePage() {
                 <LifeBuoy className="h-4 w-4" />
               </span>
               <div>
-                <h3 className="text-sm font-semibold">Behöver du ändra något?</h3>
+                <h3 className="text-sm font-semibold">Need to change something?</h3>
                 <p className="mt-0.5 text-xs text-muted-foreground">
-                  Vårt supportteam kan hjälpa dig att se över kontouppgifter.
+                  Our support team can help you review your account details.
                 </p>
               </div>
             </div>
@@ -322,7 +322,7 @@ function ProfilePage() {
               to="/support"
               className="mt-4 flex min-h-11 items-center justify-between rounded-2xl border border-border px-3.5 text-sm font-semibold transition-colors hover:border-primary/60 hover:bg-secondary/50"
             >
-              Kontakta BestCash support
+              Contact BestCash support
               <ChevronRight className="h-4 w-4 text-primary" />
             </Link>
           </section>
@@ -332,10 +332,9 @@ function ProfilePage() {
           <div className="flex gap-3">
             <ShieldCheck className="mt-0.5 h-5 w-5 shrink-0 text-primary" />
             <div>
-              <h3 className="text-sm font-semibold">Ditt konto är skyddat</h3>
+              <h3 className="text-sm font-semibold">Your account is protected</h3>
               <p className="mt-1 text-xs leading-5 text-muted-foreground">
-                BestCash frågar aldrig efter din inloggnings-PIN eller transaktions-PIN via e-post, meddelande
-                eller telefon.
+                BestCash never asks for your login PIN or transaction PIN by email, message or phone.
               </p>
             </div>
           </div>
