@@ -96,7 +96,7 @@ function LoginPage() {
                 </span>
               </label>
               <label className="block text-sm font-medium">
-                Login PIN
+                Password or login PIN
                 <span className="relative mt-2 block">
                   <LockKeyhole className="pointer-events-none absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
                   <input
@@ -104,7 +104,6 @@ function LoginPage() {
                     value={pin}
                     onChange={(e) => setPin(e.target.value)}
                     autoComplete="current-password"
-                    inputMode="numeric"
                     className="w-full rounded-xl border border-input bg-card py-3 pl-10 pr-11 text-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/15"
                   />
                   <button
