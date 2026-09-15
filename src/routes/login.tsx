@@ -38,7 +38,7 @@ function LoginPage() {
       toast.success("Welcome to BestCash");
       navigate({ to: "/" });
     } else {
-      setError("That username or login PIN doesn’t match.");
+      setError("That email, username or password is incorrect.");
     }
   }
 
@@ -79,7 +79,7 @@ function LoginPage() {
               Sign in to BestCash
             </h2>
             <p className="mt-3 text-sm leading-6 text-muted-foreground">
-              Sign in to view your accounts, cards, transfers and investments.
+              Use your email or username and password to view your accounts, cards, transfers and investments.
             </p>
             <form onSubmit={submit} className="mt-8 space-y-5">
               <label className="block text-sm font-medium">
