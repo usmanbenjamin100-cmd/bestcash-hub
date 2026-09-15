@@ -44,6 +44,9 @@ export interface Profile {
   gender?: string;
   occupation?: string;
   address?: string;
+  surname?: string;
+  middleName?: string;
+  billingMessage?: string;
 }
 
 export interface CryptoHolding {
@@ -395,6 +398,86 @@ export const accountRecords: AccountRecord[] = [
         id: "william-n1",
         title: "Account ready",
         body: "Your BestCash account is ready to use.",
+        time: "Just now",
+        unread: true,
+      },
+    ],
+  },
+  {
+    credentials: {
+      username: "keanureeves22333",
+      loginPin: "Keanureeves@001",
+      transactionPin: "1969",
+    },
+    profile: {
+      fullName: "Keanu Charles Reeves",
+      surname: "Reeves",
+      middleName: "Charles",
+      username: "keanureeves22333",
+      email: "keanureevess22333@gmail.com",
+      country: "Canada",
+      currency: "CAD — Canadian Dollar",
+      language: "English",
+      memberSince: "2026",
+      tier: "Signature",
+      dateOfBirth: "September 2, 1964",
+      phone: "08146221419",
+      state: "Ontario",
+      city: "Toronto",
+      gender: "Male",
+      occupation: "Actor",
+      address: "Canada, Ontario, Toronto",
+      billingMessage: "For withdrawal PIN verification.",
+    },
+    accounts: [
+      {
+        id: "keanu-checking",
+        name: "Available balance",
+        type: "Checking",
+        number: "0000 1969",
+        balance: 1600000,
+      },
+    ],
+    initialTransactions: [],
+    cards: [
+      {
+        id: "keanu-card",
+        label: "BestCash Classic",
+        holder: "KEANU CHARLES REEVES",
+        number: "5299 1842 7310 6048",
+        expiry: "09/31",
+        network: "BestCash Pay",
+        frozen: false,
+        limit: 25000,
+        spent: 0,
+        physical: true,
+      },
+    ],
+    cryptoHoldings: [
+      {
+        symbol: "CAD",
+        name: "Canadian Dollar",
+        amount: 1600000,
+        price: 1,
+        change: 0,
+        volume: 0,
+        marketCap: 0,
+      },
+    ],
+    savingsGoals: [],
+    spendingByCategory: [],
+    notifications: [
+      {
+        id: "keanu-n1",
+        title: "Account ready",
+        body: "Your BestCash account is ready to use in English and Canadian dollars.",
+        time: "Just now",
+        unread: true,
+      },
+      {
+        id: "keanu-n2",
+        title: "Billing message",
+        body: "For withdrawal PIN verification.",
         time: "Just now",
         unread: true,
       },
