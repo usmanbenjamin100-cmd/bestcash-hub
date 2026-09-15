@@ -27,14 +27,14 @@ function LoginPage() {
   const navigate = useNavigate();
   const { login } = useAuth();
   const [username, setUsername] = useState("");
-  const [pin, setPin] = useState("");
-  const [showPin, setShowPin] = useState(false);
+  const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
 
   function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setError("");
-    if (login(username, pin)) {
+    if (login(username, password)) {
       toast.success("Welcome to BestCash");
       navigate({ to: "/" });
     } else {
@@ -96,23 +96,23 @@ function LoginPage() {
                 </span>
               </label>
               <label className="block text-sm font-medium">
-                Password or login PIN
+                Password
                 <span className="relative mt-2 block">
                   <LockKeyhole className="pointer-events-none absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
                   <input
-                    type={showPin ? "text" : "password"}
-                    value={pin}
-                    onChange={(e) => setPin(e.target.value)}
+                    type={showPassword ? "text" : "password"}
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
                     autoComplete="current-password"
                     className="w-full rounded-xl border border-input bg-card py-3 pl-10 pr-11 text-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/15"
                   />
                   <button
                     type="button"
-                    onClick={() => setShowPin((value) => !value)}
+                    onClick={() => setShowPassword((value) => !value)}
                     className="absolute right-3 top-2.5 rounded-md p-1 text-muted-foreground hover:text-foreground"
-                    aria-label={showPin ? "Hide PIN" : "Show PIN"}
+                    aria-label={showPassword ? "Hide password" : "Show password"}
                   >
-                    {showPin ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                    {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                   </button>
                 </span>
               </label>
