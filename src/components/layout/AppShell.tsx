@@ -17,12 +17,12 @@ import { useBank } from "@/lib/bank-store";
 import { useAuth } from "@/lib/auth-store";
 
 const nav = [
-  { to: "/", label: "Översikt", icon: LayoutDashboard },
-  { to: "/transfers", label: "Överföringar", icon: ArrowLeftRight },
-  { to: "/cards", label: "Kort", icon: CreditCard },
-  { to: "/history", label: "Historik", icon: Receipt },
-  { to: "/crypto", label: "Krypto", icon: Bitcoin },
-  { to: "/profile", label: "Profil", icon: User },
+  { to: "/", label: "Overview", icon: LayoutDashboard },
+  { to: "/transfers", label: "Transfers", icon: ArrowLeftRight },
+  { to: "/cards", label: "Cards", icon: CreditCard },
+  { to: "/history", label: "History", icon: Receipt },
+  { to: "/crypto", label: "Crypto", icon: Bitcoin },
+  { to: "/profile", label: "Profile", icon: User },
   { to: "/support", label: "Support", icon: LifeBuoy },
 ] as const;
 
@@ -61,13 +61,13 @@ export function AppShell({ title, children }: { title: string; children: ReactNo
             })}
           </nav>
           <div className="mt-auto rounded-2xl border border-sidebar-border bg-sidebar-accent p-3 text-xs leading-relaxed text-sidebar-foreground/70">
-            BestCash kontotjänster, kort och överföringar
+            BestCash account services, cards and transfers
           </div>
           <button
             onClick={logout}
             className="mt-3 flex items-center gap-2 px-2 text-xs font-medium text-sidebar-foreground/60 hover:text-sidebar-foreground"
           >
-            <LogOut className="h-3.5 w-3.5" /> Logga ut
+            <LogOut className="h-3.5 w-3.5" /> Log out
           </button>
         </aside>
 
@@ -101,11 +101,20 @@ export function AppShell({ title, children }: { title: string; children: ReactNo
               <Link
                 to="/notifications"
                 className="relative rounded-full border border-border p-2 text-muted-foreground transition-colors hover:text-foreground"
-                aria-label="Aviseringar"
+                aria-label="Notifications"
               >
                 <Bell className="h-4.5 w-4.5" />
                 <span className="absolute right-1.5 top-1.5 h-2 w-2 rounded-full bg-accent" />
               </Link>
+              <button
+                type="button"
+                onClick={logout}
+                className="flex items-center gap-1.5 rounded-full border border-border px-2.5 py-2 text-xs font-semibold text-muted-foreground transition-colors hover:border-primary/60 hover:text-foreground sm:px-3"
+                aria-label="Log out"
+              >
+                <LogOut className="h-4 w-4" />
+                <span className="hidden sm:inline">Log out</span>
+              </button>
             </div>
           </header>
 
