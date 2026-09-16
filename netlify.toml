@@ -1,0 +1,9 @@
+# TanStack Start + Nitro build.
+# On Netlify, Nitro auto-selects its `netlify` preset: the prerendered/static
+# client assets are emitted to `dist/`, while the SSR handler is emitted to
+# `.netlify/functions-internal/server/` (picked up automatically). The
+# `dist/client` layout only applies to Lovable sandbox builds, so `publish`
+# must point at `dist`.
+[build]
+  command = "bun run build"
+  publish = "dist"
