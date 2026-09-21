@@ -182,7 +182,7 @@ function SupportPage() {
               )}
               {supportContacts.telegram && (
                 <a
-                  href={`https://t.me/${supportContacts.telegram.replace(/\D/g, "")}`}
+                  href={`https://t.me/+${supportContacts.telegram.replace(/\D/g, "")}`}
                   target="_blank"
                   rel="noreferrer"
                   className="flex items-center gap-3 rounded-xl border border-border p-4 transition-colors hover:bg-secondary/60"
