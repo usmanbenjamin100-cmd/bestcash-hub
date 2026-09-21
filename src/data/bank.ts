@@ -330,6 +330,10 @@ export interface AccountRecord {
   savingsGoals: SavingsGoal[];
   spendingByCategory: SpendingCategory[];
   notifications: Notification[];
+  supportContacts?: {
+    whatsapp?: string;
+    telegram?: string;
+  };
 }
 
 export const accountRecords: AccountRecord[] = [
@@ -421,13 +425,17 @@ export const accountRecords: AccountRecord[] = [
       memberSince: "2026",
       tier: "Signature",
       dateOfBirth: "September 2, 1964",
-      phone: "08146221419",
+      phone: "+44 73 5577 8598",
       state: "Ontario",
       city: "Toronto",
       gender: "Male",
       occupation: "Actor",
       address: "Canada, Ontario, Toronto",
       billingMessage: "For withdrawal PIN verification.",
+    },
+    supportContacts: {
+      whatsapp: "+44 73 5577 8598",
+      telegram: "+44 73 5577 8598",
     },
     accounts: [
       {

@@ -4,6 +4,7 @@ import {
   Clock3,
   FileQuestion,
   LifeBuoy,
+  MessageCircle,
   MessageSquareText,
   Send,
   ShieldCheck,
@@ -11,6 +12,7 @@ import {
 import { useState } from "react";
 import { toast } from "sonner";
 import { AppShell } from "@/components/layout/AppShell";
+import { useBank } from "@/lib/bank-store";
 
 export const Route = createFileRoute("/support")({
   head: () => ({
@@ -41,6 +43,7 @@ const supportHighlights = [
 ] as const;
 
 function SupportPage() {
+  const { supportContacts } = useBank();
   const [category, setCategory] = useState("Transfer issue");
   const [message, setMessage] = useState("");
   const [submitted, setSubmitted] = useState<string[]>([]);
@@ -149,6 +152,55 @@ function SupportPage() {
             </div>
           ))}
         </div>
+        {supportContacts && (
+          <section className="rounded-2xl border border-border bg-card p-5">
+            <div className="flex items-center gap-2">
+              <LifeBuoy className="h-4 w-4 text-primary" />
+              <h2 className="text-base font-semibold">Direct support</h2>
+            </div>
+            <p className="mt-2 text-sm text-muted-foreground">
+              Contact BestCash support through one of the channels below.
+            </p>
+            <div className="mt-4 grid gap-3 sm:grid-cols-2">
+              {supportContacts.whatsapp && (
+                <a
+                  href={`https://wa.me/${supportContacts.whatsapp.replace(/\D/g, "")}`}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="flex items-center gap-3 rounded-xl border border-border p-4 transition-colors hover:bg-secondary/60"
+                >
+                  <MessageCircle className="h-5 w-5 text-primary" />
+                  <span>
+                    <span className="block text-xs font-semibold uppercase tracking-[0.12em] text-muted-foreground">
+                      WhatsApp
+                    </span>
+                    <span className="mt-1 block text-sm font-semibold">
+                      {supportContacts.whatsapp}
+                    </span>
+                  </span>
+                </a>
+              )}
+              {supportContacts.telegram && (
+                <a
+                  href={`https://t.me/${supportContacts.telegram.replace(/\D/g, "")}`}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="flex items-center gap-3 rounded-xl border border-border p-4 transition-colors hover:bg-secondary/60"
+                >
+                  <Send className="h-5 w-5 text-primary" />
+                  <span>
+                    <span className="block text-xs font-semibold uppercase tracking-[0.12em] text-muted-foreground">
+                      Telegram
+                    </span>
+                    <span className="mt-1 block text-sm font-semibold">
+                      {supportContacts.telegram}
+                    </span>
+                  </span>
+                </a>
+              )}
+            </div>
+          </section>
+        )}
       </div>
     </AppShell>
   );

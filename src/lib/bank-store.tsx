@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useMemo, useState, type ReactNode } from "react";
 import {
   getAccountRecord,
+  type AccountRecord,
   type Account,
   type Card,
   type CryptoHolding,
@@ -21,6 +22,7 @@ interface BankState {
   spendingByCategory: SpendingCategory[];
   notifications: Notification[];
   profile: Profile;
+  supportContacts: AccountRecord["supportContacts"];
   totalBalance: number;
   transfer: (input: { recipient: string; amount: number; note?: string; from: string }) => void;
   toggleFreeze: (cardId: string) => void;
@@ -33,15 +35,20 @@ export function BankProvider({ children }: { children: ReactNode }) {
   const { accountUsername } = useAuth();
   const accountRecord = getAccountRecord(accountUsername);
   const [accounts, setAccounts] = useState<Account[]>(accountRecord.accounts);
-  const [transactions, setTransactions] = useState<Transaction[]>(accountRecord.initialTransactions);
+  const [transactions, setTransactions] = useState<Transaction[]>(
+    accountRecord.initialTransactions,
+  );
   const [cards, setCards] = useState<Card[]>(accountRecord.cards);
-  const [cryptoHoldings, setCryptoHoldings] = useState<CryptoHolding[]>(accountRecord.cryptoHoldings);
+  const [cryptoHoldings, setCryptoHoldings] = useState<CryptoHolding[]>(
+    accountRecord.cryptoHoldings,
+  );
   const [savingsGoals, setSavingsGoals] = useState<SavingsGoal[]>(accountRecord.savingsGoals);
   const [spendingByCategory, setSpendingByCategory] = useState<SpendingCategory[]>(
     accountRecord.spendingByCategory,
   );
   const [notifications, setNotifications] = useState<Notification[]>(accountRecord.notifications);
   const profile = accountRecord.profile;
+  const supportContacts = accountRecord.supportContacts;
 
   useEffect(() => {
     const nextAccount = getAccountRecord(accountUsername);
@@ -66,6 +73,7 @@ export function BankProvider({ children }: { children: ReactNode }) {
       spendingByCategory,
       notifications,
       profile,
+      supportContacts,
       totalBalance,
       transfer: ({ recipient, amount, note, from }) => {
         setAccounts((prev) =>
@@ -98,6 +106,7 @@ export function BankProvider({ children }: { children: ReactNode }) {
     spendingByCategory,
     notifications,
     profile,
+    supportContacts,
   ]);
 
   return <BankContext.Provider value={value}>{children}</BankContext.Provider>;
