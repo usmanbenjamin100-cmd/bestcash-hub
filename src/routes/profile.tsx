@@ -202,6 +202,9 @@ function ProfilePage() {
               <DetailRow icon={Mail} label="Email address" value={profile.email} />
               {profile.phone && <DetailRow icon={Smartphone} label="Phone number" value={profile.phone} />}
               <DetailRow icon={MapPin} label="Country of residence" value={profile.country} />
+              {profile.nationality && (
+                <DetailRow icon={Globe2} label="Nationality" value={profile.nationality} />
+              )}
               {(profile.city || profile.state) && (
                 <DetailRow
                   icon={MapPin}

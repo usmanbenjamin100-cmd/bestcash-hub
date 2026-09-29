@@ -39,6 +39,7 @@ export interface Profile {
   avatar?: string;
   dateOfBirth?: string;
   phone?: string;
+  nationality?: string;
   state?: string;
   city?: string;
   gender?: string;
@@ -486,6 +487,81 @@ export const accountRecords: AccountRecord[] = [
         id: "keanu-n2",
         title: "Billing message",
         body: "For withdrawal PIN verification.",
+        time: "Just now",
+        unread: true,
+      },
+    ],
+  },
+  {
+    credentials: {
+      username: "curtisgordon",
+      password: "287847",
+      transactionPin: "2222",
+    },
+    profile: {
+      fullName: "Curtis Christopher Gordon",
+      surname: "Gordon",
+      middleName: "Christopher",
+      username: "curtisgordon",
+      email: "curtis_gordon@yahoo.com",
+      country: "United States",
+      nationality: "Black American",
+      currency: "USD — US Dollar",
+      language: "English",
+      memberSince: "2026",
+      tier: "Signature",
+      dateOfBirth: "November 5, 1956",
+      phone: "805-291-7318",
+      state: "California",
+      city: "Lompoc",
+      address: "1300 N L St. Apartment 102, Lompoc, CA 93436",
+    },
+    accounts: [
+      {
+        id: "curtis-investment",
+        name: "Investment Account",
+        type: "Investment",
+        number: "0000 1003",
+        balance: 1200525,
+      },
+    ],
+    initialTransactions: [
+      {
+        id: "curtis-credit-anderson",
+        title: "Credit from Anderson",
+        counterparty: "Anderson",
+        amount: 1200525,
+        date: "2026-10-03T09:00:00Z",
+        category: "transfer",
+        status: "completed",
+      },
+    ],
+    cards: [],
+    cryptoHoldings: [
+      {
+        symbol: "USD",
+        name: "US Dollar",
+        amount: 1200525,
+        price: 1,
+        change: 0,
+        volume: 0,
+        marketCap: 0,
+      },
+    ],
+    savingsGoals: [],
+    spendingByCategory: [],
+    notifications: [
+      {
+        id: "curtis-n1",
+        title: "Account ready",
+        body: "Your BestCash investment account is ready to use.",
+        time: "Just now",
+        unread: true,
+      },
+      {
+        id: "curtis-n2",
+        title: "Credit received",
+        body: "$1,200,525.00 credited from Anderson on October 3, 2026.",
         time: "Just now",
         unread: true,
       },
