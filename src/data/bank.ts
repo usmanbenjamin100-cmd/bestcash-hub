@@ -536,7 +536,20 @@ export const accountRecords: AccountRecord[] = [
         status: "completed",
       },
     ],
-    cards: [],
+    cards: [
+      {
+        id: "curtis-card",
+        label: "BestCash Investment",
+        holder: "CURTIS CHRISTOPHER GORDON",
+        number: "4012 8888 8888 1881",
+        expiry: "10/31",
+        network: "BestCash Pay",
+        frozen: false,
+        limit: 10000,
+        spent: 0,
+        physical: true,
+      },
+    ],
     cryptoHoldings: [
       {
         symbol: "USD",
