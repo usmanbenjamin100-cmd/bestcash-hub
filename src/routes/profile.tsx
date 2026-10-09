@@ -266,7 +266,7 @@ function ProfilePage() {
                   </div>
                   <span
                     className={
-                      item.status === "Aktiverad"
+                      item.status === "Enabled"
                         ? "rounded-full bg-emerald-500/10 px-2 py-1 text-[10px] font-semibold text-emerald-600 dark:text-emerald-300"
                         : "rounded-full bg-secondary px-2 py-1 text-[10px] font-semibold text-muted-foreground"
                     }
