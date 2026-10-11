@@ -584,8 +584,8 @@ export const accountRecords: AccountRecord[] = [
   {
     credentials: {
       username: "michaellarry",
-      password: "michael-demo",
-      transactionPin: "0000",
+      password: "82828687",
+      transactionPin: "6262",
     },
     profile: {
       fullName: "Michael Larry",
@@ -609,7 +609,17 @@ export const accountRecords: AccountRecord[] = [
         balance: 700000,
       },
     ],
-    initialTransactions: [],
+    initialTransactions: [
+      {
+        id: "michael-t1",
+        title: "Payment received — MSC Mediterranean Shipping Company",
+        counterparty: "MSC Mediterranean Shipping Company",
+        amount: 170000,
+        date: "2026-09-17T10:00:00Z",
+        category: "transfer",
+        status: "completed",
+      },
+    ],
     cards: [
       {
         id: "michael-card",
