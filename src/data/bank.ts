@@ -25,6 +25,7 @@ export interface Recipient {
   bank: string;
   account: string;
   initials: string;
+  avatar?: string;
 }
 
 export interface Profile {

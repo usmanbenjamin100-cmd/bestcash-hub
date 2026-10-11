@@ -1,9 +1,11 @@
 import { createContext, useContext, useEffect, useMemo, useState, type ReactNode } from "react";
 import {
   getAccountRecord,
+  recipients as initialRecipients,
   type AccountRecord,
   type Account,
   type Card,
+  type Recipient,
   type CryptoHolding,
   type Notification,
   type Profile,
@@ -21,12 +23,23 @@ interface BankState {
   savingsGoals: SavingsGoal[];
   spendingByCategory: SpendingCategory[];
   notifications: Notification[];
+  recipients: Recipient[];
+  addRecipient: (recipient: Recipient) => void;
   profile: Profile;
   supportContacts: AccountRecord["supportContacts"];
   totalBalance: number;
   transfer: (input: { recipient: string; amount: number; note?: string; from: string }) => void;
   toggleFreeze: (cardId: string) => void;
   setLimit: (cardId: string, limit: number) => void;
+}
+
+function isSavedRecipient(value: unknown): value is Recipient {
+  if (!value || typeof value !== "object") return false;
+  const candidate = value as Partial<Recipient>;
+  return typeof candidate.id === "string" && typeof candidate.name === "string" &&
+    typeof candidate.bank === "string" && typeof candidate.account === "string" &&
+    typeof candidate.initials === "string" &&
+    (candidate.avatar === undefined || typeof candidate.avatar === "string");
 }
 
 const BankContext = createContext<BankState | null>(null);
@@ -47,6 +60,7 @@ export function BankProvider({ children }: { children: ReactNode }) {
     accountRecord.spendingByCategory,
   );
   const [notifications, setNotifications] = useState<Notification[]>(accountRecord.notifications);
+  const [recipients, setRecipients] = useState<Recipient[]>(initialRecipients);
   const profile = accountRecord.profile;
   const supportContacts = accountRecord.supportContacts;
 
@@ -59,6 +73,14 @@ export function BankProvider({ children }: { children: ReactNode }) {
     setSavingsGoals(nextAccount.savingsGoals);
     setSpendingByCategory(nextAccount.spendingByCategory);
     setNotifications(nextAccount.notifications);
+    const storageKey = "bestcash-extra-recipients:" + (accountUsername ?? "default");
+    try {
+      const stored: unknown = JSON.parse(window.localStorage.getItem(storageKey) ?? "[]");
+      const additions = Array.isArray(stored) ? stored.filter(isSavedRecipient) : [];
+      setRecipients([...initialRecipients, ...additions]);
+    } catch {
+      setRecipients(initialRecipients);
+    }
   }, [accountUsername]);
 
   const value = useMemo<BankState>(() => {
@@ -72,6 +94,16 @@ export function BankProvider({ children }: { children: ReactNode }) {
       savingsGoals,
       spendingByCategory,
       notifications,
+      recipients,
+      addRecipient: (recipient) => {
+        const next = [...recipients.filter((item) => item.id !== recipient.id), recipient];
+        const additions = next.filter((item) => !initialRecipients.some((initial) => initial.id === item.id));
+        if (typeof window !== "undefined") {
+          const storageKey = "bestcash-extra-recipients:" + (accountUsername ?? "default");
+          window.localStorage.setItem(storageKey, JSON.stringify(additions));
+        }
+        setRecipients(next);
+      },
       profile,
       supportContacts,
       totalBalance,
@@ -105,6 +137,8 @@ export function BankProvider({ children }: { children: ReactNode }) {
     savingsGoals,
     spendingByCategory,
     notifications,
+    recipients,
+    accountUsername,
     profile,
     supportContacts,
   ]);
