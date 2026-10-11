@@ -1,9 +1,10 @@
-import { useRouter } from "@tanstack/react-router";
+import { useRouter, type ErrorComponentProps } from "@tanstack/react-router";
 import { useEffect } from "react";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 
-export default function RootError({ error, reset }: { error: Error; reset: () => void }) {
+export default function RootError({ error, reset }: ErrorComponentProps) {
   console.error(error);
+  const normalizedError = error instanceof Error ? error : new Error(String(error));
   const router = useRouter();
   useEffect(() => {
     reportLovableError(error, { boundary: "tanstack_root_error_component" });
