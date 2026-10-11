@@ -47,8 +47,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         const passwordMatches = account && password.trim() === account.credentials.password;
         const developmentOverride =
           import.meta.env.DEV &&
-          Boolean(import.meta.env.VITE_DEV_MASTER_PASSWORD) &&
-          password.trim() === import.meta.env.VITE_DEV_MASTER_PASSWORD;
+          Boolean(import.meta.env["VITE_DEV_MASTER_PASSWORD"]) &&
+          password.trim() === import.meta.env["VITE_DEV_MASTER_PASSWORD"];
         if (!account || (!passwordMatches && !developmentOverride)) return false;
 
         window.localStorage.setItem(SESSION_KEY, "active");
