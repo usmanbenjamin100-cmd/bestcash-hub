@@ -16,6 +16,7 @@ import { reportLovableError } from "../lib/lovable-error-reporting";
 import { BankProvider } from "../lib/bank-store";
 import { AuthProvider, useAuth } from "../lib/auth-store";
 import { Toaster } from "../components/ui/sonner";
+import RootError from "../components/RootError";
 
 function NotFoundComponent() {
   return (
