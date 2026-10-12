@@ -657,6 +657,72 @@ export const accountRecords: AccountRecord[] = [
       },
     ],
   },
+  {
+    credentials: {
+      username: "mrmrsorlando",
+      password: "Ranlando",
+      transactionPin: "1111",
+    },
+    profile: {
+      fullName: "Mr & Mrs Orlando",
+      surname: "Orlando",
+      username: "mrmrsorlando",
+      email: "mrmrsorlando@bestcash.demo",
+      country: "United States",
+      currency: "USD — US Dollar",
+      language: "English",
+      memberSince: "2026",
+      tier: "Signature",
+      dateOfBirth: "December 2, 1990",
+      phone: "—",
+    },
+    accounts: [
+      {
+        id: "orlando-checking",
+        name: "Everyday Checking",
+        type: "Checking",
+        number: "0000 1111",
+        balance: 3500000,
+      },
+    ],
+    initialTransactions: [],
+    cards: [
+      {
+        id: "orlando-card",
+        label: "BestCash Classic",
+        holder: "MR & MRS ORLANDO",
+        number: "4242 4242 4242 4242",
+        expiry: "12/30",
+        network: "BestCash Pay",
+        frozen: false,
+        limit: 10000,
+        spent: 0,
+        physical: false,
+      },
+    ],
+    cryptoHoldings: [
+      {
+        symbol: "USD",
+        name: "US Dollar",
+        amount: 3500000,
+        price: 1,
+        change: 0,
+        volume: 0,
+        marketCap: 0,
+      },
+    ],
+    savingsGoals: [],
+    spendingByCategory: [],
+    notifications: [
+      {
+        id: "orlando-n1",
+        title: "Account ready",
+        body: "Your BestCash account is ready to use.",
+        time: "Just now",
+        unread: true,
+      },
+    ],
+  },
 ];
 
 function normalizeLoginIdentifier(identifier: string) {
