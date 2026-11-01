@@ -809,6 +809,7 @@ export const accountRecords: AccountRecord[] = [
       tier: "Signature",
       dateOfBirth: "01/10/1970",
       phone: "Not provided",
+      avatar: erolaAvatar.url,
     },
     accounts: [
       {
