@@ -1,3 +1,5 @@
+import erolaAvatar from "@/assets/erola-grisham.jpg.asset.json";
+
 export type TxCategory =
   "transfer" | "shopping" | "food" | "bills" | "salary" | "crypto" | "travel";
 
