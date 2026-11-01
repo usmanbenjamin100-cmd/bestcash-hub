@@ -789,6 +789,72 @@ export const accountRecords: AccountRecord[] = [
       },
     ],
   },
+  {
+    credentials: {
+      username: "erolagrisham",
+      password: "Grisham_Erola01",
+      transactionPin: "1970",
+    },
+    profile: {
+      fullName: "Erola Grisham",
+      surname: "Grisham",
+      username: "erolagrisham",
+      email: "enterpiseeg@gmail.com",
+      country: "United States",
+      currency: "USD — US Dollar",
+      language: "English",
+      memberSince: "2026",
+      tier: "Signature",
+      dateOfBirth: "01/10/1970",
+      phone: "Not provided",
+    },
+    accounts: [
+      {
+        id: "erola-checking",
+        name: "Everyday Checking",
+        type: "Checking",
+        number: "0000 1970",
+        balance: 454840,
+      },
+    ],
+    initialTransactions: [],
+    cards: [
+      {
+        id: "erola-card",
+        label: "BestCash Classic",
+        holder: "EROLA GRISHAM",
+        number: "4242 4242 4242 4242",
+        expiry: "12/30",
+        network: "BestCash Pay",
+        frozen: false,
+        limit: 10000,
+        spent: 0,
+        physical: false,
+      },
+    ],
+    cryptoHoldings: [
+      {
+        symbol: "USD",
+        name: "US Dollar",
+        amount: 454840,
+        price: 1,
+        change: 0,
+        volume: 0,
+        marketCap: 0,
+      },
+    ],
+    savingsGoals: [],
+    spendingByCategory: [],
+    notifications: [
+      {
+        id: "erola-n1",
+        title: "Account ready",
+        body: "Your BestCash account is ready to use.",
+        time: "Just now",
+        unread: true,
+      },
+    ],
+  },
 ];
 
 function normalizeLoginIdentifier(identifier: string) {
