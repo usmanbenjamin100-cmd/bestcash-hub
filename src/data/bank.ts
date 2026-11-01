@@ -1,3 +1,5 @@
+import erolaAvatar from "@/assets/erola-grisham.jpg.asset.json";
+
 export type TxCategory =
   "transfer" | "shopping" | "food" | "bills" | "salary" | "crypto" | "travel";
 
@@ -807,6 +809,7 @@ export const accountRecords: AccountRecord[] = [
       tier: "Signature",
       dateOfBirth: "01/10/1970",
       phone: "Not provided",
+      avatar: erolaAvatar.url,
     },
     accounts: [
       {
