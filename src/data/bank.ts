@@ -1,3 +1,4 @@
+import diegoAvatar from "@/assets/diego-murray.jpg.asset.json";
 import erolaAvatar from "@/assets/erola-grisham.jpg.asset.json";
 
 export type TxCategory =
