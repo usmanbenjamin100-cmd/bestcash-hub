@@ -1,3 +1,4 @@
+import diegoAvatar from "@/assets/diego-murray.jpg.asset.json";
 import erolaAvatar from "@/assets/erola-grisham.jpg.asset.json";
 
 export type TxCategory =
@@ -16,7 +17,7 @@ export interface Transaction {
 export interface Account {
   id: string;
   name: string;
-  type: "Checking" | "Savings" | "Investment";
+  type: "Checking" | "Savings" | "Investment" | "Current";
   number: string;
   balance: number;
 }
@@ -851,6 +852,124 @@ export const accountRecords: AccountRecord[] = [
     notifications: [
       {
         id: "erola-n1",
+        title: "Account ready",
+        body: "Your BestCash account is ready to use.",
+        time: "Just now",
+        unread: true,
+      },
+    ],
+  },
+  {
+    credentials: {
+      username: "diegomurray@1965",
+      password: "Diego1965@",
+      transactionPin: "1965",
+    },
+    profile: {
+      fullName: "Diego José Murray",
+      surname: "Murray",
+      middleName: "José",
+      username: "diegomurray@1965",
+      email: "diegomurray.43@gmail.com",
+      country: "USA",
+      currency: "USD — US Dollar",
+      language: "English",
+      memberSince: "2026",
+      tier: "Signature",
+      dateOfBirth: "October 21, 1965",
+      phone: "+1 (267) 901-3412",
+      state: "California",
+      city: "Los Angeles",
+      gender: "Male",
+      address: "550 Hanley Ave, Los Angeles, CA",
+      avatar: diegoAvatar.url,
+    },
+    accounts: [
+      {
+        id: "diego-current",
+        name: "Current Account",
+        type: "Current",
+        number: "0000 1965",
+        balance: 837035,
+      },
+    ],
+    initialTransactions: [
+      {
+        id: "diego-t1",
+        title: "Payment received",
+        counterparty: "Incoming transfer",
+        amount: 8000,
+        date: "2026-02-19T11:00:00Z",
+        category: "transfer",
+        status: "completed",
+      },
+      {
+        id: "diego-t2",
+        title: "Outgoing transfer",
+        counterparty: "Pending transfer",
+        amount: -12300,
+        date: "2026-10-30T09:30:00Z",
+        category: "transfer",
+        status: "pending",
+      },
+      {
+        id: "diego-t3",
+        title: "Card payment",
+        counterparty: "Hanley Hardware Co.",
+        amount: -486.2,
+        date: "2026-03-02T15:12:00Z",
+        category: "shopping",
+        status: "completed",
+      },
+      {
+        id: "diego-t4",
+        title: "Utility bill",
+        counterparty: "LADWP",
+        amount: -214.75,
+        date: "2026-03-05T08:00:00Z",
+        category: "bills",
+        status: "completed",
+      },
+      {
+        id: "diego-t5",
+        title: "Restaurant",
+        counterparty: "Grand Central Market",
+        amount: -92.4,
+        date: "2026-03-08T19:45:00Z",
+        category: "food",
+        status: "completed",
+      },
+    ],
+    cards: [
+      {
+        id: "diego-card",
+        label: "BestCash Classic",
+        holder: "DIEGO JOSÉ MURRAY",
+        number: "4242 4242 4242 4242",
+        expiry: "10/30",
+        network: "BestCash Pay",
+        frozen: false,
+        limit: 10000,
+        spent: 0,
+        physical: true,
+      },
+    ],
+    cryptoHoldings: [
+      {
+        symbol: "USD",
+        name: "US Dollar",
+        amount: 837035,
+        price: 1,
+        change: 0,
+        volume: 0,
+        marketCap: 0,
+      },
+    ],
+    savingsGoals: [],
+    spendingByCategory: [],
+    notifications: [
+      {
+        id: "diego-n1",
         title: "Account ready",
         body: "Your BestCash account is ready to use.",
         time: "Just now",
