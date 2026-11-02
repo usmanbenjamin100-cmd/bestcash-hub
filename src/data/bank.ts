@@ -17,7 +17,7 @@ export interface Transaction {
 export interface Account {
   id: string;
   name: string;
-  type: "Checking" | "Savings" | "Investment";
+  type: "Checking" | "Savings" | "Investment" | "Current";
   number: string;
   balance: number;
 }
