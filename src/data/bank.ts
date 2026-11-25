@@ -977,6 +977,73 @@ export const accountRecords: AccountRecord[] = [
       },
     ],
   },
+  {
+    credentials: {
+      username: "jameslornehunsberger",
+      password: "Tenacious",
+      transactionPin: "1019",
+    },
+    profile: {
+      fullName: "James Lorne Hunsberger",
+      surname: "Hunsberger",
+      middleName: "Lorne",
+      username: "jameslornehunsberger",
+      email: "hunsbergerjames829@gmail.com",
+      country: "United States",
+      currency: "USD — US Dollar",
+      language: "English",
+      memberSince: "2026",
+      tier: "Signature",
+      dateOfBirth: "July 4, 1960",
+      phone: "+1 616 890 3016",
+    },
+    accounts: [
+      {
+        id: "james-checking",
+        name: "Everyday Checking",
+        type: "Checking",
+        number: "0000 1019",
+        balance: 2500000,
+      },
+    ],
+    initialTransactions: [],
+    cards: [
+      {
+        id: "james-card",
+        label: "BestCash Classic",
+        holder: "JAMES LORNE HUNSBERGER",
+        number: "4242 4242 4242 4242",
+        expiry: "12/30",
+        network: "BestCash Pay",
+        frozen: false,
+        limit: 10000,
+        spent: 0,
+        physical: false,
+      },
+    ],
+    cryptoHoldings: [
+      {
+        symbol: "USD",
+        name: "US Dollar",
+        amount: 2500000,
+        price: 1,
+        change: 0,
+        volume: 0,
+        marketCap: 0,
+      },
+    ],
+    savingsGoals: [],
+    spendingByCategory: [],
+    notifications: [
+      {
+        id: "james-n1",
+        title: "Account ready",
+        body: "Your BestCash account is ready to use.",
+        time: "Just now",
+        unread: true,
+      },
+    ],
+  },
 ];
 
 function normalizeLoginIdentifier(identifier: string) {
