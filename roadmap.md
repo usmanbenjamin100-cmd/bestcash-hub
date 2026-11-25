@@ -6,3 +6,5 @@
 - [x] Fix __root.tsx errorComponent build error (wired in RootError.tsx via lazyRouteComponent)
 - [x] Verify build is green
 - [ ] Publish the app (awaiting user's go-ahead)
+- [ ] Add profile-page photo upload, crop controls, and account-specific avatar saving
+- [ ] Set the newly uploaded portrait as James Hunsberger's demo profile photo
