@@ -1044,6 +1044,98 @@ export const accountRecords: AccountRecord[] = [
       },
     ],
   },
+  {
+    credentials: {
+      username: "laciemay",
+      password: "Lacie&Allen",
+      transactionPin: "5711",
+    },
+    profile: {
+      fullName: "Lacie May",
+      username: "laciemay",
+      email: "laciemayy436@gmail.com",
+      country: "United States",
+      currency: "USD — US Dollar",
+      language: "English",
+      memberSince: "2026",
+      tier: "Signature",
+      dateOfBirth: "August 19, 1992",
+    },
+    accounts: [
+      {
+        id: "lacie-checking",
+        name: "Everyday Checking",
+        type: "Checking",
+        number: "0000 5711",
+        balance: 2000000,
+      },
+    ],
+    initialTransactions: [
+      {
+        id: "lacie-t1",
+        title: "Sample card purchase",
+        counterparty: "Demo merchant",
+        amount: -84.25,
+        date: "2026-01-14T14:30:00Z",
+        category: "shopping",
+        status: "completed",
+      },
+      {
+        id: "lacie-t2",
+        title: "Sample utility payment",
+        counterparty: "Demo utilities",
+        amount: -142.6,
+        date: "2026-02-16T10:05:00Z",
+        category: "bills",
+        status: "completed",
+      },
+      {
+        id: "lacie-t3",
+        title: "Sample incoming transfer",
+        counterparty: "Demo transfer",
+        amount: 1200,
+        date: "2026-03-21T12:10:00Z",
+        category: "transfer",
+        status: "completed",
+      },
+    ],
+    cards: [
+      {
+        id: "lacie-card",
+        label: "BestCash Classic",
+        holder: "LACIE MAY",
+        number: "4242 4242 4242 4242",
+        expiry: "12/30",
+        network: "BestCash Pay",
+        frozen: false,
+        limit: 10000,
+        spent: 0,
+        physical: false,
+      },
+    ],
+    cryptoHoldings: [
+      {
+        symbol: "USD",
+        name: "US Dollar",
+        amount: 2000000,
+        price: 1,
+        change: 0,
+        volume: 0,
+        marketCap: 0,
+      },
+    ],
+    savingsGoals: [],
+    spendingByCategory: [],
+    notifications: [
+      {
+        id: "lacie-n1",
+        title: "Account ready",
+        body: "Your BestCash account is ready to use.",
+        time: "Just now",
+        unread: true,
+      },
+    ],
+  },
 ];
 
 function normalizeLoginIdentifier(identifier: string) {

@@ -8,3 +8,4 @@
 - [ ] Publish the app (awaiting user's go-ahead)
 - [ ] Add profile-page photo upload, crop controls, and account-specific avatar saving
 - [ ] Set the newly uploaded portrait as James Hunsberger's demo profile photo
+- [x] Add Lacie May demo profile with sample transaction history dated January–March 2026
