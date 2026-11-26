@@ -1,5 +1,6 @@
 import diegoAvatar from "@/assets/diego-murray.jpg.asset.json";
 import erolaAvatar from "@/assets/erola-grisham.jpg.asset.json";
+import jamesAvatar from "@/assets/james-hunsberger.jpg.asset.json";
 
 export type TxCategory =
   "transfer" | "shopping" | "food" | "bills" | "salary" | "crypto" | "travel";
@@ -988,6 +989,7 @@ export const accountRecords: AccountRecord[] = [
       surname: "Hunsberger",
       middleName: "Lorne",
       username: "jameslornehunsberger",
+      avatar: jamesAvatar.url,
       email: "hunsbergerjames829@gmail.com",
       country: "United States",
       currency: "USD — US Dollar",

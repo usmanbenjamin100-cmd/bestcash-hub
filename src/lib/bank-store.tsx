@@ -26,6 +26,7 @@ interface BankState {
   recipients: Recipient[];
   addRecipient: (recipient: Recipient) => void;
   profile: Profile;
+  saveProfileAvatar: (avatar: string) => boolean;
   supportContacts: AccountRecord["supportContacts"];
   totalBalance: number;
   transfer: (input: { recipient: string; amount: number; note?: string; from: string }) => void;
@@ -61,7 +62,7 @@ export function BankProvider({ children }: { children: ReactNode }) {
   );
   const [notifications, setNotifications] = useState<Notification[]>(accountRecord.notifications);
   const [recipients, setRecipients] = useState<Recipient[]>(initialRecipients);
-  const profile = accountRecord.profile;
+  const [profile, setProfile] = useState<Profile>(accountRecord.profile);
   const supportContacts = accountRecord.supportContacts;
 
   useEffect(() => {
@@ -73,6 +74,16 @@ export function BankProvider({ children }: { children: ReactNode }) {
     setSavingsGoals(nextAccount.savingsGoals);
     setSpendingByCategory(nextAccount.spendingByCategory);
     setNotifications(nextAccount.notifications);
+    const avatarKey = `bestcash-profile-avatar:${nextAccount.credentials.username}`;
+    let storedAvatar: string | null = null;
+    try {
+      storedAvatar = window.localStorage.getItem(avatarKey);
+    } catch {
+      storedAvatar = null;
+    }
+    setProfile(
+      storedAvatar ? { ...nextAccount.profile, avatar: storedAvatar } : nextAccount.profile,
+    );
     const storageKey = "bestcash-extra-recipients:" + (accountUsername ?? "default");
     try {
       const stored: unknown = JSON.parse(window.localStorage.getItem(storageKey) ?? "[]");
@@ -105,6 +116,16 @@ export function BankProvider({ children }: { children: ReactNode }) {
         setRecipients(next);
       },
       profile,
+      saveProfileAvatar: (avatar) => {
+        if (!accountUsername) return false;
+        try {
+          window.localStorage.setItem(`bestcash-profile-avatar:${accountUsername}`, avatar);
+        } catch {
+          return false;
+        }
+        setProfile((current) => ({ ...current, avatar }));
+        return true;
+      },
       supportContacts,
       totalBalance,
       transfer: ({ recipient, amount, note, from }) => {
